@@ -67,24 +67,11 @@ return [
         'disk' => 'public',        // Changed from null to 'public'
         'rules' => null,       // Example: ['file', 'mimes:png,jpg']  | Default: ['required', 'file', 'max:12288'] (12MB)
         'directory' => 'livewire-tmp',   // Default directory
-        'middleware' => ['web', 'auth'],  // Ensure both web and auth middleware are applied
+        'middleware' => 'web',  // Changed from null to 'web' to ensure session is available
         'preview_mimes' => [   // Supported file types for temporary pre-signed file URLs...
-            'png',
-            'gif',
-            'bmp',
-            'svg',
-            'wav',
-            'mp4',
-            'mov',
-            'avi',
-            'wmv',
-            'mp3',
-            'm4a',
-            'jpg',
-            'jpeg',
-            'mpga',
-            'webp',
-            'wma',
+            'png', 'gif', 'bmp', 'svg', 'wav', 'mp4',
+            'mov', 'avi', 'wmv', 'mp3', 'm4a',
+            'jpg', 'jpeg', 'mpga', 'webp', 'wma',
         ],
         'max_upload_time' => 5, // Max duration (in minutes) before an upload is invalidated...
         'cleanup' => true, // Should cleanup temporary uploads older than 24 hrs...
