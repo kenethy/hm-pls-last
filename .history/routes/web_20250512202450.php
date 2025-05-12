@@ -63,8 +63,3 @@ Route::get('/sitemap/posts', [SitemapController::class, 'posts']);
 Route::get('/sitemap/categories', [SitemapController::class, 'categories']);
 Route::get('/sitemap/tags', [SitemapController::class, 'tags']);
 Route::get('/sitemap/promos', [SitemapController::class, 'promos']);
-
-// Livewire Upload Fix - Explicit route for file uploads
-Route::post('/livewire/upload-file', function () {
-    return app(\Livewire\Livewire::class)->upload();
-})->middleware(['web', 'auth']);
