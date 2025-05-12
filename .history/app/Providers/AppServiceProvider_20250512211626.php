@@ -6,11 +6,8 @@ use App\Models\Service;
 use App\Observers\MechanicServiceObserver;
 use App\Observers\ServiceObserver;
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
