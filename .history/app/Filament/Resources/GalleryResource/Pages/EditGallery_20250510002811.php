@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\GalleryResource\Pages;
 
 use App\Filament\Resources\GalleryResource;
-use App\Filament\Widgets\GalleryUploadWidget;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
@@ -15,13 +14,6 @@ class EditGallery extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
-        ];
-    }
-
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            GalleryUploadWidget::class,
         ];
     }
 }
