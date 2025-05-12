@@ -140,7 +140,6 @@ class ServiceResource extends Resource
 
                         Forms\Components\Select::make('vehicle_id')
                             ->label('Kendaraan')
-                            ->helperText('Pilih kendaraan yang terdaftar atau isi data kendaraan baru di bawah')
                             ->options(function (callable $get) {
                                 $customerId = $get('customer_id');
                                 if (!$customerId) {
@@ -162,18 +161,7 @@ class ServiceResource extends Resource
                                     if ($vehicle) {
                                         $set('car_model', $vehicle->model);
                                         $set('license_plate', $vehicle->license_plate);
-
-                                        // Tampilkan notifikasi
-                                        Notification::make()
-                                            ->title('Kendaraan dipilih')
-                                            ->body("Data kendaraan {$vehicle->model} ({$vehicle->license_plate}) telah diisi otomatis.")
-                                            ->success()
-                                            ->send();
                                     }
-                                } else {
-                                    // Jika kendaraan tidak dipilih, kosongkan field
-                                    $set('car_model', '');
-                                    $set('license_plate', '');
                                 }
                             })
                             ->createOptionForm([
@@ -196,7 +184,6 @@ class ServiceResource extends Resource
                                     ->label('Warna')
                                     ->maxLength(50),
                             ])
-                            ->placeholder('-- Pilih Kendaraan --')
                             ->hidden(fn(callable $get) => empty($get('customer_id'))),
 
                         Forms\Components\TextInput::make('customer_name')
@@ -210,7 +197,7 @@ class ServiceResource extends Resource
                             ->tel()
                             ->maxLength(20)
                             ->reactive()
-                            ->afterStateUpdated(function ($state, Forms\Set $set) {
+                            ->afterStateUpdated(function ($state, Forms\Set $set, Forms\Get $get) {
                                 if ($state) {
                                     // Cari pelanggan berdasarkan nomor telepon
                                     $customer = Customer::where('phone', $state)->first();
