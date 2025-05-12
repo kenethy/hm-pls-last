@@ -1293,32 +1293,20 @@ class ServiceResource extends Resource
 
             // Process vehicle if license plate and car model are provided
             if ($form->model->license_plate && $form->model->car_model) {
-                // Jika is_new_vehicle = true atau vehicle_id kosong, buat kendaraan baru
-                if ($form->getState()['is_new_vehicle'] ?? true || empty($form->model->vehicle_id)) {
-                    // Find or create vehicle based on phone and license plate
-                    $vehicle = Vehicle::findOrCreateByPhoneAndPlate(
-                        $form->model->phone,
-                        $form->model->license_plate,
-                        [
-                            'customer_name' => $form->model->customer_name,
-                            'car_model' => $form->model->car_model,
-                        ]
-                    );
+                // Find or create vehicle based on phone and license plate
+                $vehicle = Vehicle::findOrCreateByPhoneAndPlate(
+                    $form->model->phone,
+                    $form->model->license_plate,
+                    [
+                        'customer_name' => $form->model->customer_name,
+                        'car_model' => $form->model->car_model,
+                    ]
+                );
 
-                    // Associate service with vehicle
-                    $form->model->vehicle_id = $vehicle->id;
+                // Associate service with vehicle
+                $form->model->vehicle_id = $vehicle->id;
 
-                    Log::info("Service associated with new/existing vehicle: {$vehicle->id} ({$vehicle->model} - {$vehicle->license_plate})");
-
-                    // Tampilkan notifikasi
-                    Notification::make()
-                        ->title('Kendaraan berhasil dibuat/digunakan')
-                        ->body("Kendaraan {$vehicle->model} ({$vehicle->license_plate}) berhasil dibuat/digunakan untuk servis ini.")
-                        ->success()
-                        ->send();
-                } else {
-                    Log::info("Using existing vehicle ID: {$form->model->vehicle_id}");
-                }
+                Log::info("Service associated with vehicle: {$vehicle->id} ({$vehicle->model} - {$vehicle->license_plate})");
             }
         }
     }

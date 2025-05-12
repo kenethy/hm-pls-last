@@ -78,7 +78,7 @@
                     <p class="text-gray-600 mb-4">Penggantian oli berkualitas untuk menjaga kesehatan mesin kendaraan
                         Anda. Tersedia berbagai pilihan oli sesuai kebutuhan kendaraan Anda.</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-red-600 font-bold">Mulai dari Rp 10.000</span>
+                        <span class="text-red-600 font-bold">Mulai dari Rp 80.000</span>
                         <a href="{{ route('booking') }}"
                             class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition-colors">Booking</a>
                     </div>
@@ -110,7 +110,7 @@
                     <p class="text-gray-600 mb-4">Penyeimbangan roda untuk kenyamanan berkendara dan umur
                         ban yang lebih panjang. Termasuk pemeriksaan kaki-kaki kendaraan.</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-red-600 font-bold">Mulai dari Rp 25.000</span>
+                        <span class="text-red-600 font-bold">Mulai dari Rp 300.000</span>
                         <a href="{{ route('booking') }}"
                             class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition-colors">Booking</a>
                     </div>
