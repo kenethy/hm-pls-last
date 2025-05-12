@@ -1318,8 +1318,6 @@ class ServiceResource extends Resource
                         ->body('Tidak dapat membuat atau menemukan detail kendaraan/pelanggan terkait. Silakan periksa data dan coba lagi.')
                         ->danger()
                         ->send();
-                    // Throw an exception to halt the saving process if vehicle/customer data is inconsistent.
-                    throw new \Exception('Gagal memproses data kendaraan atau pelanggan untuk servis.');
                 }
             } catch (\Exception $e) {
                 Log::error('Exception during vehicle/customer processing in ServiceResource@beforeSave', [
@@ -1333,8 +1331,8 @@ class ServiceResource extends Resource
                     ->body('Terjadi kesalahan saat memproses data kendaraan: ' . $e->getMessage())
                     ->danger()
                     ->send();
-                // Rethrow the exception to halt the saving process if vehicle/customer creation fails.
-                throw $e; 
+                // Optionally rethrow or handle to prevent saving if critical
+                // throw $e; 
             }
         } else {
             Log::warning('Skipping vehicle/customer processing in ServiceResource@beforeSave due to missing data.', [

@@ -368,7 +368,7 @@ class ServiceResource extends Resource
                             ->afterStateUpdated(function ($state, Forms\Set $set) {
                                 if ($state === 'completed') {
                                     // Set exit_time jika status completed
-                                    $set('exit_time', now()); // global now() is fine here
+                                    $set('exit_time', now());
                                 }
                             }),
 
@@ -804,8 +804,8 @@ class ServiceResource extends Resource
                         // Update status servis dan nomor nota
                         $record->status = 'completed';
                         $record->invoice_number = $data['invoice_number'] ?? null;
-                        $record->completed_at = now(); // global now()
-                        $record->exit_time = now(); // global now()
+                        $record->completed_at = now();
+                        $record->exit_time = now();
 
                         // Log untuk debugging
                         \Illuminate\Support\Facades\Log::info("Updating service #{$record->id} status to completed", [
@@ -993,7 +993,7 @@ class ServiceResource extends Resource
                                     ->update([
                                         'services_count' => $servicesCount,
                                         'total_labor_cost' => $totalLaborCost,
-                                        'updated_at' => now(), // global now()
+                                        'updated_at' => now(),
                                     ]);
 
                                 Log::info("ServiceResource: Force updated mechanic report for mechanic #{$mechanic->id}", [
@@ -1104,7 +1104,7 @@ class ServiceResource extends Resource
                                     Log::info("markAsCompletedBulk: Setting default labor cost for service #{$record->id} to {$laborCostPerMechanic}");
 
                                     // Dapatkan tanggal awal dan akhir minggu saat ini (Senin-Minggu)
-                                    $now = now(); // global now()
+                                    $now = now();
                                     $weekStart = $now->copy()->startOfWeek();
                                     $weekEnd = $now->copy()->endOfWeek();
 
@@ -1130,8 +1130,8 @@ class ServiceResource extends Resource
                                     // Update status servis dan nomor nota
                                     $record->status = 'completed';
                                     $record->invoice_number = $data['invoice_number'] ?? null;
-                                    $record->completed_at = now(); // global now()
-                                    $record->exit_time = now(); // global now()
+                                    $record->completed_at = now();
+                                    $record->exit_time = now();
                                     $record->labor_cost = $totalLaborCost;
                                     $record->total_cost = $totalLaborCost;
 
@@ -1231,7 +1231,7 @@ class ServiceResource extends Resource
 
         // Jika ini adalah record baru, set entry_time ke waktu saat ini
         if (!$form->model->exists && !$form->model->entry_time) {
-            $form->model->entry_time = now(); // global now()
+            $form->model->entry_time = now();
         }
 
         if ($form->model->status === 'completed') {
@@ -1247,11 +1247,11 @@ class ServiceResource extends Resource
             } else {
                 // Set completed_at dan exit_time jika belum diset
                 if (!$form->model->completed_at) {
-                    $form->model->completed_at = now(); // global now()
+                    $form->model->completed_at = now();
                 }
 
                 if (!$form->model->exit_time) {
-                    $form->model->exit_time = now(); // global now()
+                    $form->model->exit_time = now();
                 }
 
                 // Hitung biaya jasa per montir - setiap montir mendapatkan biaya jasa penuh
@@ -1259,7 +1259,7 @@ class ServiceResource extends Resource
                 $laborCostPerMechanic = $form->model->labor_cost;
 
                 // Dapatkan tanggal awal dan akhir minggu saat ini (Senin-Minggu)
-                $now = now(); // global now()
+                $now = now();
                 $weekStart = $now->copy()->startOfWeek();
                 $weekEnd = $now->copy()->endOfWeek();
 
@@ -1318,8 +1318,6 @@ class ServiceResource extends Resource
                         ->body('Tidak dapat membuat atau menemukan detail kendaraan/pelanggan terkait. Silakan periksa data dan coba lagi.')
                         ->danger()
                         ->send();
-                    // Throw an exception to halt the saving process if vehicle/customer data is inconsistent.
-                    throw new \Exception('Gagal memproses data kendaraan atau pelanggan untuk servis.');
                 }
             } catch (\Exception $e) {
                 Log::error('Exception during vehicle/customer processing in ServiceResource@beforeSave', [
@@ -1333,8 +1331,8 @@ class ServiceResource extends Resource
                     ->body('Terjadi kesalahan saat memproses data kendaraan: ' . $e->getMessage())
                     ->danger()
                     ->send();
-                // Rethrow the exception to halt the saving process if vehicle/customer creation fails.
-                throw $e; 
+                // Optionally rethrow or handle to prevent saving if critical
+                // throw $e; 
             }
         } else {
             Log::warning('Skipping vehicle/customer processing in ServiceResource@beforeSave due to missing data.', [
