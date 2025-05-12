@@ -309,7 +309,7 @@ class ServiceResource extends Resource
                             ->selectablePlaceholder(false)
                             ->required()
                             ->reactive()
-                            ->afterStateUpdated(function ($state, Forms\Set $set) {
+                            ->afterStateUpdated(function ($state, Forms\Set $set, $get, $record) {
                                 if ($state === 'completed') {
                                     // Set exit_time jika status completed
                                     $set('exit_time', now());

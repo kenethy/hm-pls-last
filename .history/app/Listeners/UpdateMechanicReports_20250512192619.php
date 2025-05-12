@@ -278,7 +278,7 @@ class UpdateMechanicReports
                 //     'labor_cost' => 0,
                 // ]);
 
-                Log::info("UpdateMechanicReports: Preserving labor cost value for mechanic #{$mechanic->id} on service #{$service->id}");
+                Log::info("UpdateMechanicReports: Set labor cost to 0 for mechanic #{$mechanic->id} on service #{$service->id}");
 
                 // Get the current report
                 $report = DB::table('mechanic_reports')

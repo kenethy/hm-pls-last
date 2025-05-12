@@ -309,10 +309,78 @@ class ServiceResource extends Resource
                             ->selectablePlaceholder(false)
                             ->required()
                             ->reactive()
-                            ->afterStateUpdated(function ($state, Forms\Set $set) {
+                            ->afterStateUpdated(function ($state, Forms\Set $set, $get, $record) {
                                 if ($state === 'completed') {
-                                    // Set exit_time jika status completed
-                                    $set('exit_time', now());
+                                    // Jika tidak ada montir yang dipilih, tampilkan pesan error
+                                    if (empty($get('mechanics'))) {
+                                        $set('status', 'in_progress');
+                                        Notification::make()
+                                            ->title('Montir harus dipilih sebelum menyelesaikan servis')
+                                            ->danger()
+                                            ->send();
+                                    } else {
+                                        // Set exit_time jika status completed
+                                        $set('exit_time', now());
+
+                                        // Log untuk debugging
+                                        Log::info("Status changed to completed in form. Mechanics:", [
+                                            'mechanics' => $get('mechanics'),
+                                            'mechanic_costs' => $get('mechanic_costs'),
+                                        ]);
+
+                                        // Pastikan biaya jasa montir dipertahankan
+                                        if ($record && !empty($get('mechanic_costs'))) {
+                                            // Tidak perlu melakukan apa-apa, karena mechanic_costs sudah diisi dengan benar
+                                            Log::info("Mechanic costs already set correctly");
+                                        } elseif ($record && empty($get('mechanic_costs')) && !empty($get('mechanics'))) {
+                                            // Jika mechanic_costs kosong tapi mechanics ada, isi mechanic_costs
+                                            $mechanicCosts = [];
+
+                                            // Ambil biaya jasa dari pivot table
+                                            foreach ($get('mechanics') as $mechanicId) {
+                                                $laborCost = 0;
+
+                                                // Coba ambil dari record jika ada
+                                                if ($record) {
+                                                    $mechanic = $record->mechanics()
+                                                        ->where('mechanic_id', $mechanicId)
+                                                        ->first();
+
+                                                    if ($mechanic && $mechanic->pivot && $mechanic->pivot->labor_cost) {
+                                                        $laborCost = $mechanic->pivot->labor_cost;
+                                                    }
+                                                }
+
+                                                // Jika masih 0, gunakan default, tapi jangan override nilai yang sudah diisi
+                                                if ($laborCost == 0 && empty($get('mechanic_costs'))) {
+                                                    $laborCost = 50000; // Default labor cost
+                                                }
+
+                                                $mechanicCosts[] = [
+                                                    'mechanic_id' => $mechanicId,
+                                                    'labor_cost' => $laborCost,
+                                                ];
+                                            }
+
+                                            $set('mechanic_costs', $mechanicCosts);
+                                            Log::info("Set mechanic costs:", $mechanicCosts);
+
+                                            // Hitung total biaya jasa
+                                            $totalLaborCost = 0;
+                                            foreach ($mechanicCosts as $cost) {
+                                                if (isset($cost['labor_cost']) && $cost['labor_cost'] > 0) {
+                                                    $totalLaborCost += (int)$cost['labor_cost'];
+                                                    Log::info("afterStateUpdated: Adding labor cost: " . (int)$cost['labor_cost'] . " for mechanic ID: " . ($cost['mechanic_id'] ?? 'unknown'));
+                                                }
+                                            }
+
+                                            // Update total biaya
+                                            $set('labor_cost', $totalLaborCost);
+                                            $set('total_cost', $totalLaborCost);
+
+                                            Log::info("afterStateUpdated: Updated total labor cost to {$totalLaborCost}");
+                                        }
+                                    }
                                 }
                             }),
 
