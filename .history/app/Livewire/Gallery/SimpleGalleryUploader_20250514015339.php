@@ -49,7 +49,7 @@ class SimpleGalleryUploader extends Component
     {
         try {
             $this->categories = GalleryCategory::orderBy('order')->pluck('name', 'id')->toArray();
-        } catch (\Exception) {
+        } catch (\Exception $_) {
             // Ignore the exception and just set empty categories
             $this->categories = [];
         }

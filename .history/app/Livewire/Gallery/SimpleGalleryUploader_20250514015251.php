@@ -49,8 +49,7 @@ class SimpleGalleryUploader extends Component
     {
         try {
             $this->categories = GalleryCategory::orderBy('order')->pluck('name', 'id')->toArray();
-        } catch (\Exception) {
-            // Ignore the exception and just set empty categories
+        } catch (\Exception $e) {
             $this->categories = [];
         }
     }
@@ -176,7 +175,7 @@ class SimpleGalleryUploader extends Component
             logger()->error('Gallery multiple upload error: ' . $e->getMessage());
 
             // Dispatch error event
-            $this->dispatch('gallery-upload-error', [
+            $this->dispatchBrowserEvent('gallery-upload-error', [
                 'message' => 'Failed to upload images: ' . $e->getMessage()
             ]);
         }

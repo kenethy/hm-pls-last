@@ -1,33 +1,13 @@
 /**
  * Gallery Upload Helper
- *
+ * 
  * This script provides helper functions for reliable file uploads in Docker environments
  * with Livewire 3 and Laravel 12.
  */
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Handle file upload progress (Livewire v3 uses a different event name)
-    document.addEventListener('livewire:init', () => {
-        // For Livewire v3
-        Livewire.on('gallery-image-uploaded', (data) => {
-            console.log('Image uploaded:', data);
-            showNotification('Success', 'Image uploaded successfully!', 'success');
-        });
-
-        Livewire.on('gallery-images-uploaded', (data) => {
-            console.log('Images uploaded:', data);
-            const count = data.count || 'Multiple';
-            showNotification('Success', `${count} images uploaded successfully!`, 'success');
-        });
-
-        Livewire.on('gallery-upload-error', (data) => {
-            console.error('Upload error:', data);
-            showNotification('Error', data.message || 'Upload failed', 'error');
-        });
-    });
-
+document.addEventListener('DOMContentLoaded', function() {
     // Handle file upload progress
-    window.addEventListener('livewire-upload-progress', function (event) {
+    window.addEventListener('livewire-upload-progress', function(event) {
         // Update progress bars if they exist
         const progressBars = document.querySelectorAll('.upload-progress');
         if (progressBars.length) {
@@ -39,30 +19,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Handle file upload errors
-    window.addEventListener('livewire-upload-error', function (event) {
+    window.addEventListener('livewire-upload-error', function(event) {
         console.error('Upload error:', event.detail);
-
+        
         // Show error notification
         showNotification('Error', 'File upload failed. Please try again.', 'error');
     });
 
     // Handle file upload completion
-    window.addEventListener('livewire-upload-finish', function (event) {
+    window.addEventListener('livewire-upload-finish', function(event) {
         console.log('Upload finished');
     });
 
-    // Fallback for direct DOM events (for backward compatibility)
-    document.addEventListener('gallery-image-uploaded', function (event) {
+    // Listen for custom events from our Livewire components
+    document.addEventListener('gallery-image-uploaded', function(event) {
         showNotification('Success', 'Image uploaded successfully!', 'success');
     });
 
-    document.addEventListener('gallery-images-uploaded', function (event) {
-        const count = event.detail?.count || 'Multiple';
+    document.addEventListener('gallery-images-uploaded', function(event) {
+        const count = event.detail.count || 'Multiple';
         showNotification('Success', `${count} images uploaded successfully!`, 'success');
     });
 
-    document.addEventListener('gallery-upload-error', function (event) {
-        showNotification('Error', event.detail?.message || 'Upload failed', 'error');
+    document.addEventListener('gallery-upload-error', function(event) {
+        showNotification('Error', event.detail.message || 'Upload failed', 'error');
     });
 });
 
