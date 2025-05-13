@@ -18,11 +18,11 @@ class EditGallery extends EditRecord
                 ->label('Lihat di Website')
                 ->icon('heroicon-o-eye')
                 ->color('success')
-                ->url(fn() => route('gallery.show', $this->record->slug))
+                ->url(fn () => route('gallery.show', $this->record->slug))
                 ->openUrlInNewTab(),
         ];
     }
-
+    
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
