@@ -98,8 +98,6 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make()
                     ->label('Konten Website'),
                 NavigationGroup::make()
-                    ->label('Galeri'),
-                NavigationGroup::make()
                     ->label('Manajemen Pelanggan'),
             ])
             ->navigationItems([

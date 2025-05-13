@@ -59,7 +59,6 @@ class AdminPanelProvider extends PanelProvider
                 MechanicResource::class,
                 PromoResource::class,
                 GalleryResource::class,
-                EnhancedGalleryResource::class,
                 GalleryCategoryResource::class,
                 BlogPostResource::class,
                 BlogCategoryResource::class,
@@ -75,7 +74,6 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
                 SimpleGalleryWidget::class,
-                EnhancedGalleryWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -97,8 +95,6 @@ class AdminPanelProvider extends PanelProvider
                     ->label('Servis & Booking'),
                 NavigationGroup::make()
                     ->label('Konten Website'),
-                NavigationGroup::make()
-                    ->label('Galeri'),
                 NavigationGroup::make()
                     ->label('Manajemen Pelanggan'),
             ])
