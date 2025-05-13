@@ -63,39 +63,41 @@ echo "Menggunakan direktori kerja: $WORK_DIR"
 
 # Bersihkan cache Laravel
 echo "Membersihkan cache Laravel..."
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH cache:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH config:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH route:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH view:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH package:discover
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH filament:clear-cache
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH optimize:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH filament:cache
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH route:cache
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH view:cache
+docker exec $CONTAINER_NAME php artisan cache:clear
+docker exec $CONTAINER_NAME php artisan config:clear
+docker exec $CONTAINER_NAME php artisan route:clear
+docker exec $CONTAINER_NAME php artisan view:clear
+docker exec $CONTAINER_NAME php artisan package:discover
+docker exec $CONTAINER_NAME php artisan filament:clear-cache
+docker exec $CONTAINER_NAME php artisan route:clear
+docker exec $CONTAINER_NAME php artisan view:clear
+docker exec $CONTAINER_NAME php artisan optimize:clear
+docker exec $CONTAINER_NAME php artisan filament:cache
+docker exec $CONTAINER_NAME php artisan route:cache
+docker exec $CONTAINER_NAME php artisan view:cache
 
 # Optimize the application
 echo "Optimizing application..."
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH optimize
+docker exec $CONTAINER_NAME php artisan optimize
 
 # Periksa rute yang terdaftar
 echo "Memeriksa rute yang terdaftar..."
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH route:list | grep mechanic-reports
+docker exec $CONTAINER_NAME php artisan route:list | grep mechanic-reports
 
 # Jalankan perintah untuk memperbaiki laporan montir
 echo "Menjalankan perintah regenerate-mechanic-reports..."
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH mechanic:regenerate-reports
+docker exec $CONTAINER_NAME php artisan mechanic:regenerate-reports
 
 # Periksa apakah ada laporan montir yang masih menunjukkan biaya jasa 0
 echo "Memeriksa laporan montir dengan biaya jasa 0..."
-ZERO_REPORTS=$(docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH tinker --execute="echo \App\Models\MechanicReport::where('total_labor_cost', 0)->count();")
+ZERO_REPORTS=$(docker exec $CONTAINER_NAME php artisan tinker --execute="echo \App\Models\MechanicReport::where('total_labor_cost', 0)->count();")
 
 if [[ $ZERO_REPORTS -gt 0 ]]; then
     echo "Ditemukan $ZERO_REPORTS laporan montir dengan biaya jasa 0."
     echo "Memperbaiki laporan montir dengan biaya jasa default..."
 
     # Jalankan perintah untuk memperbaiki laporan montir dengan biaya jasa 0
-    docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH tinker --execute="
+    docker exec $CONTAINER_NAME php artisan tinker --execute="
         \$reports = \App\Models\MechanicReport::where('total_labor_cost', 0)->get();
         foreach (\$reports as \$report) {
             \$services = \$report->mechanic->services()
@@ -112,18 +114,6 @@ if [[ $ZERO_REPORTS -gt 0 ]]; then
         }
     "
 fi
-
-# Jalankan perintah sync-reports untuk memastikan semua rekap montir sudah benar
-echo "Menjalankan perintah sync-reports untuk validasi akhir..."
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH mechanic:sync-reports --force
-
-# Bersihkan cache lagi
-echo "Membersihkan cache akhir..."
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH cache:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH config:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH route:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH view:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH optimize
 
 echo "Selesai! Laporan montir telah diperbaiki."
 echo "Sekarang biaya jasa seharusnya ditampilkan dengan benar di laporan montir."

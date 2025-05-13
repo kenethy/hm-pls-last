@@ -95,7 +95,7 @@ if [[ $ZERO_REPORTS -gt 0 ]]; then
     echo "Memperbaiki laporan montir dengan biaya jasa default..."
 
     # Jalankan perintah untuk memperbaiki laporan montir dengan biaya jasa 0
-    docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH tinker --execute="
+    docker exec $CONTAINER_NAME php artisan tinker --execute="
         \$reports = \App\Models\MechanicReport::where('total_labor_cost', 0)->get();
         foreach (\$reports as \$report) {
             \$services = \$report->mechanic->services()
@@ -112,18 +112,6 @@ if [[ $ZERO_REPORTS -gt 0 ]]; then
         }
     "
 fi
-
-# Jalankan perintah sync-reports untuk memastikan semua rekap montir sudah benar
-echo "Menjalankan perintah sync-reports untuk validasi akhir..."
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH mechanic:sync-reports --force
-
-# Bersihkan cache lagi
-echo "Membersihkan cache akhir..."
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH cache:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH config:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH route:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH view:clear
-docker exec -w $WORK_DIR $CONTAINER_NAME php $ARTISAN_PATH optimize
 
 echo "Selesai! Laporan montir telah diperbaiki."
 echo "Sekarang biaya jasa seharusnya ditampilkan dengan benar di laporan montir."
