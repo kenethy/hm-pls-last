@@ -5,8 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers;
 use App\Models\Customer;
-use App\Models\Membership;
-use Filament\Notifications\Notification;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -289,7 +287,7 @@ class CustomerResource extends Resource
                                     'points' => $data['points'],
                                     'type' => 'manual',
                                     'description' => 'Poin awal saat pendaftaran membership',
-                                    'created_by' => Auth::id(),
+                                    'created_by' => auth()->id(),
                                 ]);
                             }
 

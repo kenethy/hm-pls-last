@@ -11,18 +11,18 @@ use App\Models\Mechanic;
 use App\Models\Membership;
 use App\Models\Service;
 use App\Models\Vehicle; // Added import for Vehicle model
-use Filament\Notifications\Notification;
-use Illuminate\Support\Facades\Log;
 use App\Policies\ServicePolicy;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ServiceResource extends Resource
 {
@@ -318,7 +318,7 @@ class ServiceResource extends Resource
                             ->label('Status Servis')
                             ->options(function () {
                                 // Tampilkan opsi berdasarkan role user
-                                if (Auth::user()->role === 'admin') {
+                                if (Auth::user()->isAdmin()) {
                                     // Admin dapat melihat semua opsi
                                     return [
                                         'in_progress' => 'Dalam Pengerjaan',
@@ -349,72 +349,6 @@ class ServiceResource extends Resource
                             ->placeholder('Catatan tambahan tentang servis ini')
                             ->rows(3),
                     ]),
-
-                Forms\Components\Section::make('Membership Points')
-                    ->schema([
-                        Forms\Components\Placeholder::make('membership_status')
-                            ->label('Status Membership')
-                            ->content(function (callable $get) {
-                                $customerId = $get('customer_id');
-                                if (!$customerId) {
-                                    return 'Pilih pelanggan terlebih dahulu untuk melihat status membership.';
-                                }
-
-                                $customer = Customer::find($customerId);
-                                if (!$customer) {
-                                    return 'Pelanggan tidak ditemukan.';
-                                }
-
-                                if (!$customer->isMember()) {
-                                    return 'Pelanggan ini belum menjadi member. Anda dapat mendaftarkan pelanggan ini sebagai member di halaman Membership.';
-                                }
-
-                                $membership = $customer->membership;
-                                if (!$membership->is_active) {
-                                    return "Pelanggan ini memiliki membership yang tidak aktif (#{$membership->membership_number}).";
-                                }
-
-                                return "Pelanggan ini adalah member aktif (#{$membership->membership_number}) dengan {$membership->points} poin.";
-                            }),
-
-                        Forms\Components\Toggle::make('add_membership_points')
-                            ->label('Tambahkan Poin Membership')
-                            ->helperText('Aktifkan untuk menambahkan poin ke akun membership pelanggan saat servis selesai.')
-                            ->default(true)
-                            ->visible(function (callable $get) {
-                                $customerId = $get('customer_id');
-                                if (!$customerId) {
-                                    return false;
-                                }
-
-                                $customer = Customer::find($customerId);
-                                if (!$customer || !$customer->isMember()) {
-                                    return false;
-                                }
-
-                                $membership = $customer->membership;
-                                return $membership->is_active;
-                            }),
-
-                        Forms\Components\TextInput::make('membership_points')
-                            ->label('Jumlah Poin')
-                            ->numeric()
-                            ->minValue(1)
-                            ->default(1)
-                            ->required()
-                            ->visible(fn(callable $get) => $get('add_membership_points') === true),
-
-                        Forms\Components\Textarea::make('membership_points_description')
-                            ->label('Deskripsi Poin')
-                            ->default(function (callable $get) {
-                                $serviceType = $get('service_type');
-                                $licensePlate = $get('license_plate');
-                                return "Poin untuk servis {$serviceType} kendaraan {$licensePlate}";
-                            })
-                            ->required()
-                            ->visible(fn(callable $get) => $get('add_membership_points') === true),
-                    ])
-                    ->visible(fn(callable $get) => $get('status') === 'completed'),
             ]);
     }
 
@@ -568,7 +502,7 @@ class ServiceResource extends Resource
                     ->label('Selesai')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
-                    ->visible(fn(Service $record) => $record->status === 'in_progress' && Auth::user()->role === 'admin')
+                    ->visible(fn(Service $record) => $record->status === 'in_progress' && Auth::user()->isAdmin())
                     ->form(function (Service $record) {
                         // Ambil montir yang sudah ada
                         $existingMechanics = $record->mechanics()->pluck('mechanic_id')->toArray();
@@ -1091,7 +1025,7 @@ class ServiceResource extends Resource
                         ->label('Tandai Selesai')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
-                        ->visible(fn() => Auth::user()->role === 'admin')
+                        ->visible(fn() => Auth::user()->isAdmin())
                         ->form([
                             Forms\Components\TextInput::make('invoice_number')
                                 ->label('Nomor Nota')
@@ -1320,55 +1254,6 @@ class ServiceResource extends Resource
         // We don't need to manually update mechanic reports here anymore
         // The Service model will automatically dispatch events when status changes
         // or when mechanics are assigned/removed
-
-        // Process membership points if service is completed and points should be added
-        $state = $form->getState();
-        if (
-            $form->model->status === 'completed' &&
-            isset($state['add_membership_points']) &&
-            $state['add_membership_points'] === true &&
-            isset($state['membership_points']) &&
-            $state['membership_points'] > 0 &&
-            $form->model->customer_id
-        ) {
-
-            try {
-                $customer = Customer::find($form->model->customer_id);
-                if ($customer && $customer->isMember()) {
-                    $membership = $customer->membership;
-                    if ($membership && $membership->is_active) {
-                        $points = (int) $state['membership_points'];
-                        $description = $state['membership_points_description'] ?? "Poin untuk servis {$form->model->service_type}";
-
-                        $membership->addPoints(
-                            $points,
-                            'service',
-                            $description,
-                            $form->model->invoice_number,
-                            $form->model->id
-                        );
-
-                        Notification::make()
-                            ->title('Poin membership berhasil ditambahkan')
-                            ->body("{$points} poin telah ditambahkan ke akun membership {$customer->name}")
-                            ->success()
-                            ->send();
-                    }
-                }
-            } catch (\Exception $e) {
-                Log::error('Error adding membership points', [
-                    'error' => $e->getMessage(),
-                    'customer_id' => $form->model->customer_id,
-                    'service_id' => $form->model->id,
-                ]);
-
-                Notification::make()
-                    ->title('Gagal menambahkan poin membership')
-                    ->body('Terjadi kesalahan saat menambahkan poin: ' . $e->getMessage())
-                    ->danger()
-                    ->send();
-            }
-        }
 
         // Process customer and vehicle information
         if ($form->model->phone && $form->model->customer_name && $form->model->license_plate && $form->model->car_model) {

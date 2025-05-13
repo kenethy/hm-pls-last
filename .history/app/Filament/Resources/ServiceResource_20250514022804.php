@@ -11,18 +11,18 @@ use App\Models\Mechanic;
 use App\Models\Membership;
 use App\Models\Service;
 use App\Models\Vehicle; // Added import for Vehicle model
-use Filament\Notifications\Notification;
-use Illuminate\Support\Facades\Log;
 use App\Policies\ServicePolicy;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ServiceResource extends Resource
 {
@@ -568,7 +568,7 @@ class ServiceResource extends Resource
                     ->label('Selesai')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
-                    ->visible(fn(Service $record) => $record->status === 'in_progress' && Auth::user()->role === 'admin')
+                    ->visible(fn(Service $record) => $record->status === 'in_progress' && Auth::user()->isAdmin())
                     ->form(function (Service $record) {
                         // Ambil montir yang sudah ada
                         $existingMechanics = $record->mechanics()->pluck('mechanic_id')->toArray();
@@ -1091,7 +1091,7 @@ class ServiceResource extends Resource
                         ->label('Tandai Selesai')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
-                        ->visible(fn() => Auth::user()->role === 'admin')
+                        ->visible(fn() => Auth::user()->isAdmin())
                         ->form([
                             Forms\Components\TextInput::make('invoice_number')
                                 ->label('Nomor Nota')
@@ -1320,55 +1320,6 @@ class ServiceResource extends Resource
         // We don't need to manually update mechanic reports here anymore
         // The Service model will automatically dispatch events when status changes
         // or when mechanics are assigned/removed
-
-        // Process membership points if service is completed and points should be added
-        $state = $form->getState();
-        if (
-            $form->model->status === 'completed' &&
-            isset($state['add_membership_points']) &&
-            $state['add_membership_points'] === true &&
-            isset($state['membership_points']) &&
-            $state['membership_points'] > 0 &&
-            $form->model->customer_id
-        ) {
-
-            try {
-                $customer = Customer::find($form->model->customer_id);
-                if ($customer && $customer->isMember()) {
-                    $membership = $customer->membership;
-                    if ($membership && $membership->is_active) {
-                        $points = (int) $state['membership_points'];
-                        $description = $state['membership_points_description'] ?? "Poin untuk servis {$form->model->service_type}";
-
-                        $membership->addPoints(
-                            $points,
-                            'service',
-                            $description,
-                            $form->model->invoice_number,
-                            $form->model->id
-                        );
-
-                        Notification::make()
-                            ->title('Poin membership berhasil ditambahkan')
-                            ->body("{$points} poin telah ditambahkan ke akun membership {$customer->name}")
-                            ->success()
-                            ->send();
-                    }
-                }
-            } catch (\Exception $e) {
-                Log::error('Error adding membership points', [
-                    'error' => $e->getMessage(),
-                    'customer_id' => $form->model->customer_id,
-                    'service_id' => $form->model->id,
-                ]);
-
-                Notification::make()
-                    ->title('Gagal menambahkan poin membership')
-                    ->body('Terjadi kesalahan saat menambahkan poin: ' . $e->getMessage())
-                    ->danger()
-                    ->send();
-            }
-        }
 
         // Process customer and vehicle information
         if ($form->model->phone && $form->model->customer_name && $form->model->license_plate && $form->model->car_model) {

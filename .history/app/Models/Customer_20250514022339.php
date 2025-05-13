@@ -76,30 +76,4 @@ class Customer extends Model
 
         $this->save();
     }
-
-    /**
-     * Get the membership associated with this customer.
-     */
-    public function membership(): HasOne
-    {
-        return $this->hasOne(Membership::class);
-    }
-
-    /**
-     * Check if the customer is a member.
-     *
-     * @return bool
-     */
-    public function isMember(): bool
-    {
-        return $this->membership()->exists();
-    }
-
-    /**
-     * Get the active membership associated with this customer.
-     */
-    public function activeMembership(): HasOne
-    {
-        return $this->hasOne(Membership::class)->where('is_active', true);
-    }
 }

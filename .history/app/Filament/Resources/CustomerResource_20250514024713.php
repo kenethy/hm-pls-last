@@ -5,8 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers;
 use App\Models\Customer;
-use App\Models\Membership;
-use Filament\Notifications\Notification;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -223,88 +221,6 @@ class CustomerResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\Action::make('createMembership')
-                        ->label('Buat Membership')
-                        ->icon('heroicon-o-identification')
-                        ->color('success')
-                        ->form([
-                            Forms\Components\TextInput::make('membership_number')
-                                ->label('Nomor Membership')
-                                ->required()
-                                ->default(fn() => Membership::generateMembershipNumber())
-                                ->disabled()
-                                ->dehydrated(),
-
-                            Forms\Components\Select::make('card_type')
-                                ->label('Tipe Kartu')
-                                ->options([
-                                    'regular' => 'Regular',
-                                    'silver' => 'Silver',
-                                    'gold' => 'Gold',
-                                    'platinum' => 'Platinum',
-                                ])
-                                ->required()
-                                ->default('regular'),
-
-                            Forms\Components\DatePicker::make('join_date')
-                                ->label('Tanggal Bergabung')
-                                ->required()
-                                ->default(now()),
-
-                            Forms\Components\DatePicker::make('expiry_date')
-                                ->label('Tanggal Kadaluarsa')
-                                ->default(fn() => now()->addYear()),
-
-                            Forms\Components\TextInput::make('points')
-                                ->label('Poin Awal')
-                                ->numeric()
-                                ->default(0),
-
-                            Forms\Components\Textarea::make('notes')
-                                ->label('Catatan')
-                                ->rows(3),
-                        ])
-                        ->action(function (Customer $record, array $data) {
-                            if ($record->isMember()) {
-                                Notification::make()
-                                    ->title('Pelanggan sudah menjadi member')
-                                    ->warning()
-                                    ->send();
-                                return;
-                            }
-
-                            $membership = $record->membership()->create([
-                                'membership_number' => $data['membership_number'],
-                                'card_type' => $data['card_type'],
-                                'points' => $data['points'],
-                                'lifetime_points' => $data['points'],
-                                'join_date' => $data['join_date'],
-                                'expiry_date' => $data['expiry_date'],
-                                'is_active' => true,
-                                'notes' => $data['notes'],
-                            ]);
-
-                            if ($data['points'] > 0) {
-                                $membership->pointHistory()->create([
-                                    'points' => $data['points'],
-                                    'type' => 'manual',
-                                    'description' => 'Poin awal saat pendaftaran membership',
-                                    'created_by' => Auth::id(),
-                                ]);
-                            }
-
-                            Notification::make()
-                                ->title('Membership berhasil dibuat')
-                                ->success()
-                                ->send();
-                        })
-                        ->visible(fn(Customer $record) => !$record->isMember()),
-                    Tables\Actions\Action::make('manageMembership')
-                        ->label('Kelola Membership')
-                        ->icon('heroicon-o-identification')
-                        ->color('primary')
-                        ->url(fn(Customer $record) => route('filament.admin.resources.memberships.edit', ['record' => $record->membership]))
-                        ->visible(fn(Customer $record) => $record->isMember()),
                     Tables\Actions\Action::make('sendWhatsApp')
                         ->label('WhatsApp')
                         ->icon('heroicon-o-chat-bubble-left-right')

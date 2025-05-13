@@ -289,7 +289,7 @@ class CustomerResource extends Resource
                                     'points' => $data['points'],
                                     'type' => 'manual',
                                     'description' => 'Poin awal saat pendaftaran membership',
-                                    'created_by' => Auth::id(),
+                                    'created_by' => auth()->id(),
                                 ]);
                             }
 
