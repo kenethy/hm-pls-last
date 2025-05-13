@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use App\Livewire\Gallery\GalleryUploader;
 use App\Livewire\Gallery\GalleryManager;
-use App\Livewire\Gallery\SimpleGalleryUploader;
 
 class LivewireServiceProvider extends ServiceProvider
 {
@@ -26,6 +25,5 @@ class LivewireServiceProvider extends ServiceProvider
         // Register Livewire components
         Livewire::component('gallery.gallery-uploader', GalleryUploader::class);
         Livewire::component('gallery.gallery-manager', GalleryManager::class);
-        Livewire::component('gallery.simple-gallery-uploader', SimpleGalleryUploader::class);
     }
 }

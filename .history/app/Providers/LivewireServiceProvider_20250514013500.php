@@ -26,6 +26,5 @@ class LivewireServiceProvider extends ServiceProvider
         // Register Livewire components
         Livewire::component('gallery.gallery-uploader', GalleryUploader::class);
         Livewire::component('gallery.gallery-manager', GalleryManager::class);
-        Livewire::component('gallery.simple-gallery-uploader', SimpleGalleryUploader::class);
     }
 }

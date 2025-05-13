@@ -94,13 +94,6 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make()
                     ->label('Manajemen Pelanggan'),
             ])
-            ->navigationItems([
-                \Filament\Navigation\NavigationItem::make('Simple Gallery')
-                    ->url(fn(): string => route('admin.simple-gallery'))
-                    ->icon('heroicon-o-photo')
-                    ->group('Konten Website')
-                    ->sort(10),
-            ])
             ->authGuard('web')
             ->renderHook(
                 'panels::resource.pages.list-records.table.before',
