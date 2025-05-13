@@ -58,8 +58,6 @@ class AdminPanelProvider extends PanelProvider
 
                 // Resources available only to admin users
                 CustomerResource::class,
-                MembershipResource::class,
-                MembershipPointHistoryResource::class,
                 MechanicResource::class,
                 PromoResource::class,
                 GalleryResource::class,
