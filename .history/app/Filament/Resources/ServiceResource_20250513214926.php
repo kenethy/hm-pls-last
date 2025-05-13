@@ -299,7 +299,7 @@ class ServiceResource extends Resource
                             ->label('Jam Masuk')
                             ->seconds(false)
                             ->timezone('Asia/Jakarta')
-                            ->default(fn() => now())
+                            ->default(fn () => now())
                             ->disabled(fn($record) => $record && $record->entry_time)
                             ->helperText('Otomatis diisi saat servis dibuat'),
 
@@ -363,8 +363,8 @@ class ServiceResource extends Resource
                     // Check if vehicle already exists by license plate for any customer
                     // Or, more specifically, for this customer if you want to allow same plate for different customers
                     $existingVehicle = Vehicle::where('license_plate', $licensePlate)
-                        // Optionally add ->where('customer_id', $customerId)
-                        ->first();
+                                            // Optionally add ->where('customer_id', $customerId)
+                                            ->first();
 
                     if (!$existingVehicle) {
                         // Create new vehicle
@@ -1353,7 +1353,7 @@ class ServiceResource extends Resource
                     ->danger()
                     ->send();
                 // Rethrow the exception to halt the saving process if vehicle/customer creation fails.
-                throw $e;
+                throw $e; 
             }
         } else {
             Log::warning('Skipping vehicle/customer processing in ServiceResource@beforeSave due to missing data.', [
@@ -1364,7 +1364,7 @@ class ServiceResource extends Resource
             ]);
             // Notify if critical fields for vehicle/customer creation are missing
             if (empty($form->model->license_plate) || empty($form->model->car_model)) {
-                Notification::make()
+                 Notification::make()
                     ->title('Data Kendaraan Tidak Lengkap')
                     ->body('Nomor plat atau model mobil tidak boleh kosong untuk membuat atau menghubungkan kendaraan.')
                     ->warning()
