@@ -9,7 +9,6 @@ use Filament\Resources\Pages\ListRecords;
 use App\Models\Gallery;
 use App\Models\GalleryCategory;
 use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 
@@ -23,7 +22,7 @@ class ListGalleries extends ListRecords
             Actions\CreateAction::make()
                 ->label('Tambah Foto Baru')
                 ->icon('heroicon-o-plus'),
-
+                
             Actions\Action::make('uploadMultiple')
                 ->label('Upload Batch')
                 ->icon('heroicon-o-cloud-arrow-up')
@@ -67,7 +66,7 @@ class ListGalleries extends ListRecords
                         ->label('Awalan Judul')
                         ->helperText('Akan ditambahkan nomor urut di belakangnya')
                         ->required(),
-
+                        
                     Forms\Components\Toggle::make('is_featured')
                         ->label('Tampilkan di Halaman Utama')
                         ->default(false),
@@ -77,9 +76,9 @@ class ListGalleries extends ListRecords
                     $title_prefix = $data['title_prefix'];
                     $is_featured = $data['is_featured'] ?? false;
                     $images = $data['images'];
-
+                    
                     $count = 0;
-
+                    
                     foreach ($images as $index => $image) {
                         Gallery::create([
                             'title' => $title_prefix . ' ' . ($index + 1),
@@ -89,16 +88,16 @@ class ListGalleries extends ListRecords
                             'is_featured' => $is_featured,
                             'order' => 0,
                         ]);
-
+                        
                         $count++;
                     }
-
+                    
                     Notification::make()
                         ->title('Berhasil mengupload ' . $count . ' gambar')
                         ->success()
                         ->send();
                 }),
-
+                
             Actions\Action::make('openGalleryManager')
                 ->label('Gallery Manager')
                 ->icon('heroicon-o-photo')
