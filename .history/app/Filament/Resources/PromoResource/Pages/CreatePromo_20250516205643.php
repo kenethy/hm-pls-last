@@ -5,7 +5,6 @@ namespace App\Filament\Resources\PromoResource\Pages;
 use App\Filament\Resources\PromoResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
-use Illuminate\Contracts\View\View;
 
 class CreatePromo extends CreateRecord
 {

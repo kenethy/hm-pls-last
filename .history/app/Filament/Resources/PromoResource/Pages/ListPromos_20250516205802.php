@@ -16,6 +16,19 @@ class ListPromos extends ListRecords
             Actions\CreateAction::make()
                 ->label('Tambah Promo Baru')
                 ->icon('heroicon-o-plus'),
+            Actions\Action::make('openPromoUploader')
+                ->label('Promo Uploader')
+                ->icon('heroicon-o-cloud-arrow-up')
+                ->color('success')
+                ->url(route('admin.promo-uploader'))
+                ->openUrlInNewTab(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            PromoUploaderWidget::class,
         ];
     }
 }

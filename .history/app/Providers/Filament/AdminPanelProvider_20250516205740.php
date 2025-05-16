@@ -82,6 +82,7 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\FilamentInfoWidget::class,
                 SimpleGalleryWidget::class,
                 EnhancedGalleryWidget::class,
+                PromoUploaderWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

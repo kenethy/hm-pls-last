@@ -19,6 +19,7 @@ use App\Filament\Resources\ServiceResource;
 use App\Filament\Resources\EnhancedGalleryResource;
 use App\Filament\Widgets\SimpleGalleryWidget;
 use App\Filament\Widgets\EnhancedGalleryWidget;
+use App\Filament\Widgets\PromoUploaderWidget;
 use App\Filament\Pages\GalleryManager;
 use App\Http\Middleware\CheckUserRole;
 use Filament\Http\Middleware\Authenticate;
@@ -82,6 +83,7 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\FilamentInfoWidget::class,
                 SimpleGalleryWidget::class,
                 EnhancedGalleryWidget::class,
+                PromoUploaderWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

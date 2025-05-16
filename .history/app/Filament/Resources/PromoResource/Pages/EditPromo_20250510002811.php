@@ -4,18 +4,16 @@ namespace App\Filament\Resources\PromoResource\Pages;
 
 use App\Filament\Resources\PromoResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
+use Filament\Resources\Pages\EditRecord;
 
-class ListPromos extends ListRecords
+class EditPromo extends EditRecord
 {
     protected static string $resource = PromoResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
-                ->label('Tambah Promo Baru')
-                ->icon('heroicon-o-plus'),
+            Actions\DeleteAction::make(),
         ];
     }
 }

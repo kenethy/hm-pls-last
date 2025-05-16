@@ -40,13 +40,15 @@ class PromoResource extends Resource
                             ->required()
                             ->rows(4),
 
-                        // Custom Livewire image uploader component
-                        View::make('components.filament-promo-image-uploader')
-                            ->statePath('image_path')
-                            ->columnSpanFull(),
-
-                        // Hidden field to store the image path
-                        Forms\Components\Hidden::make('image_path'),
+                        Forms\Components\FileUpload::make('image_path')
+                            ->label('Gambar Promo')
+                            ->image()
+                            ->directory('promos')
+                            ->visibility('public')
+                            ->imageResizeMode('cover')
+                            ->imageCropAspectRatio('16:9')
+                            ->imageResizeTargetWidth('1200')
+                            ->imageResizeTargetHeight('675'),
                     ])->columns(1),
 
                 Forms\Components\Section::make('Harga & Diskon')
@@ -188,7 +190,7 @@ class PromoResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                        ->visible(fn() => Auth::user() && Auth::user()->role === 'admin'),
+                        ->visible(fn() => Auth::user()->isAdmin()),
                     Tables\Actions\BulkAction::make('toggleFeatured')
                         ->label('Toggle Featured')
                         ->icon('heroicon-o-star')

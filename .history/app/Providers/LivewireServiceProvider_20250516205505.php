@@ -28,6 +28,6 @@ class LivewireServiceProvider extends ServiceProvider
         Livewire::component('gallery.gallery-uploader', GalleryUploader::class);
         Livewire::component('gallery.gallery-manager', GalleryManager::class);
         Livewire::component('gallery.simple-gallery-uploader', SimpleGalleryUploader::class);
-        Livewire::component('promo.promo-image-uploader', PromoImageUploader::class);
+        Livewire::component('promo.promo-uploader', PromoUploader::class);
     }
 }
