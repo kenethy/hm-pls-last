@@ -188,8 +188,7 @@ class PromoResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()
-                        ->visible(fn() => Auth::user()->isAdmin()),
+                    Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\BulkAction::make('toggleFeatured')
                         ->label('Toggle Featured')
                         ->icon('heroicon-o-star')
