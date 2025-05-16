@@ -72,6 +72,8 @@ Route::post('/admin/gallery/upload-multiple', [App\Http\Controllers\Admin\Galler
     ->middleware(['web', 'auth'])
     ->name('admin.gallery.upload.multiple');
 
+
+
 // Custom file upload route for admin forms (as a fallback)
 Route::post('/admin/file-upload', [App\Http\Controllers\Admin\FileUploadController::class, 'upload'])
     ->middleware(['web', 'auth'])
