@@ -104,7 +104,13 @@ class PromoImageUploader extends Component
         ]);
     }
 
-    // This method was moved up with the #[On] attribute
+    public function refreshImage()
+    {
+        // This method can be called to refresh the component state
+        if ($this->imagePath) {
+            $this->imageUrl = Storage::url($this->imagePath);
+        }
+    }
 
     public function render()
     {
