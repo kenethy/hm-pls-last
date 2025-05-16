@@ -231,10 +231,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to ensure form submission works correctly
     function patchFormSubmission() {
-        // Find all potential submit buttons (Filament uses different selectors)
-        const submitButtons = document.querySelectorAll('button[type="submit"], button.filament-button');
-
-        submitButtons.forEach(submitButton => {
+        // Find the form submit button
+        const submitButton = document.querySelector('button[type="submit"]');
+        if (submitButton) {
             console.log('Found form submit button, ensuring it works correctly');
 
             // Make sure the button is not disabled
@@ -246,54 +245,29 @@ document.addEventListener('DOMContentLoaded', function () {
             submitButton.addEventListener('click', function (event) {
                 console.log('Submit button clicked');
 
-                // Ensure all image paths are in the form
-                ensureAllImagePathsInForm();
+                // Find all hidden inputs for uploaded images
+                const hiddenInputs = document.querySelectorAll('input[type="hidden"][name*="image_path"]');
 
-                // Find the Filament form component
-                const formComponent = document.querySelector('[wire\\:id^="filament.forms"]');
-                if (formComponent) {
-                    const formComponentId = formComponent.getAttribute('wire:id');
-                    const formLivewire = window.Livewire.find(formComponentId);
+                // Make sure they're properly included in the form data
+                hiddenInputs.forEach(input => {
+                    if (input.value) {
+                        console.log('Ensuring image path is included in form submission:', input.name, input.value);
 
-                    if (formLivewire && typeof formLivewire.$wire !== 'undefined') {
-                        // Dispatch a custom event to notify our code that form is being submitted
-                        Livewire.dispatch('form-submitted');
+                        // Find the Filament form component
+                        const formComponent = document.querySelector('[wire\\:id^="filament.forms"]');
+                        if (formComponent) {
+                            const formComponentId = formComponent.getAttribute('wire:id');
+                            const formLivewire = window.Livewire.find(formComponentId);
 
-                        // Force a form validation and submission
-                        setTimeout(() => {
-                            if (typeof formLivewire.$wire.submit === 'function') {
-                                console.log('Forcing form submission');
-                                formLivewire.$wire.submit();
-                            }
-                        }, 100);
-                    }
-                }
-            });
-        });
-
-        // Also monitor for form elements being added to the DOM
-        const observer = new MutationObserver(function (mutations) {
-            mutations.forEach(function (mutation) {
-                if (mutation.addedNodes && mutation.addedNodes.length > 0) {
-                    for (let i = 0; i < mutation.addedNodes.length; i++) {
-                        const node = mutation.addedNodes[i];
-                        if (node.nodeType === 1) { // Element node
-                            const newButtons = node.querySelectorAll('button[type="submit"], button.filament-button');
-                            if (newButtons.length > 0) {
-                                console.log('New submit buttons detected, patching them');
-                                patchFormSubmission();
-                                break;
+                            if (formLivewire && typeof formLivewire.$wire !== 'undefined') {
+                                // Set the value in the Filament form state
+                                formLivewire.$wire.set(input.name, input.value);
                             }
                         }
                     }
-                }
+                });
             });
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
+        }
     }
 
     // Run the patches when the page is loaded and after any AJAX navigation
