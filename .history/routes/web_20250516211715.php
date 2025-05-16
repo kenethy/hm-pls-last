@@ -78,10 +78,10 @@ Route::post('/livewire/upload-file', function () {
     return app(\Livewire\Features\SupportFileUploads\FileUploadController::class)->handle();
 })->middleware(['web', 'auth'])->name('livewire.upload-file');
 
-// Custom file upload route for admin forms
-Route::post('/admin/file-upload', [App\Http\Controllers\Admin\FileUploadController::class, 'upload'])
-    ->middleware(['web', 'auth'])
-    ->name('admin.file.upload');
+// Filament file upload route
+Route::post('/filament/upload-attachment', function () {
+    return app(\Filament\Actions\CreateAttachment::class)->handle();
+})->middleware(['web', 'auth'])->name('filament.upload-attachment');
 
 // Simple Gallery page
 Route::get('/admin/simple-gallery', function () {

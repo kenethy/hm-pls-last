@@ -44,7 +44,6 @@ class PromoResource extends Resource
                             ->image()
                             ->directory('promos')
                             ->visibility('public')
-                            ->disk('public')
                             ->imageResizeMode('cover')
                             ->imageCropAspectRatio('16:9')
                             ->imageResizeTargetWidth('1200')
@@ -53,9 +52,7 @@ class PromoResource extends Resource
                             ->uploadButtonPosition('left')
                             ->panelAspectRatio('16:9')
                             ->panelLayout('integrated')
-                            ->maxSize(5120) // 5MB
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif'])
-                            ->required(),
+                            ->maxSize(5120), // 5MB
                     ])->columns(1),
 
                 Forms\Components\Section::make('Harga & Diskon')

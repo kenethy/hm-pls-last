@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PromoResource\Pages;
 use App\Models\Promo;
 use Filament\Forms;
+use Filament\Forms\Components\View;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -44,7 +45,6 @@ class PromoResource extends Resource
                             ->image()
                             ->directory('promos')
                             ->visibility('public')
-                            ->disk('public')
                             ->imageResizeMode('cover')
                             ->imageCropAspectRatio('16:9')
                             ->imageResizeTargetWidth('1200')
@@ -53,9 +53,7 @@ class PromoResource extends Resource
                             ->uploadButtonPosition('left')
                             ->panelAspectRatio('16:9')
                             ->panelLayout('integrated')
-                            ->maxSize(5120) // 5MB
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif'])
-                            ->required(),
+                            ->maxSize(5120), // 5MB
                     ])->columns(1),
 
                 Forms\Components\Section::make('Harga & Diskon')

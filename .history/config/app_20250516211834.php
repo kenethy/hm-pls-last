@@ -169,6 +169,7 @@ return [
         // Custom Service Providers...
         App\Providers\CloudinaryServiceProvider::class,
         App\Providers\CustomFileUploadServiceProvider::class,
+        App\Providers\LivewireServiceProvider::class,
         App\Providers\FilamentServiceProvider::class,
     ],
 

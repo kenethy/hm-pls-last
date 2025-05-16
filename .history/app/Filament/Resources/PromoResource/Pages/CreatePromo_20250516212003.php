@@ -19,4 +19,10 @@ class CreatePromo extends CreateRecord
                 ->color('gray'),
         ];
     }
+
+    public function getFooter(): ?View
+    {
+        // Include the promo image uploader helper script
+        return view('components.filament-promo-image-uploader-script');
+    }
 }
