@@ -69,9 +69,9 @@ class PromoImageUploader extends Component
             ]);
 
             // Update Filament form state if statePath is provided
-            if ($this->statePathString) {
+            if ($this->statePath) {
                 $this->dispatch('set-file-upload', [
-                    'statePath' => $this->statePathString,
+                    'statePath' => $this->statePath,
                     'value' => $path,
                 ]);
             }
@@ -97,9 +97,9 @@ class PromoImageUploader extends Component
             $this->uploadSuccessful = false;
 
             // Update Filament form state if statePath is provided
-            if ($this->statePathString) {
+            if ($this->statePath) {
                 $this->dispatch('set-file-upload', [
-                    'statePath' => $this->statePathString,
+                    'statePath' => $this->statePath,
                     'value' => null,
                 ]);
             }
