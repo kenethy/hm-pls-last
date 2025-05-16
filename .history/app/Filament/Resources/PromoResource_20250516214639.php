@@ -40,8 +40,14 @@ class PromoResource extends Resource
                             ->required()
                             ->rows(4),
 
-                        PromoImageUpload::make('image_path')
+                        Forms\Components\FileUpload::make('image_path')
                             ->label('Gambar Promo')
+                            ->image()
+                            ->directory('promos')
+                            ->imageResizeMode('cover')
+                            ->imageCropAspectRatio('16:9')
+                            ->imageResizeTargetWidth('1200')
+                            ->imageResizeTargetHeight('675')
                             ->required(),
                     ])->columns(1),
 
