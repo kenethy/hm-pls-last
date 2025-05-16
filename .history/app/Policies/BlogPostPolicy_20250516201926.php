@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-// use App\Models\BlogPost; // Commented out as we're using mixed type for compatibility
+use App\Models\BlogPost;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 

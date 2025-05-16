@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-// use App\Models\BlogPost; // Commented out as we're using mixed type for compatibility
+use App\Models\Promo;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class BlogPostPolicy extends BasePolicy
+class PromoPolicy extends BasePolicy
 {
     use HandlesAuthorization;
 
@@ -20,11 +20,8 @@ class BlogPostPolicy extends BasePolicy
 
     /**
      * Determine whether the user can view the model.
-     *
-     * @param User $user
-     * @param BlogPost|mixed $model
      */
-    public function view(User $user, $model): bool
+    public function view(User $user, Promo $promo): bool
     {
         return true;
     }
@@ -39,48 +36,36 @@ class BlogPostPolicy extends BasePolicy
 
     /**
      * Determine whether the user can update the model.
-     *
-     * @param User $user
-     * @param BlogPost|mixed $model
      */
-    public function update(User $user, $model): bool
+    public function update(User $user, Promo $promo): bool
     {
         return true;
     }
 
     /**
      * Determine whether the user can delete the model.
-     *
-     * @param User $user
-     * @param BlogPost|mixed $model
      */
-    public function delete(User $user, $model): bool
+    public function delete(User $user, Promo $promo): bool
     {
-        // Only admin users can delete blog posts
+        // Only admin users can delete promos
         return $user->isAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
-     *
-     * @param User $user
-     * @param BlogPost|mixed $model
      */
-    public function restore(User $user, $model): bool
+    public function restore(User $user, Promo $promo): bool
     {
-        // Only admin users can restore blog posts
+        // Only admin users can restore promos
         return $user->isAdmin();
     }
 
     /**
      * Determine whether the user can permanently delete the model.
-     *
-     * @param User $user
-     * @param BlogPost|mixed $model
      */
-    public function forceDelete(User $user, $model): bool
+    public function forceDelete(User $user, Promo $promo): bool
     {
-        // Only admin users can force delete blog posts
+        // Only admin users can force delete promos
         return $user->isAdmin();
     }
 }
