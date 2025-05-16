@@ -83,7 +83,7 @@ class PromoImageUploader extends Component
             // Dispatch event to update Filament form
             $this->dispatch('promo-image-uploaded', [
                 'path' => $path,
-                'statePath' => $this->statePathString
+                'statePath' => $this->statePath
             ]);
 
             // Reset the file input
@@ -110,7 +110,7 @@ class PromoImageUploader extends Component
 
         // Dispatch event to update Filament form
         $this->dispatch('promo-image-removed', [
-            'statePath' => $this->statePathString
+            'statePath' => $this->statePath
         ]);
     }
 

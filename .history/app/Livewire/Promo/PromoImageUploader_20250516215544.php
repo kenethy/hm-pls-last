@@ -20,7 +20,6 @@ class PromoImageUploader extends Component
     // For Filament integration
     public $formComponent;
     public $statePath;
-    public $statePathString;
 
     // In Livewire 3, we use the #[On] attribute instead of $listeners
     #[\Livewire\Attributes\On('refreshPromoImage')]
@@ -83,7 +82,7 @@ class PromoImageUploader extends Component
             // Dispatch event to update Filament form
             $this->dispatch('promo-image-uploaded', [
                 'path' => $path,
-                'statePath' => $this->statePathString
+                'statePath' => $this->statePath
             ]);
 
             // Reset the file input
@@ -110,7 +109,7 @@ class PromoImageUploader extends Component
 
         // Dispatch event to update Filament form
         $this->dispatch('promo-image-removed', [
-            'statePath' => $this->statePathString
+            'statePath' => $this->statePath
         ]);
     }
 

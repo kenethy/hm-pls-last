@@ -110,7 +110,7 @@ class PromoImageUploader extends Component
 
         // Dispatch event to update Filament form
         $this->dispatch('promo-image-removed', [
-            'statePath' => $this->statePathString
+            'statePath' => $this->statePath
         ]);
     }
 

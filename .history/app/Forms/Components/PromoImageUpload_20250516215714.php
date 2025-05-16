@@ -8,9 +8,6 @@ class PromoImageUpload extends Field
 {
     protected string $view = 'components.forms.promo-image-upload';
 
-    // Store the current image path
-    protected $imagePath = null;
-
     protected function setUp(): void
     {
         parent::setUp();
