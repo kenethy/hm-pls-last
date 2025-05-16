@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Livewire\Promo\PromoImageUploader;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 

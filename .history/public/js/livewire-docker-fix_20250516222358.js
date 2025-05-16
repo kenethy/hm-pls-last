@@ -49,8 +49,30 @@ document.addEventListener('DOMContentLoaded', function () {
         return originalFetch(url, options);
     };
 
-    // We'll skip the XMLHttpRequest patch as it might interfere with login
-    // If we need it later, we can add it back with more specific conditions
+    // Also patch XMLHttpRequest for older Livewire versions
+    const originalOpen = XMLHttpRequest.prototype.open;
+
+    XMLHttpRequest.prototype.open = function (method, url, async, user, password) {
+        // Check if this is a Livewire upload request
+        if (typeof url === 'string' && url.includes('livewire/upload')) {
+            console.log('Intercepting Livewire XHR upload request:', url);
+
+            // Replace the URL with our custom route
+            const newUrl = '/livewire/upload-file';
+
+            // Keep any query parameters from the original URL
+            const queryString = url.includes('?') ? url.substring(url.indexOf('?')) : '';
+            const finalUrl = newUrl + queryString;
+
+            console.log('Redirecting XHR to:', finalUrl);
+
+            // Use the new URL
+            url = finalUrl;
+        }
+
+        // Call the original open method
+        return originalOpen.call(this, method, url, async, user, password);
+    };
 
     // Handle Livewire upload errors
     window.addEventListener('livewire-upload-error', function (event) {
