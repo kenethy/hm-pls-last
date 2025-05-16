@@ -24,9 +24,7 @@ class FilamentServiceProvider extends ServiceProvider
         FileUpload::configureUsing(function (FileUpload $fileUpload): void {
             $fileUpload
                 ->disk('public')
-                ->visibility('public')
-                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])
-                ->maxSize(5120); // 5MB
+                ->visibility('public');
         });
     }
 }

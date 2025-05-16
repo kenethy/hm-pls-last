@@ -12,6 +12,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MechanicServiceHistoryController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\SitemapController;
+use Livewire\Livewire;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
