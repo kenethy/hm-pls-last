@@ -116,11 +116,6 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-photo')
                     ->group('Konten Website')
                     ->sort(10),
-                \Filament\Navigation\NavigationItem::make('Promo Uploader')
-                    ->url(fn(): string => route('admin.promo-uploader'))
-                    ->icon('heroicon-o-megaphone')
-                    ->group('Konten Website')
-                    ->sort(11),
             ])
             ->authGuard('web')
             ->renderHook(
