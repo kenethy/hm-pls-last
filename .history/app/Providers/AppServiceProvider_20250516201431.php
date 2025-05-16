@@ -67,12 +67,5 @@ class AppServiceProvider extends ServiceProvider
         // Register observers
         Service::observe(ServiceObserver::class);
         Pivot::observe(MechanicServiceObserver::class);
-
-        // Register activity log observers for staff actions
-        Service::observe(ActivityLogObserver::class);
-        Booking::observe(ActivityLogObserver::class);
-        MechanicReport::observe(ActivityLogObserver::class);
-        BlogPost::observe(ActivityLogObserver::class);
-        Promo::observe(ActivityLogObserver::class);
     }
 }

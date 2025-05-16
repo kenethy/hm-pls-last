@@ -318,6 +318,7 @@ class ServiceResource extends Resource
                             ->label('Status Servis')
                             ->options([
                                 'in_progress' => 'Dalam Pengerjaan',
+                                'completed' => 'Selesai',
                                 'cancelled' => 'Dibatalkan',
                             ])
                             ->default('in_progress')

@@ -5,34 +5,14 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
-class ResourcePolicy extends BasePolicy
+class BasePolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        // Admin can view all resources
-        if ($user->isAdmin()) {
-            return true;
-        }
-
-        // Staff can only view specific resources
-        if ($user->isStaff()) {
-            // Get the current resource class name
-            $resourceClass = request()->route('resource');
-
-            // Allow access only to BookingResource, ServiceResource, and MechanicReportResource
-            $allowedResources = [
-                'bookings',
-                'services',
-                'mechanic-reports',
-            ];
-
-            return in_array($resourceClass, $allowedResources);
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -40,7 +20,7 @@ class ResourcePolicy extends BasePolicy
      */
     public function view(User $user, Model $model): bool
     {
-        return $this->viewAny($user);
+        return true;
     }
 
     /**
@@ -48,7 +28,7 @@ class ResourcePolicy extends BasePolicy
      */
     public function create(User $user): bool
     {
-        return $this->viewAny($user);
+        return true;
     }
 
     /**
@@ -56,7 +36,7 @@ class ResourcePolicy extends BasePolicy
      */
     public function update(User $user, Model $model): bool
     {
-        return $this->viewAny($user);
+        return true;
     }
 
     /**
@@ -65,6 +45,24 @@ class ResourcePolicy extends BasePolicy
     public function delete(User $user, Model $model): bool
     {
         // Only admin users can delete models
+        return $user->isAdmin();
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     */
+    public function restore(User $user, Model $model): bool
+    {
+        // Only admin users can restore models
+        return $user->isAdmin();
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function forceDelete(User $user, Model $model): bool
+    {
+        // Only admin users can force delete models
         return $user->isAdmin();
     }
 }

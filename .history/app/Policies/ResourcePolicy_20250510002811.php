@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
-class ResourcePolicy extends BasePolicy
+class ResourcePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -21,14 +21,13 @@ class ResourcePolicy extends BasePolicy
         if ($user->isStaff()) {
             // Get the current resource class name
             $resourceClass = request()->route('resource');
-
-            // Allow access only to BookingResource, ServiceResource, and MechanicReportResource
+            
+            // Allow access only to BookingResource and ServiceResource
             $allowedResources = [
                 'bookings',
                 'services',
-                'mechanic-reports',
             ];
-
+            
             return in_array($resourceClass, $allowedResources);
         }
 
@@ -64,7 +63,6 @@ class ResourcePolicy extends BasePolicy
      */
     public function delete(User $user, Model $model): bool
     {
-        // Only admin users can delete models
-        return $user->isAdmin();
+        return $this->viewAny($user);
     }
 }

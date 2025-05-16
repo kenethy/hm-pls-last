@@ -316,10 +316,23 @@ class ServiceResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('status')
                             ->label('Status Servis')
-                            ->options([
-                                'in_progress' => 'Dalam Pengerjaan',
-                                'cancelled' => 'Dibatalkan',
-                            ])
+                            ->options(function () {
+                                // Tampilkan opsi berdasarkan role user
+                                if (Auth::user()->role === 'admin') {
+                                    // Admin dapat melihat semua opsi
+                                    return [
+                                        'in_progress' => 'Dalam Pengerjaan',
+                                        'completed' => 'Selesai',
+                                        'cancelled' => 'Dibatalkan',
+                                    ];
+                                } else {
+                                    // Staff hanya dapat melihat opsi 'dalam pengerjaan' dan 'dibatalkan'
+                                    return [
+                                        'in_progress' => 'Dalam Pengerjaan',
+                                        'cancelled' => 'Dibatalkan',
+                                    ];
+                                }
+                            })
                             ->default('in_progress')
                             ->selectablePlaceholder(false)
                             ->required()
