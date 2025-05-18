@@ -106,7 +106,7 @@ class CustomUploadController extends Controller
                 'type' => $file->getMimeType(),
             ]);
         } catch (\Exception $e) {
-            Log::error('Upload failed', [
+            \Log::error('Upload failed', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);

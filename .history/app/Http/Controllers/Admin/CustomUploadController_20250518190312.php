@@ -95,7 +95,7 @@ class CustomUploadController extends Controller
             // Store the file
             $path = $file->storeAs($directory, $filename, 'public');
 
-            Log::info('File stored successfully', ['path' => $path]);
+            \Log::info('File stored successfully', ['path' => $path]);
 
             // Format response in Livewire-compatible format
             return response()->json([
@@ -106,7 +106,7 @@ class CustomUploadController extends Controller
                 'type' => $file->getMimeType(),
             ]);
         } catch (\Exception $e) {
-            Log::error('Upload failed', [
+            \Log::error('Upload failed', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);

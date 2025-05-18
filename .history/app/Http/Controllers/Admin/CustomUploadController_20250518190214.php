@@ -56,14 +56,14 @@ class CustomUploadController extends Controller
             } else {
                 // Try to find any uploaded file
                 foreach ($request->allFiles() as $key => $uploadedFile) {
-                    Log::info('Found file in request', ['key' => $key]);
+                    \Log::info('Found file in request', ['key' => $key]);
                     $file = $uploadedFile;
                     break;
                 }
             }
 
             if (!$file) {
-                Log::error('No file found in the request', [
+                \Log::error('No file found in the request', [
                     'request_keys' => array_keys($request->all()),
                     'files_keys' => $request->hasFile('files') ? array_keys($request->file('files')) : 'No files key',
                 ]);
@@ -87,7 +87,7 @@ class CustomUploadController extends Controller
                 $directory = 'blog';
             }
 
-            Log::info('Using directory for upload', ['directory' => $directory, 'referer' => $referer]);
+            \Log::info('Using directory for upload', ['directory' => $directory, 'referer' => $referer]);
 
             // Generate a unique filename
             $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
@@ -95,7 +95,7 @@ class CustomUploadController extends Controller
             // Store the file
             $path = $file->storeAs($directory, $filename, 'public');
 
-            Log::info('File stored successfully', ['path' => $path]);
+            \Log::info('File stored successfully', ['path' => $path]);
 
             // Format response in Livewire-compatible format
             return response()->json([
@@ -106,7 +106,7 @@ class CustomUploadController extends Controller
                 'type' => $file->getMimeType(),
             ]);
         } catch (\Exception $e) {
-            Log::error('Upload failed', [
+            \Log::error('Upload failed', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
