@@ -71,7 +71,6 @@ class AdminPanelProvider extends PanelProvider
                 BlogCategoryResource::class,
                 BlogTagResource::class,
                 ActivityLogResource::class,
-                MessageTemplateResource::class,
             ])
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
