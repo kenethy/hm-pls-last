@@ -180,21 +180,6 @@ document.addEventListener('DOMContentLoaded', function () {
         interval = setInterval(showNextSlide, autoplayDelay);
     }
 
-    // Add smooth transition effect when autoplay resumes
-    function smoothTransition() {
-        // Add a subtle pulse animation to indicate autoplay is resuming
-        const activeSlide = slides[currentIndex];
-        activeSlide.style.transition = 'transform 0.3s ease';
-        activeSlide.style.transform = 'scale(1.02)';
-
-        setTimeout(() => {
-            activeSlide.style.transform = 'scale(1)';
-            setTimeout(() => {
-                activeSlide.style.transition = '';
-            }, 300);
-        }, 300);
-    }
-
     // Pause autoplay
     function pauseAutoplay() {
         clearInterval(interval);
@@ -204,8 +189,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function resetAutoplay() {
         pauseAutoplay();
         startAutoplay();
-        // Add smooth transition effect when user interacts
-        smoothTransition();
     }
 
     // Handle keyboard navigation

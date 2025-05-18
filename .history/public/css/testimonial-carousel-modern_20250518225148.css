@@ -254,103 +254,34 @@
     }
 }
 
-/* Animations for slide transitions */
-@keyframes fadeInScale {
-    0% {
+/* Animation for slide transitions */
+@keyframes fadeIn {
+    from {
         opacity: 0;
-        transform: scale(0.92) translateY(10px);
+        transform: translateY(20px);
     }
 
-    100% {
+    to {
         opacity: 1;
-        transform: scale(1) translateY(0);
+        transform: translateY(0);
     }
 }
 
-@keyframes fadeOutLeft {
-    0% {
-        opacity: 1;
-        transform: scale(1) translateX(0);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(0.92) translateX(-30px);
-    }
-}
-
-@keyframes fadeOutRight {
-    0% {
-        opacity: 1;
-        transform: scale(1) translateX(0);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(0.92) translateX(30px);
-    }
-}
-
-@keyframes fadeInLeft {
-    0% {
-        opacity: 0;
-        transform: scale(0.92) translateX(-30px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1) translateX(0);
-    }
-}
-
-@keyframes fadeInRight {
-    0% {
-        opacity: 0;
-        transform: scale(0.92) translateX(30px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1) translateX(0);
-    }
-}
-
-.testimonial-modern-slide.active.animate-in {
-    animation: fadeInScale 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-.testimonial-modern-slide.active.animate-in-left {
-    animation: fadeInLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-.testimonial-modern-slide.active.animate-in-right {
-    animation: fadeInRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-.testimonial-modern-slide.animate-out-left {
-    animation: fadeOutLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-.testimonial-modern-slide.animate-out-right {
-    animation: fadeOutRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+.testimonial-modern-slide.active {
+    animation: fadeIn 0.6s ease forwards;
 }
 
 /* Accessibility - respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-
-    .testimonial-modern-track,
-    .testimonial-modern-slide,
-    .testimonial-modern-dot,
-    .testimonial-modern-card {
-        transition: none !important;
+    .testimonial-modern-track {
+        transition: none;
     }
 
-    .testimonial-modern-slide.active,
-    .testimonial-modern-slide.active.animate-in,
-    .testimonial-modern-slide.active.animate-in-left,
-    .testimonial-modern-slide.active.animate-in-right,
-    .testimonial-modern-slide.animate-out-left,
-    .testimonial-modern-slide.animate-out-right {
-        animation: none !important;
+    .testimonial-modern-slide {
+        transition: none;
+    }
+
+    .testimonial-modern-slide.active {
+        animation: none;
     }
 }

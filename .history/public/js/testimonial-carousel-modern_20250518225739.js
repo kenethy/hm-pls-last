@@ -204,8 +204,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function resetAutoplay() {
         pauseAutoplay();
         startAutoplay();
-        // Add smooth transition effect when user interacts
-        smoothTransition();
     }
 
     // Handle keyboard navigation

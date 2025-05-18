@@ -20,22 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize the carousel
     function initCarousel() {
-        // Set initial slide classes
-        slides[0].classList.add('active');
-        slides[slides.length - 1].classList.add('prev');
-        slides[1].classList.add('next');
-        dots[0].classList.add('active');
-
-        // Add a small delay before starting animations to ensure DOM is ready
-        setTimeout(() => {
-            // Add animate-in class to first slide for initial animation
-            slides[0].classList.add('animate-in');
-
-            // Remove the animation class after it completes
-            setTimeout(() => {
-                slides[0].classList.remove('animate-in');
-            }, 800);
-        }, 100);
+        // Show the first slide
+        showSlide(currentIndex);
 
         // Start autoplay
         startAutoplay();
@@ -48,8 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
         dots.forEach(dot => {
             dot.addEventListener('click', function () {
                 const index = parseInt(this.getAttribute('data-index'));
-                const direction = index > currentIndex ? 'right' : 'left';
-                showSlide(index, direction);
+                showSlide(index);
                 resetAutoplay();
             });
         });
@@ -180,21 +165,6 @@ document.addEventListener('DOMContentLoaded', function () {
         interval = setInterval(showNextSlide, autoplayDelay);
     }
 
-    // Add smooth transition effect when autoplay resumes
-    function smoothTransition() {
-        // Add a subtle pulse animation to indicate autoplay is resuming
-        const activeSlide = slides[currentIndex];
-        activeSlide.style.transition = 'transform 0.3s ease';
-        activeSlide.style.transform = 'scale(1.02)';
-
-        setTimeout(() => {
-            activeSlide.style.transform = 'scale(1)';
-            setTimeout(() => {
-                activeSlide.style.transition = '';
-            }, 300);
-        }, 300);
-    }
-
     // Pause autoplay
     function pauseAutoplay() {
         clearInterval(interval);
@@ -204,8 +174,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function resetAutoplay() {
         pauseAutoplay();
         startAutoplay();
-        // Add smooth transition effect when user interacts
-        smoothTransition();
     }
 
     // Handle keyboard navigation
