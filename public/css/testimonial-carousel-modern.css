@@ -1,0 +1,266 @@
+/* Modern Testimonial Carousel Styles */
+.testimonial-modern {
+    position: relative;
+    overflow: hidden;
+    padding: 2rem 0;
+    background-color: transparent;
+}
+
+.testimonial-modern-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Main carousel container */
+.testimonial-modern-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+/* Carousel track for sliding */
+.testimonial-modern-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+}
+
+/* Individual slide */
+.testimonial-modern-slide {
+    flex: 0 0 100%;
+    padding: 0 1rem;
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    transform: scale(0.95);
+    display: none;
+}
+
+.testimonial-modern-slide.active {
+    opacity: 1;
+    transform: scale(1);
+    display: block;
+}
+
+/* Testimonial card */
+.testimonial-modern-card {
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-modern-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, #e11d48, #f43f5e);
+}
+
+.testimonial-modern-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Testimonial content */
+.testimonial-modern-content {
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.testimonial-modern-content p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #4b5563;
+    font-style: italic;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.testimonial-modern-content p::before {
+    content: '"';
+    position: absolute;
+    left: 0;
+    top: -0.5rem;
+    font-size: 3rem;
+    line-height: 1;
+    color: #e11d48;
+    opacity: 0.2;
+    font-family: serif;
+}
+
+/* Customer info */
+.testimonial-modern-customer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.testimonial-modern-avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+    border: 2px solid #f3f4f6;
+}
+
+.testimonial-modern-info h4 {
+    font-weight: 600;
+    font-size: 1.125rem;
+    margin: 0 0 0.25rem;
+    color: #111827;
+}
+
+.testimonial-modern-info p {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Rating stars */
+.testimonial-modern-rating {
+    display: flex;
+    color: #fbbf24;
+}
+
+.testimonial-modern-star {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* Navigation arrows */
+.testimonial-modern-arrows {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.testimonial-modern-arrow {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: #111827;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    opacity: 0.8;
+}
+
+.testimonial-modern-arrow:hover {
+    background-color: #e11d48;
+    color: white;
+    opacity: 1;
+}
+
+.testimonial-modern-arrow svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Navigation dots */
+.testimonial-modern-nav {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.testimonial-modern-dots {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.testimonial-modern-dot {
+    width: 2.5rem;
+    height: 0.25rem;
+    border-radius: 0.125rem;
+    background-color: #e5e7eb;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.testimonial-modern-dot:hover {
+    background-color: #9ca3af;
+}
+
+.testimonial-modern-dot.active {
+    background-color: #e11d48;
+    width: 3rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .testimonial-modern-card {
+        padding: 1.5rem;
+    }
+    
+    .testimonial-modern-content p {
+        font-size: 1rem;
+    }
+    
+    .testimonial-modern-arrow {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    
+    .testimonial-modern-arrow svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+}
+
+/* Animation for slide transitions */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.testimonial-modern-slide.active {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+/* Accessibility - respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .testimonial-modern-track {
+        transition: none;
+    }
+    
+    .testimonial-modern-slide {
+        transition: none;
+    }
+    
+    .testimonial-modern-slide.active {
+        animation: none;
+    }
+}

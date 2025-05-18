@@ -159,7 +159,6 @@
 
     <!-- Testimonial Carousel Scripts -->
     <script src="{{ asset('js/testimonial-carousel-new.js') }}" defer></script>
-    <script src="{{ asset('js/testimonial-carousel-modern.js') }}" defer></script>
 
     <!-- Page-specific scripts -->
     @yield('scripts')
