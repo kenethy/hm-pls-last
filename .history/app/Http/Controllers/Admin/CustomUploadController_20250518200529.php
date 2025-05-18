@@ -236,7 +236,7 @@ class CustomUploadController extends Controller
     {
         // Validate the request
         $request->validate([
-            'file' => 'required|file|max:40960', // 40MB max
+            'file' => 'required|file|max:5120', // 5MB max
             'directory' => 'nullable|string',
         ]);
 
@@ -272,7 +272,7 @@ class CustomUploadController extends Controller
     {
         // Validate the request
         $request->validate([
-            'files.*' => 'required|file|max:40960', // 40MB max
+            'files.*' => 'required|file|max:5120', // 5MB max
             'directory' => 'nullable|string',
         ]);
 
