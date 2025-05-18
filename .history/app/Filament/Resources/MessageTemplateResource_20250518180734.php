@@ -72,21 +72,7 @@ class MessageTemplateResource extends Resource
 
                         Forms\Components\Section::make('Variabel yang Tersedia')
                             ->schema([
-                                Forms\Components\Placeholder::make('format_info')
-                                    ->label('Panduan Format')
-                                    ->content(
-                                        'Untuk format terbaik di WhatsApp:' .
-                                            '<ul>' .
-                                            '<li>Gunakan paragraf untuk memisahkan bagian teks</li>' .
-                                            '<li>Gunakan line breaks (Enter) untuk baris baru</li>' .
-                                            '<li>Hindari menggunakan kode HTML seperti &lt;br&gt; secara langsung</li>' .
-                                            '<li>Gunakan variabel di bawah dengan format {nama_variabel}</li>' .
-                                            '</ul>'
-                                    )
-                                    ->columnSpanFull(),
-
                                 Forms\Components\Placeholder::make('variables')
-                                    ->label('Variabel Dinamis')
                                     ->content(
                                         '{customer_name} - Nama Pelanggan<br>' .
                                             '{vehicle_model} - Model Kendaraan<br>' .
@@ -97,23 +83,6 @@ class MessageTemplateResource extends Resource
                                             '{mechanic_names} - Nama Montir<br>' .
                                             '{invoice_number} - Nomor Nota<br>' .
                                             '{service_cost} - Biaya Servis'
-                                    )
-                                    ->columnSpanFull(),
-
-                                Forms\Components\Placeholder::make('example')
-                                    ->label('Contoh Template yang Baik')
-                                    ->content(
-                                        'Halo {customer_name},<br><br>' .
-                                            'Terima kasih telah mempercayakan kendaraan {vehicle_model} ({license_plate}) kepada Hartono Motor.<br><br>' .
-                                            'Detail servis:<br>' .
-                                            '- Jenis: {service_type}<br>' .
-                                            '- Deskripsi: {service_description}<br>' .
-                                            '- Montir: {mechanic_names}<br>' .
-                                            '- Nomor Nota: {invoice_number}<br>' .
-                                            '- Biaya: Rp {service_cost}<br><br>' .
-                                            'Terima kasih atas kepercayaan Anda.<br><br>' .
-                                            'Salam,<br>' .
-                                            'Tim Hartono Motor'
                                     )
                                     ->columnSpanFull(),
                             ]),

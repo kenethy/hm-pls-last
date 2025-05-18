@@ -55,39 +55,13 @@ Tim Hartono Motor</p>",
         MessageTemplate::create([
             'name' => 'Tawarkan Promo',
             'type' => 'promo',
-            'content' => "<p>Halo {customer_name},</p>
-<p>Terima kasih telah mempercayakan servis {service_type} untuk kendaraan {vehicle_model} ({license_plate}) Anda kepada Hartono Motor.</p>
-<p>Sebagai pelanggan setia kami, Anda berhak mendapatkan:</p>
-<p>✨ DISKON 10% ✨</p>
-<p>Untuk servis berikutnya dalam 3 bulan ke depan.</p>
-<p>Gunakan kode promo: <b>HARTONO10</b></p>
-<p>Jangan lewatkan kesempatan ini untuk merawat kendaraan Anda dengan harga spesial!</p>
-<p>Terima kasih,<br>
-Tim Hartono Motor</p>",
+            'content' => "Halo {customer_name},\n\n" .
+                "Terima kasih telah mempercayakan servis {service_type} untuk mobil {vehicle_model} Anda kepada Hartono Motor.\n\n" .
+                "Sebagai pelanggan setia kami, Anda berhak mendapatkan DISKON 10% untuk servis berikutnya dalam 3 bulan ke depan.\n\n" .
+                "Gunakan kode promo: HARTONO10\n\n" .
+                "Jangan lewatkan kesempatan ini untuk merawat kendaraan Anda dengan harga spesial!\n\n" .
+                "Terima kasih,\nTim Hartono Motor",
             'is_default' => true,
-            'is_active' => true,
-        ]);
-
-        // Create a detailed service report template
-        MessageTemplate::create([
-            'name' => 'Laporan Servis Detail',
-            'type' => 'custom',
-            'content' => "<p>Halo {customer_name},</p>
-<p>Terima kasih telah mempercayakan kendaraan Anda kepada Hartono Motor.</p>
-<p><b>LAPORAN SERVIS</b></p>
-<p>Tanggal: {service_date}<br>
-Kendaraan: {vehicle_model}<br>
-Plat Nomor: {license_plate}<br>
-Jenis Servis: {service_type}<br>
-Deskripsi: {service_description}<br>
-Montir: {mechanic_names}<br>
-Nomor Nota: {invoice_number}</p>
-<p><b>TOTAL BIAYA: Rp {service_cost}</b></p>
-<p>Kami telah menyelesaikan servis kendaraan Anda sesuai dengan standar kualitas Hartono Motor. Jika Anda memiliki pertanyaan atau membutuhkan informasi lebih lanjut, jangan ragu untuk menghubungi kami.</p>
-<p>Terima kasih atas kepercayaan Anda.</p>
-<p>Salam,<br>
-Tim Hartono Motor</p>",
-            'is_default' => false,
             'is_active' => true,
         ]);
     }
