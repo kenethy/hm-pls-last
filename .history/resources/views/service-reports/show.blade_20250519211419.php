@@ -273,7 +273,7 @@
                 Cetak
             </button>
 
-            <a href="https://wa.me/?text={{ urlencode('Laporan servis kendaraan saya di Hartono Motor: ' . route('service-reports.show', $report->code)) }}"
+            <a href="https://wa.me/?text={{ urlencode('Laporan servis kendaraan saya di Hartono Motor: ' . route('service-reports.show', $report->unique_code)) }}"
                 target="_blank"
                 class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
