@@ -95,6 +95,8 @@ class ServiceReportResource extends Resource
 
                                             // Force reset and set checklist items
                                             $set('checklist_items', []);
+                                            // Small delay to ensure the reset takes effect
+                                            usleep(100000); // 100ms delay
                                             $set('checklist_items', $checklistItems);
                                         }
                                     }

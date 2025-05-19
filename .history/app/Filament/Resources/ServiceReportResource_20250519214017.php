@@ -82,7 +82,7 @@ class ServiceReportResource extends Resource
                                             $set('technician_name', $service->mechanics->first()->name);
                                         }
 
-                                        // Always load checklist items from default template
+                                        // Load checklist items from default template
                                         $template = \App\Models\ServiceReportTemplate::getDefault();
                                         if ($template && is_array($template->checklist_items)) {
                                             $checklistItems = collect($template->checklist_items)->map(function ($item) {
@@ -93,7 +93,7 @@ class ServiceReportResource extends Resource
                                                 ];
                                             })->toArray();
 
-                                            // Force reset and set checklist items
+                                            // Reset and set checklist items
                                             $set('checklist_items', []);
                                             $set('checklist_items', $checklistItems);
                                         }
@@ -240,7 +240,7 @@ class ServiceReportResource extends Resource
                             ->addActionLabel('Tambah Titik Pemeriksaan')
                             ->hiddenLabel()
                             ->defaultItems(count($defaultChecklistItems))
-                            ->afterStateHydrated(function (Forms\Set $set) use ($defaultChecklistItems) {
+                            ->afterStateHydrated(function ($state, Forms\Set $set) use ($defaultChecklistItems) {
                                 // Always set the checklist items on form load
                                 $set('checklist_items', $defaultChecklistItems);
                             })

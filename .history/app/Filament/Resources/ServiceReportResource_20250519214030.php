@@ -95,6 +95,8 @@ class ServiceReportResource extends Resource
 
                                             // Force reset and set checklist items
                                             $set('checklist_items', []);
+                                            // Small delay to ensure the reset takes effect
+                                            usleep(100000); // 100ms delay
                                             $set('checklist_items', $checklistItems);
                                         }
                                     }
@@ -240,7 +242,7 @@ class ServiceReportResource extends Resource
                             ->addActionLabel('Tambah Titik Pemeriksaan')
                             ->hiddenLabel()
                             ->defaultItems(count($defaultChecklistItems))
-                            ->afterStateHydrated(function (Forms\Set $set) use ($defaultChecklistItems) {
+                            ->afterStateHydrated(function ($state, Forms\Set $set) use ($defaultChecklistItems) {
                                 // Always set the checklist items on form load
                                 $set('checklist_items', $defaultChecklistItems);
                             })
