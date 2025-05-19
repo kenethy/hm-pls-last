@@ -94,14 +94,7 @@ class ServiceReportResource extends Resource
 
                         Forms\Components\Select::make('technician_name')
                             ->label('Teknisi Penanggung Jawab')
-                            ->options(function () {
-                                return Mechanic::active()
-                                    ->get()
-                                    ->mapWithKeys(function ($mechanic) {
-                                        return [$mechanic->name => $mechanic->name];
-                                    })
-                                    ->toArray();
-                            })
+                            ->options(Mechanic::active()->get()->pluck('name', 'name'))
                             ->searchable(),
 
                         Forms\Components\DateTimePicker::make('service_date')

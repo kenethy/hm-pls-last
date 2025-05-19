@@ -43,14 +43,7 @@ class ServiceReportResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('service_id')
                             ->label('Servis')
-                            ->options(function () {
-                                return Service::where('status', 'completed')
-                                    ->get()
-                                    ->mapWithKeys(function ($service) {
-                                        return [$service->id => "{$service->customer_name} - {$service->license_plate}"];
-                                    })
-                                    ->toArray();
-                            })
+                            ->options(Service::where('status', 'completed')->get()->pluck('customer_name_with_license_plate', 'id'))
                             ->searchable()
                             ->required()
                             ->reactive()
@@ -62,7 +55,7 @@ class ServiceReportResource extends Resource
                                         $set('license_plate', $service->license_plate);
                                         $set('car_model', $service->car_model);
                                         $set('service_date', $service->completed_at ?? now());
-
+                                        
                                         // Set technician name if available
                                         if ($service->mechanics->isNotEmpty()) {
                                             $set('technician_name', $service->mechanics->first()->name);
@@ -94,14 +87,7 @@ class ServiceReportResource extends Resource
 
                         Forms\Components\Select::make('technician_name')
                             ->label('Teknisi Penanggung Jawab')
-                            ->options(function () {
-                                return Mechanic::active()
-                                    ->get()
-                                    ->mapWithKeys(function ($mechanic) {
-                                        return [$mechanic->name => $mechanic->name];
-                                    })
-                                    ->toArray();
-                            })
+                            ->options(Mechanic::active()->get()->pluck('name', 'name'))
                             ->searchable(),
 
                         Forms\Components\DateTimePicker::make('service_date')
@@ -219,7 +205,7 @@ class ServiceReportResource extends Resource
                     ->label('Kedaluwarsa')
                     ->dateTime('d M Y H:i')
                     ->sortable()
-                    ->color(fn(ServiceReport $record) => $record->hasExpired() ? 'danger' : 'success'),
+                    ->color(fn (ServiceReport $record) => $record->hasExpired() ? 'danger' : 'success'),
 
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('Aktif')
@@ -250,11 +236,11 @@ class ServiceReportResource extends Resource
                         return $query
                             ->when(
                                 $data['expires_from'],
-                                fn(Builder $query, $date): Builder => $query->whereDate('expires_at', '>=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('expires_at', '>=', $date),
                             )
                             ->when(
                                 $data['expires_until'],
-                                fn(Builder $query, $date): Builder => $query->whereDate('expires_at', '<=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('expires_at', '<=', $date),
                             );
                     }),
             ])
@@ -267,7 +253,7 @@ class ServiceReportResource extends Resource
                 Tables\Actions\Action::make('checklist')
                     ->label('Checklist')
                     ->icon('heroicon-o-clipboard-document-check')
-                    ->url(fn(ServiceReport $record) => route('filament.admin.resources.service-reports.checklist', $record))
+                    ->url(fn (ServiceReport $record) => route('filament.admin.resources.service-reports.checklist', $record))
                     ->color('warning'),
                 Tables\Actions\Action::make('share')
                     ->label('Bagikan')
