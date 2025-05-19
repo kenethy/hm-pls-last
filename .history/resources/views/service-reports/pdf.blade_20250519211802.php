@@ -212,7 +212,7 @@
         <!-- Header -->
         <div class="header">
             <div class="logo-container">
-                <img src="{{ public_path('images/logo/logo.png') }}" alt="Hartono Motor" class="logo">
+                <img src="{{ public_path('images/logo.png') }}" alt="Hartono Motor" class="logo">
                 <div>
                     <h1 class="company-name">Hartono Motor</h1>
                     <p class="company-tagline">Bengkel Mobil Terpercaya</p>

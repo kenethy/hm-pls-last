@@ -44,7 +44,7 @@ class ServiceReportController extends Controller
         }
 
         // Generate PDF
-        $pdf = Pdf::loadView('service-reports.pdf', compact('report'));
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('service-reports.pdf', compact('report'));
 
         return $pdf->download("laporan-servis-{$report->license_plate}.pdf");
     }
