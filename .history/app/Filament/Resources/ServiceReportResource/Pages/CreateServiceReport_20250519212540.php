@@ -14,7 +14,7 @@ class CreateServiceReport extends CreateRecord
 
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('index');
+        return $this->getResource()::getUrl('checklist', ['record' => $this->record]);
     }
 
     protected function afterCreate(): void

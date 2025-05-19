@@ -67,20 +67,6 @@ class ServiceReportResource extends Resource
                                         if ($service->mechanics->isNotEmpty()) {
                                             $set('technician_name', $service->mechanics->first()->name);
                                         }
-
-                                        // Load checklist items from default template
-                                        $template = \App\Models\ServiceReportTemplate::getDefault();
-                                        if ($template && is_array($template->checklist_items)) {
-                                            $checklistItems = collect($template->checklist_items)->map(function ($item) {
-                                                return [
-                                                    'inspection_point' => $item['inspection_point'],
-                                                    'status' => 'ok',
-                                                    'notes' => '',
-                                                ];
-                                            })->toArray();
-
-                                            $set('checklist_items', $checklistItems);
-                                        }
                                     }
                                 }
                             }),

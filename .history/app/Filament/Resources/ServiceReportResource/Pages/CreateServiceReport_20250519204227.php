@@ -14,29 +14,28 @@ class CreateServiceReport extends CreateRecord
 
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('index');
+        return $this->getResource()::getUrl('checklist', ['record' => $this->record]);
     }
 
     protected function afterCreate(): void
     {
-        // Get the form data
-        $data = $this->data;
+        // Get the default template
+        $template = ServiceReportTemplate::getDefault();
 
-        // Check if checklist_items exists in the form data
-        if (isset($data['checklist_items']) && is_array($data['checklist_items'])) {
-            // Create checklist items from the form data
+        if ($template) {
+            // Create checklist items from the template
             $order = 1;
-            foreach ($data['checklist_items'] as $item) {
+            foreach ($template->checklist_items as $item) {
                 $this->record->checklistItems()->create([
                     'order' => $order++,
                     'inspection_point' => $item['inspection_point'],
-                    'status' => $item['status'] ?? 'ok',
-                    'notes' => $item['notes'] ?? '',
+                    'status' => 'ok', // Default status
+                    'notes' => '',
                 ]);
             }
 
             Notification::make()
-                ->title('Checklist berhasil disimpan')
+                ->title('Checklist berhasil dibuat dari template')
                 ->success()
                 ->send();
         }
