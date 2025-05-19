@@ -54,7 +54,7 @@ class ServiceReportChecklistItem extends Model
     public function getStatusLabelAttribute(): string
     {
         return match ($this->status) {
-            'ok' => 'GOOD',
+            'ok' => 'OK',
             'warning' => 'Waspada',
             'needs_repair' => 'Harus Diperbaiki',
             default => 'Tidak Diperiksa',

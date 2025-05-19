@@ -303,7 +303,7 @@
         <!-- Action Buttons -->
         <div class="flex flex-wrap justify-center gap-4 mb-8 no-print">
             <a href="{{ route('service-reports.download', $report->code) }}"
-                class="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition shadow-sm">
+                class="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
