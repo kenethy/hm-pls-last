@@ -166,28 +166,11 @@ class MechanicReportResource extends Resource
 
                 Tables\Filters\Filter::make('week')
                     ->label('Filter Tanggal')
-                    ->indicateUsing(function (array $data): ?string {
-                        if (!$data['week_start'] && !$data['week_end']) {
-                            return null;
-                        }
-
-                        $indicator = 'Periode: ';
-
-                        if ($data['week_start']) {
-                            $indicator .= 'Dari ' . \Carbon\Carbon::parse($data['week_start'])->format('d M Y');
-                        }
-
-                        if ($data['week_end']) {
-                            $indicator .= ($data['week_start'] ? ' ' : '') . 'Sampai ' . \Carbon\Carbon::parse($data['week_end'])->format('d M Y');
-                        }
-
-                        return $indicator;
-                    })
                     ->form([
                         Forms\Components\DatePicker::make('week_start')
-                            ->label('Dari Tanggal'),
+                            ->label('Mulai Minggu'),
                         Forms\Components\DatePicker::make('week_end')
-                            ->label('Sampai Tanggal'),
+                            ->label('Akhir Minggu'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
