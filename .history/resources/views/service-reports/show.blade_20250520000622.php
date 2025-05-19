@@ -389,7 +389,7 @@
                             clip-rule="evenodd" />
                     </svg>
                 </a>
-                <a href="https://hartonomotor.xyz" target="_blank"
+                <a href="https://hartonomotor.com" target="_blank"
                     class="text-gray-500 hover:text-primary-600 transition">
                     <span class="sr-only">Website</span>
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

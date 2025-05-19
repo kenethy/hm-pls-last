@@ -355,7 +355,7 @@
         <!-- Footer -->
         <div class="footer">
             <p>© {{ date('Y') }} Hartono Motor. Semua hak dilindungi.</p>
-            <p>WhatsApp: 082135202581 | Instagram: @hartonomotorsidoarjo | Website: hartonomotor.xyz</p>
+            <p>WhatsApp: 081234567890 | Instagram: @hartonomotorsidoarjo | Website: hartonomotor.com</p>
         </div>
     </div>
 </body>
