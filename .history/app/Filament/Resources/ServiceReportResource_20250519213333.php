@@ -93,8 +93,6 @@ class ServiceReportResource extends Resource
                                                 ];
                                             })->toArray();
 
-                                            // Reset and set checklist items
-                                            $set('checklist_items', []);
                                             $set('checklist_items', $checklistItems);
                                         }
                                     }
