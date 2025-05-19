@@ -12,8 +12,8 @@ class ServiceReportController extends Controller
      */
     public function show(string $code)
     {
-        // Find the report by its code
-        $report = ServiceReport::where('code', $code)
+        // Find the report by its unique code
+        $report = ServiceReport::where('unique_code', $code)
             ->where('is_active', true)
             ->where('expires_at', '>', now())
             ->with('checklistItems')
@@ -31,8 +31,8 @@ class ServiceReportController extends Controller
      */
     public function download(string $code)
     {
-        // Find the report by its code
-        $report = ServiceReport::where('code', $code)
+        // Find the report by its unique code
+        $report = ServiceReport::where('unique_code', $code)
             ->where('is_active', true)
             ->where('expires_at', '>', now())
             ->with('checklistItems')
@@ -44,7 +44,7 @@ class ServiceReportController extends Controller
 
         // Generate PDF
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('service-reports.pdf', compact('report'));
-
+        
         return $pdf->download("laporan-servis-{$report->license_plate}.pdf");
     }
 

@@ -103,8 +103,8 @@ class ServiceReport extends Model
 
         static::creating(function ($report) {
             // Generate a unique code if not provided
-            if (empty($report->code)) {
-                $report->code = self::generateUniqueCode();
+            if (empty($report->unique_code)) {
+                $report->unique_code = self::generateUniqueCode();
             }
 
             // Set expiration date if not provided (7 days from now)

@@ -62,7 +62,7 @@ class ServiceReport extends Model
         $code = strtoupper(Str::random(8));
 
         // Check if the code already exists
-        while (self::where('code', $code)->exists()) {
+        while (self::where('unique_code', $code)->exists()) {
             $code = strtoupper(Str::random(8));
         }
 
@@ -74,7 +74,7 @@ class ServiceReport extends Model
      */
     public function getUrl(): string
     {
-        return route('service-reports.show', $this->code);
+        return route('service-reports.show', $this->unique_code);
     }
 
     /**
@@ -103,8 +103,8 @@ class ServiceReport extends Model
 
         static::creating(function ($report) {
             // Generate a unique code if not provided
-            if (empty($report->code)) {
-                $report->code = self::generateUniqueCode();
+            if (empty($report->unique_code)) {
+                $report->unique_code = self::generateUniqueCode();
             }
 
             // Set expiration date if not provided (7 days from now)
