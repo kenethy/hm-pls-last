@@ -16,8 +16,6 @@ use App\Filament\Resources\MembershipPointHistoryResource;
 use App\Filament\Resources\MembershipResource;
 use App\Filament\Resources\MessageTemplateResource;
 use App\Filament\Resources\PromoResource;
-use App\Filament\Resources\ServiceReportResource;
-use App\Filament\Resources\ServiceReportTemplateResource;
 use App\Filament\Resources\ServiceResource;
 use App\Filament\Resources\EnhancedGalleryResource;
 use App\Filament\Widgets\SimpleGalleryWidget;
