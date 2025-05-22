@@ -123,7 +123,8 @@
         !function (n) { "use strict"; n.loadCSS || (n.loadCSS = function () { }); var t = loadCSS.relpreload = {}; if (t.support = function () { var e; try { e = n.document.createElement("link").relList.supports("preload") } catch (t) { e = !1 } return function () { return e } }(), t.bindMediaToggle = function (t) { var e = t.media || "all"; function a() { t.addEventListener ? t.removeEventListener("load", a) : t.attachEvent && t.detachEvent("onload", a), t.setAttribute("onload", null), t.media = e } t.addEventListener ? t.addEventListener("load", a) : t.attachEvent && t.attachEvent("onload", a), setTimeout(function () { t.rel = "stylesheet", t.media = "only x" }), setTimeout(a, 3e3) }, t.poly = function () { if (!t.support()) for (var e = n.document.getElementsByTagName("link"), a = 0; a < e.length; a++) { var o = e[a]; "preload" !== o.rel || "style" !== o.getAttribute("as") || o.getAttribute("data-loadcss") || (o.setAttribute("data-loadcss", !0), t.bindMediaToggle(o)) } }, !t.support()) { t.poly(); var e = n.setInterval(t.poly, 500); n.addEventListener ? n.addEventListener("load", function () { t.poly(), n.clearInterval(e) }) : n.attachEvent && n.attachEvent("onload", function () { t.poly(), n.clearInterval(e) }) } "undefined" != typeof exports ? exports.loadCSS = loadCSS : n.loadCSS = loadCSS }("undefined" != typeof global ? global : this);
     </script>
 
-
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
 </head>
 
 <body class="bg-white text-gray-900 min-h-screen flex flex-col">
