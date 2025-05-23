@@ -113,7 +113,7 @@ class ServiceReportTemplateResource extends Resource
                                 'bulletList',
                                 'orderedList',
                             ])
-                            ->default('<p>Garansi Tune-Up 1 Minggu</p><p>Syarat dan ketentuan berlaku.</p>')
+                            ->default('<p>Garansi Tune-Up 2 Minggu</p><p>Syarat dan ketentuan berlaku.</p>')
                             ->columnSpanFull(),
                     ]),
             ]);

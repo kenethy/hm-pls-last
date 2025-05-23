@@ -55,8 +55,6 @@
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     <link rel="mask-icon" href="{{ asset('favicon/safari-pinned-tab.svg') }}" color="#e11d48">
     <meta name="msapplication-TileColor" content="#e11d48">
-    <meta name="msapplication-TileImage" content="{{ asset('favicon/mstile-150x150.png') }}">
-    <meta name="msapplication-config" content="{{ asset('browserconfig.xml') }}">
     <meta name="theme-color" content="#e11d48">
 
     <!-- Preconnect to external domains -->

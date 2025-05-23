@@ -155,17 +155,4 @@ class Membership extends Model
 
         return $candidateNumber;
     }
-
-    /**
-     * Check if a membership number exists (including soft-deleted records).
-     *
-     * @param string $membershipNumber
-     * @return bool
-     */
-    public static function membershipNumberExists(string $membershipNumber): bool
-    {
-        return self::withTrashed()
-            ->where('membership_number', $membershipNumber)
-            ->exists();
-    }
 }

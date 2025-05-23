@@ -106,7 +106,7 @@ class ServiceReportTemplateSeeder extends Seeder
                     'description' => 'Pembersihan throttle body untuk aliran udara yang lebih baik'
                 ],
             ],
-            'warranty_info' => '<p>Garansi Tune-Up 1 Minggu</p><p>Syarat dan ketentuan berlaku:</p><ul><li>Garansi berlaku untuk masalah yang sama pada komponen yang telah diservis</li><li>Kerusakan akibat penggunaan yang tidak normal tidak termasuk dalam garansi</li><li>Klaim garansi harus disertai dengan bukti laporan servis ini</li></ul>',
+            'warranty_info' => '<p>Garansi Tune-Up 2 Minggu</p><p>Syarat dan ketentuan berlaku:</p><ul><li>Garansi berlaku untuk masalah yang sama pada komponen yang telah diservis</li><li>Kerusakan akibat penggunaan yang tidak normal tidak termasuk dalam garansi</li><li>Klaim garansi harus disertai dengan bukti laporan servis ini</li></ul>',
             'recommendations' => '<p>Rekomendasi perawatan rutin:</p><ul><li>Ganti oli mesin setiap 5.000 km</li><li>Periksa tekanan ban setiap 2 minggu</li><li>Lakukan tune up mesin setiap 10.000 km</li><li>Periksa sistem rem setiap 10.000 km</li></ul>',
         ]);
     }
