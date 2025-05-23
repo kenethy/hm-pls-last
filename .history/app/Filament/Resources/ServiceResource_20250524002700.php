@@ -954,8 +954,7 @@ class ServiceResource extends Resource
                             // Save the report first
                             $report->save();
 
-                            // Initialize certificate data
-                            $report->initializeCertificate();
+                            $report->save();
 
                             // Create the checklist items
                             if (is_array($template->checklist_items)) {

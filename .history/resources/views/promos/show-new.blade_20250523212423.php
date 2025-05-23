@@ -143,7 +143,7 @@
                             class="bg-red-600 hover:bg-red-700 text-white text-center font-bold py-3 px-6 rounded-full transition duration-300 flex-1 btn-animate animate-pulse-subtle">
                             BOOKING SEKARANG
                         </a>
-                        <a href="https://wa.me/6282135202581?text=Halo%20Hartono%20Motor%2C%20saya%20tertarik%20dengan%20promo%20{{ urlencode($promo->title) }}."
+                        <a href="https://wa.me/62812135202581?text=Halo%20Hartono%20Motor%2C%20saya%20tertarik%20dengan%20promo%20{{ urlencode($promo->title) }}."
                             target="_blank"
                             class="bg-green-500 hover:bg-green-600 text-white text-center font-bold py-3 px-6 rounded-full transition duration-300 flex-1 btn-animate">
                             TANYA VIA WHATSAPP
