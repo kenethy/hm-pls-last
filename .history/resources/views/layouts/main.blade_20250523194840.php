@@ -71,11 +71,6 @@
     <meta name="msapplication-config" content="{{ asset('browserconfig.xml') }}?v=20241201-hq">
     <meta name="theme-color" content="#e11d48">
 
-    <!-- Additional meta tags for better favicon recognition -->
-    <meta name="application-name" content="Hartono Motor">
-    <meta name="msapplication-tooltip" content="Hartono Motor - Bengkel Mobil Terpercaya">
-    <meta name="msapplication-starturl" content="{{ url('/') }}">
-
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
