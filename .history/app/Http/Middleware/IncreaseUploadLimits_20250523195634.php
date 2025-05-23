@@ -25,14 +25,6 @@ class IncreaseUploadLimits
             ini_set('memory_limit', '512M');
         }
 
-        // Ensure CSRF token is properly handled for Livewire uploads
-        if ($request->is('livewire/*') && $request->isMethod('POST')) {
-            // Add CSRF token to headers if not present but available in request
-            if (!$request->hasHeader('X-CSRF-TOKEN') && $request->has('_token')) {
-                $request->headers->set('X-CSRF-TOKEN', $request->input('_token'));
-            }
-        }
-
         return $next($request);
     }
 }
