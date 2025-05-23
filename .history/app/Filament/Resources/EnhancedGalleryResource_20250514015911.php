@@ -11,7 +11,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
@@ -97,24 +96,17 @@ class EnhancedGalleryResource extends Resource
                     ->icon('heroicon-o-camera')
                     ->schema([
                         Forms\Components\FileUpload::make('image_path')
-                            ->label('Gambar Galeri')
+                            ->label('Gambar')
                             ->image()
                             ->required()
                             ->directory('galleries')
-                            ->disk('public')
                             ->visibility('public')
                             ->imageEditor()
                             ->imageResizeMode('cover')
                             ->imageCropAspectRatio('16:9')
                             ->imageResizeTargetWidth('1200')
                             ->imageResizeTargetHeight('675')
-                            ->maxSize(10240) // 10MB - consistent with promotion uploads
-                            ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/webp'])
-                            ->uploadProgressIndicatorPosition('left')
-                            ->uploadButtonPosition('left')
-                            ->panelAspectRatio('16:9')
-                            ->panelLayout('integrated')
-                            ->helperText('Maksimal 10MB. Format yang didukung: JPEG, PNG, WebP. Ukuran yang disarankan: 1200x675 pixels (16:9 ratio)')
+                            ->helperText('Recommended size: 1200x675 pixels (16:9 ratio)')
                             ->columnSpanFull(),
                     ]),
 
@@ -203,7 +195,7 @@ class EnhancedGalleryResource extends Resource
                     ->trueLabel('Hanya Unggulan')
                     ->falseLabel('Bukan Unggulan')
                     ->indicator('Status Unggulan'),
-
+                    
                 Tables\Filters\Filter::make('created_at')
                     ->form([
                         Forms\Components\DatePicker::make('created_from')
@@ -215,11 +207,11 @@ class EnhancedGalleryResource extends Resource
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
                             )
                             ->when(
                                 $data['created_until'],
-                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
                     })
                     ->indicateUsing(function (array $data): array {
