@@ -143,10 +143,10 @@
                     <div class="mt-1 flex space-x-3">
                         <a href="https://hartonomotor.com" target="_blank"
                             class="text-gray-500 hover:text-primary-600 transition text-sm">
-                            hartonomotor.xyz
+                            hartonomotor.com
                         </a>
                         <a href="tel:+6281234567890" class="text-gray-500 hover:text-primary-600 transition text-sm">
-                            0821-3520-2581
+                            0821-3456-7890
                         </a>
                     </div>
                 </div>
