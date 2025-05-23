@@ -48,17 +48,17 @@
     <meta property="twitter:image" content="{{ $ogImage ?? asset('images/hero-bg.png') }}">
 
     <!-- Favicon and App Icons -->
-    <link rel="icon" href="{{ asset('favicon.ico') }}?v=20241201" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=20241201" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}?v=20241201">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}?v=20241201">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}?v=20241201">
-    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon/favicon-96x96.png') }}?v=20241201">
-    <link rel="manifest" href="{{ asset('site.webmanifest') }}?v=20241201">
-    <link rel="mask-icon" href="{{ asset('favicon/safari-pinned-tab.svg') }}?v=20241201" color="#e11d48">
+    <link rel="icon" href="{{ asset('favicon.ico') }}?v={{ time() }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v={{ time() }}" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}?v={{ time() }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}?v={{ time() }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}?v={{ time() }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon/favicon-96x96.png') }}?v={{ time() }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}?v={{ time() }}">
+    <link rel="mask-icon" href="{{ asset('favicon/safari-pinned-tab.svg') }}?v={{ time() }}" color="#e11d48">
     <meta name="msapplication-TileColor" content="#e11d48">
-    <meta name="msapplication-TileImage" content="{{ asset('favicon/mstile-150x150.png') }}?v=20241201">
-    <meta name="msapplication-config" content="{{ asset('browserconfig.xml') }}?v=20241201">
+    <meta name="msapplication-TileImage" content="{{ asset('favicon/mstile-150x150.png') }}?v={{ time() }}">
+    <meta name="msapplication-config" content="{{ asset('browserconfig.xml') }}?v={{ time() }}">
     <meta name="theme-color" content="#e11d48">
 
     <!-- Preconnect to external domains -->
