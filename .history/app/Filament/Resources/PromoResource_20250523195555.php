@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PromoResource\Pages;
+use App\Forms\Components\PromoImageUpload;
 use App\Models\Promo;
 use Filament\Forms;
 use Filament\Forms\Form;
