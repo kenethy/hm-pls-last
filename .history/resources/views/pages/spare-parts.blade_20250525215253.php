@@ -750,10 +750,6 @@
         /* 22 logos * 170px each (150px + 20px padding) */
         animation: scroll-logos 30s linear infinite;
         will-change: transform;
-        transform: translateZ(0);
-        /* Force hardware acceleration */
-        backface-visibility: hidden;
-        /* Improve performance */
     }
 
     .logo-carousel-track:hover {

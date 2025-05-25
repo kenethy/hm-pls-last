@@ -750,10 +750,6 @@
         /* 22 logos * 170px each (150px + 20px padding) */
         animation: scroll-logos 30s linear infinite;
         will-change: transform;
-        transform: translateZ(0);
-        /* Force hardware acceleration */
-        backface-visibility: hidden;
-        /* Improve performance */
     }
 
     .logo-carousel-track:hover {
@@ -939,21 +935,7 @@ Terima kasih!`;
     // Partner Logo Carousel Enhancement
     document.addEventListener('DOMContentLoaded', function () {
         const carousel = document.getElementById('logoCarousel');
-
-        if (!carousel) {
-            console.warn('Logo carousel container not found');
-            return;
-        }
-
         const track = carousel.querySelector('.logo-carousel-track');
-
-        if (!track) {
-            console.warn('Logo carousel track not found');
-            return;
-        }
-
-        // Ensure animation starts properly
-        track.style.animationPlayState = 'running';
 
         // Enhanced hover functionality with smooth transitions
         carousel.addEventListener('mouseenter', function () {
@@ -966,22 +948,15 @@ Terima kasih!`;
 
         // Add touch support for mobile devices
         let startX = 0;
-        let touchStartTime = 0;
+        let scrollLeft = 0;
 
         carousel.addEventListener('touchstart', function (e) {
             startX = e.touches[0].pageX;
-            touchStartTime = Date.now();
             track.style.animationPlayState = 'paused';
         });
 
-        carousel.addEventListener('touchend', function (e) {
-            const touchEndTime = Date.now();
-            const touchDuration = touchEndTime - touchStartTime;
-
-            // Resume animation after a short delay to prevent immediate restart
-            setTimeout(() => {
-                track.style.animationPlayState = 'running';
-            }, touchDuration < 200 ? 500 : 100);
+        carousel.addEventListener('touchend', function () {
+            track.style.animationPlayState = 'running';
         });
 
         // Accessibility: Pause on focus for keyboard navigation
@@ -995,12 +970,6 @@ Terima kasih!`;
                 track.style.animationPlayState = 'running';
             });
         });
-
-        // Debug: Log carousel initialization
-        console.log('Partner logo carousel initialized successfully');
-        console.log('Track width:', track.offsetWidth + 'px');
-        console.log('Container width:', carousel.offsetWidth + 'px');
-        console.log('Logo items count:', logoItems.length);
     });
 
     // Floating WhatsApp Widget
