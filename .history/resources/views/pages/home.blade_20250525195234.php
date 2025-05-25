@@ -672,7 +672,7 @@
 
         <!-- Social Media Section -->
         <div>
-            <h3 class="text-xl font-bold text-center mb-6 text-red-600">Ikuti Media Sosial Kami</h3>
+            <h3 class="text-xl font-bold text-center mb-6 text-red-600">📱 Ikuti Media Sosial Kami</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 <a href="https://instagram.com/hartonomotorsidoarjo" target="_blank"
                     class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-pink-50 to-purple-100 hover:from-pink-100 hover:to-purple-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
