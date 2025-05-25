@@ -699,10 +699,10 @@
             </div>
         </div>
 
-        <!-- Partner Trust Statement -->
+        <!-- Note about adding actual logos -->
         <div class="text-center mt-8">
-            <p class="text-sm text-gray-600">Dipercaya oleh merek-merek terkemuka dunia untuk kualitas dan keaslian
-                produk sparepart</p>
+            <p class="text-sm text-gray-500 italic">* Logo placeholder - Ganti dengan logo partner asli dari direktori
+                images/logo partner</p>
         </div>
     </div>
 </section>
@@ -835,12 +835,6 @@
             height: 50px;
         }
 
-        .partner-logo {
-            max-width: 110px;
-            max-height: 55px;
-            padding: 6px;
-        }
-
         .brand-text {
             font-size: 10px;
         }
@@ -859,12 +853,6 @@
         .logo-placeholder {
             width: 80px;
             height: 40px;
-        }
-
-        .partner-logo {
-            max-width: 90px;
-            max-height: 45px;
-            padding: 4px;
         }
 
         .brand-text {

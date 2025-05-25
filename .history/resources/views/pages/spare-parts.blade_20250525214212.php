@@ -699,10 +699,10 @@
             </div>
         </div>
 
-        <!-- Partner Trust Statement -->
+        <!-- Note about adding actual logos -->
         <div class="text-center mt-8">
-            <p class="text-sm text-gray-600">Dipercaya oleh merek-merek terkemuka dunia untuk kualitas dan keaslian
-                produk sparepart</p>
+            <p class="text-sm text-gray-500 italic">* Logo placeholder - Ganti dengan logo partner asli dari direktori
+                images/logo partner</p>
         </div>
     </div>
 </section>
@@ -788,31 +788,6 @@
         letter-spacing: 1px;
     }
 
-    /* Partner Logo Styles for Real Images */
-    .partner-logo {
-        max-width: 140px;
-        max-height: 70px;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        filter: grayscale(100%) brightness(0.8);
-        transition: all 0.4s ease;
-        opacity: 0.75;
-        border-radius: 6px;
-        padding: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-    }
-
-    .partner-logo:hover {
-        filter: grayscale(0%) brightness(1);
-        opacity: 1;
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        background: rgba(255, 255, 255, 0.95);
-    }
-
     @keyframes scroll-logos {
         0% {
             transform: translateX(0);
@@ -835,12 +810,6 @@
             height: 50px;
         }
 
-        .partner-logo {
-            max-width: 110px;
-            max-height: 55px;
-            padding: 6px;
-        }
-
         .brand-text {
             font-size: 10px;
         }
@@ -859,12 +828,6 @@
         .logo-placeholder {
             width: 80px;
             height: 40px;
-        }
-
-        .partner-logo {
-            max-width: 90px;
-            max-height: 45px;
-            padding: 4px;
         }
 
         .brand-text {

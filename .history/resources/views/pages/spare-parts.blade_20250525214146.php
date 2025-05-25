@@ -644,48 +644,54 @@
 
                     <!-- Duplicate set for seamless loop -->
                     <div class="logo-item">
-                        <img src="{{ asset('images/logo partner/Shell_logo.svg.png') }}" alt="Shell"
-                            class="partner-logo" loading="lazy">
+                        <div class="logo-placeholder">
+                            <span class="brand-text">SHELL</span>
+                        </div>
                     </div>
                     <div class="logo-item">
-                        <img src="{{ asset('images/logo partner/Castrol_logo_2023.svg.png') }}" alt="Castrol"
-                            class="partner-logo" loading="lazy">
+                        <div class="logo-placeholder">
+                            <span class="brand-text">CASTROL</span>
+                        </div>
                     </div>
                     <div class="logo-item">
-                        <img src="{{ asset('images/logo partner/pertamina_lubricants-logo_brandlogos.net_02sbt.png') }}"
-                            alt="Pertamina Lubricants" class="partner-logo" loading="lazy">
+                        <div class="logo-placeholder">
+                            <span class="brand-text">MOBIL 1</span>
+                        </div>
                     </div>
                     <div class="logo-item">
-                        <img src="{{ asset('images/logo partner/Akebono_Brake_company_logo.svg.png') }}" alt="Akebono"
-                            class="partner-logo" loading="lazy">
+                        <div class="logo-placeholder">
+                            <span class="brand-text">BREMBO</span>
+                        </div>
                     </div>
                     <div class="logo-item">
-                        <img src="{{ asset('images/logo partner/exedy-logo-png_seeklogo-611832.png') }}" alt="Exedy"
-                            class="partner-logo" loading="lazy">
+                        <div class="logo-placeholder">
+                            <span class="brand-text">BENDIX</span>
+                        </div>
                     </div>
                     <div class="logo-item">
-                        <img src="{{ asset('images/logo partner/Denso-Logo.wine.png') }}" alt="Denso"
-                            class="partner-logo" loading="lazy">
+                        <div class="logo-placeholder">
+                            <span class="brand-text">VALEO</span>
+                        </div>
                     </div>
                     <div class="logo-item">
-                        <img src="{{ asset('images/logo partner/kyb-logo-png_seeklogo-502885.png') }}" alt="KYB"
-                            class="partner-logo" loading="lazy">
+                        <div class="logo-placeholder">
+                            <span class="brand-text">EXEDY</span>
+                        </div>
                     </div>
                     <div class="logo-item">
-                        <img src="{{ asset('images/logo partner/NTN_Corporation_Logo.svg.png') }}" alt="NTN Corporation"
-                            class="partner-logo" loading="lazy">
+                        <div class="logo-placeholder">
+                            <span class="brand-text">NGK</span>
+                        </div>
                     </div>
                     <div class="logo-item">
-                        <img src="{{ asset('images/logo partner/Stanley_Electric_logo.svg.png') }}"
-                            alt="Stanley Electric" class="partner-logo" loading="lazy">
+                        <div class="logo-placeholder">
+                            <span class="brand-text">DENSO</span>
+                        </div>
                     </div>
                     <div class="logo-item">
-                        <img src="{{ asset('images/logo partner/yuasa-logo-png_seeklogo-257397.png') }}" alt="Yuasa"
-                            class="partner-logo" loading="lazy">
-                    </div>
-                    <div class="logo-item">
-                        <img src="{{ asset('images/logo partner/STP_(motor_oil_company)_(logo).png') }}" alt="STP"
-                            class="partner-logo" loading="lazy">
+                        <div class="logo-placeholder">
+                            <span class="brand-text">BOSCH</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -699,10 +705,10 @@
             </div>
         </div>
 
-        <!-- Partner Trust Statement -->
+        <!-- Note about adding actual logos -->
         <div class="text-center mt-8">
-            <p class="text-sm text-gray-600">Dipercaya oleh merek-merek terkemuka dunia untuk kualitas dan keaslian
-                produk sparepart</p>
+            <p class="text-sm text-gray-500 italic">* Logo placeholder - Ganti dengan logo partner asli dari direktori
+                images/logo partner</p>
         </div>
     </div>
 </section>
@@ -788,31 +794,6 @@
         letter-spacing: 1px;
     }
 
-    /* Partner Logo Styles for Real Images */
-    .partner-logo {
-        max-width: 140px;
-        max-height: 70px;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        filter: grayscale(100%) brightness(0.8);
-        transition: all 0.4s ease;
-        opacity: 0.75;
-        border-radius: 6px;
-        padding: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-    }
-
-    .partner-logo:hover {
-        filter: grayscale(0%) brightness(1);
-        opacity: 1;
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        background: rgba(255, 255, 255, 0.95);
-    }
-
     @keyframes scroll-logos {
         0% {
             transform: translateX(0);
@@ -835,12 +816,6 @@
             height: 50px;
         }
 
-        .partner-logo {
-            max-width: 110px;
-            max-height: 55px;
-            padding: 6px;
-        }
-
         .brand-text {
             font-size: 10px;
         }
@@ -859,12 +834,6 @@
         .logo-placeholder {
             width: 80px;
             height: 40px;
-        }
-
-        .partner-logo {
-            max-width: 90px;
-            max-height: 45px;
-            padding: 4px;
         }
 
         .brand-text {
