@@ -861,13 +861,6 @@
     }
 
     @media (max-width: 480px) {
-        .logo-carousel-container {
-            border-radius: 12px;
-            padding: 24px 0;
-            margin: 0 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-        }
-
         .logo-carousel-track {
             animation-duration: 20s;
         }

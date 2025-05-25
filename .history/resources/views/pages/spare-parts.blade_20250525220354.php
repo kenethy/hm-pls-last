@@ -580,119 +580,119 @@
 </section>
 
 <!-- Partner Brands Carousel Section -->
-<section id="partner-brands" class="py-20 bg-gradient-to-b from-white to-gray-50">
-    <div class="container mx-auto px-4 max-w-7xl">
-        <!-- Section Header -->
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Partner & Merek Terpercaya</h2>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Kami bekerja sama dengan merek-merek terpercaya dunia untuk menjamin kualitas dan keaslian
-                setiap produk sparepart yang kami jual.
-            </p>
+<section id="partner-brands" class="py-16 bg-gradient-to-br from-gray-50 to-gray-100">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12 reveal">
+            <h2 class="text-3xl font-bold mb-4">Partner & Merek Terpercaya</h2>
+            <p class="text-gray-600 max-w-3xl mx-auto">Kami bekerja sama dengan merek-merek terpercaya dunia untuk
+                menjamin kualitas dan keaslian setiap produk sparepart yang kami jual.</p>
         </div>
 
-        <!-- Minimalist Logo Carousel -->
-        <div class="logo-carousel-container" id="logoCarousel">
-            <div class="logo-carousel-track">
-                <!-- First set of logos -->
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/Shell_logo.svg.png') }}" alt="Shell" class="partner-logo"
-                        loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/Castrol_logo_2023.svg.png') }}" alt="Castrol"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/pertamina_lubricants-logo_brandlogos.net_02sbt.png') }}"
-                        alt="Pertamina Lubricants" class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/Akebono_Brake_company_logo.svg.png') }}" alt="Akebono"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/exedy-logo-png_seeklogo-611832.png') }}" alt="Exedy"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/Denso-Logo.wine.png') }}" alt="Denso" class="partner-logo"
-                        loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/kyb-logo-png_seeklogo-502885.png') }}" alt="KYB"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/NTN_Corporation_Logo.svg.png') }}" alt="NTN Corporation"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/Stanley_Electric_logo.svg.png') }}" alt="Stanley Electric"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/yuasa-logo-png_seeklogo-257397.png') }}" alt="Yuasa"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/STP_(motor_oil_company)_(logo).png') }}" alt="STP"
-                        class="partner-logo" loading="lazy">
-                </div>
+        <!-- Animated Logo Carousel -->
+        <div class="relative overflow-hidden bg-white rounded-xl shadow-lg py-8">
+            <div class="logo-carousel-container" id="logoCarousel">
+                <div class="logo-carousel-track">
+                    <!-- First set of logos -->
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/Shell_logo.svg.png') }}" alt="Shell"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/Castrol_logo_2023.svg.png') }}" alt="Castrol"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/pertamina_lubricants-logo_brandlogos.net_02sbt.png') }}"
+                            alt="Pertamina Lubricants" class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/Akebono_Brake_company_logo.svg.png') }}" alt="Akebono"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/exedy-logo-png_seeklogo-611832.png') }}" alt="Exedy"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/Denso-Logo.wine.png') }}" alt="Denso"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/kyb-logo-png_seeklogo-502885.png') }}" alt="KYB"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/NTN_Corporation_Logo.svg.png') }}" alt="NTN Corporation"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/Stanley_Electric_logo.svg.png') }}"
+                            alt="Stanley Electric" class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/yuasa-logo-png_seeklogo-257397.png') }}" alt="Yuasa"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/STP_(motor_oil_company)_(logo).png') }}" alt="STP"
+                            class="partner-logo" loading="lazy">
+                    </div>
 
-                <!-- Duplicate set for seamless loop -->
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/Shell_logo.svg.png') }}" alt="Shell" class="partner-logo"
-                        loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/Castrol_logo_2023.svg.png') }}" alt="Castrol"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/pertamina_lubricants-logo_brandlogos.net_02sbt.png') }}"
-                        alt="Pertamina Lubricants" class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/Akebono_Brake_company_logo.svg.png') }}" alt="Akebono"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/exedy-logo-png_seeklogo-611832.png') }}" alt="Exedy"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/Denso-Logo.wine.png') }}" alt="Denso" class="partner-logo"
-                        loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/kyb-logo-png_seeklogo-502885.png') }}" alt="KYB"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/NTN_Corporation_Logo.svg.png') }}" alt="NTN Corporation"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/Stanley_Electric_logo.svg.png') }}" alt="Stanley Electric"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/yuasa-logo-png_seeklogo-257397.png') }}" alt="Yuasa"
-                        class="partner-logo" loading="lazy">
-                </div>
-                <div class="logo-item">
-                    <img src="{{ asset('images/logo partner/STP_(motor_oil_company)_(logo).png') }}" alt="STP"
-                        class="partner-logo" loading="lazy">
+                    <!-- Duplicate set for seamless loop -->
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/Shell_logo.svg.png') }}" alt="Shell"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/Castrol_logo_2023.svg.png') }}" alt="Castrol"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/pertamina_lubricants-logo_brandlogos.net_02sbt.png') }}"
+                            alt="Pertamina Lubricants" class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/Akebono_Brake_company_logo.svg.png') }}" alt="Akebono"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/exedy-logo-png_seeklogo-611832.png') }}" alt="Exedy"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/Denso-Logo.wine.png') }}" alt="Denso"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/kyb-logo-png_seeklogo-502885.png') }}" alt="KYB"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/NTN_Corporation_Logo.svg.png') }}" alt="NTN Corporation"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/Stanley_Electric_logo.svg.png') }}"
+                            alt="Stanley Electric" class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/yuasa-logo-png_seeklogo-257397.png') }}" alt="Yuasa"
+                            class="partner-logo" loading="lazy">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/logo partner/STP_(motor_oil_company)_(logo).png') }}" alt="STP"
+                            class="partner-logo" loading="lazy">
+                    </div>
                 </div>
             </div>
+
+
         </div>
 
         <!-- Partner Trust Statement -->
-        <div class="text-center mt-12">
-            <p class="text-base text-gray-500 font-medium">
-                Dipercaya oleh merek-merek terkemuka dunia untuk kualitas dan keaslian produk sparepart
-            </p>
+        <div class="text-center mt-8">
+            <p class="text-sm text-gray-600">Dipercaya oleh merek-merek terkemuka dunia untuk kualitas dan keaslian
+                produk sparepart</p>
         </div>
     </div>
 </section>
@@ -727,21 +727,15 @@
 
 @push('styles')
 <style>
-    /* Partner Logo Carousel Styles - Minimalist Design */
+    /* Partner Logo Carousel Styles - Simplified and Robust */
     .logo-carousel-container {
         width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
         overflow: hidden;
         position: relative;
-        background: linear-gradient(135deg, #fafafa 0%, #f8f9fa 100%);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: 20px;
-        padding: 40px 0;
-        box-shadow:
-            0 4px 6px -1px rgba(0, 0, 0, 0.1),
-            0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        backdrop-filter: blur(10px);
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        padding: 20px 0;
     }
 
     .logo-carousel-track {
@@ -828,12 +822,6 @@
 
     /* Responsive adjustments */
     @media (max-width: 768px) {
-        .logo-carousel-container {
-            border-radius: 16px;
-            padding: 32px 0;
-            margin: 0 16px;
-        }
-
         .logo-carousel-track {
             animation-duration: 25s;
         }
@@ -861,13 +849,6 @@
     }
 
     @media (max-width: 480px) {
-        .logo-carousel-container {
-            border-radius: 12px;
-            padding: 24px 0;
-            margin: 0 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-        }
-
         .logo-carousel-track {
             animation-duration: 20s;
         }
@@ -894,13 +875,13 @@
         }
     }
 
-    /* Minimalist fade edges */
+    /* Fade edges for smooth appearance */
     .logo-carousel-container::before,
     .logo-carousel-container::after {
         content: '';
         position: absolute;
         top: 0;
-        width: 60px;
+        width: 40px;
         height: 100%;
         z-index: 2;
         pointer-events: none;
@@ -908,18 +889,12 @@
 
     .logo-carousel-container::before {
         left: 0;
-        background: linear-gradient(to right,
-                rgba(250, 250, 250, 1) 0%,
-                rgba(250, 250, 250, 0.8) 50%,
-                transparent 100%);
+        background: linear-gradient(to right, white, transparent);
     }
 
     .logo-carousel-container::after {
         right: 0;
-        background: linear-gradient(to left,
-                rgba(250, 250, 250, 1) 0%,
-                rgba(250, 250, 250, 0.8) 50%,
-                transparent 100%);
+        background: linear-gradient(to left, white, transparent);
     }
 </style>
 @endpush

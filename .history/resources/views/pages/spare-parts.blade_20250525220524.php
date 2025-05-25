@@ -688,12 +688,14 @@
             </div>
         </div>
 
-        <!-- Partner Trust Statement -->
-        <div class="text-center mt-12">
-            <p class="text-base text-gray-500 font-medium">
-                Dipercaya oleh merek-merek terkemuka dunia untuk kualitas dan keaslian produk sparepart
-            </p>
-        </div>
+
+    </div>
+
+    <!-- Partner Trust Statement -->
+    <div class="text-center mt-8">
+        <p class="text-sm text-gray-600">Dipercaya oleh merek-merek terkemuka dunia untuk kualitas dan keaslian
+            produk sparepart</p>
+    </div>
     </div>
 </section>
 
@@ -730,18 +732,14 @@
     /* Partner Logo Carousel Styles - Minimalist Design */
     .logo-carousel-container {
         width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
         overflow: hidden;
         position: relative;
         background: linear-gradient(135deg, #fafafa 0%, #f8f9fa 100%);
         border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: 20px;
-        padding: 40px 0;
-        box-shadow:
-            0 4px 6px -1px rgba(0, 0, 0, 0.1),
-            0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        margin: 40px 0;
+        padding: 32px 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
     .logo-carousel-track {
@@ -828,12 +826,6 @@
 
     /* Responsive adjustments */
     @media (max-width: 768px) {
-        .logo-carousel-container {
-            border-radius: 16px;
-            padding: 32px 0;
-            margin: 0 16px;
-        }
-
         .logo-carousel-track {
             animation-duration: 25s;
         }
@@ -861,13 +853,6 @@
     }
 
     @media (max-width: 480px) {
-        .logo-carousel-container {
-            border-radius: 12px;
-            padding: 24px 0;
-            margin: 0 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-        }
-
         .logo-carousel-track {
             animation-duration: 20s;
         }
