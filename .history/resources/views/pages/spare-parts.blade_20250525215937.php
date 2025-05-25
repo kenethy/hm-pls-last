@@ -686,7 +686,13 @@
                 </div>
             </div>
 
-
+            <!-- Fade edges for smooth appearance -->
+            <div
+                class="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-white to-transparent pointer-events-none z-10">
+            </div>
+            <div
+                class="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10">
+            </div>
         </div>
 
         <!-- Partner Trust Statement -->

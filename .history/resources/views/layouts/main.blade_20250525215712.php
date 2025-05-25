@@ -185,7 +185,6 @@
 
     <!-- Page-specific scripts -->
     @yield('scripts')
-    @stack('scripts')
 
     <!-- Structured Data -->
     <script type="application/ld+json">

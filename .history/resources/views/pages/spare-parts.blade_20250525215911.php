@@ -686,7 +686,13 @@
                 </div>
             </div>
 
-
+            <!-- Fade edges for smooth appearance -->
+            <div
+                class="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-white to-transparent pointer-events-none z-10">
+            </div>
+            <div
+                class="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10">
+            </div>
         </div>
 
         <!-- Partner Trust Statement -->
@@ -923,48 +929,71 @@ Terima kasih!`;
         window.open(whatsappUrl, '_blank');
     }
 
-    // Partner Logo Carousel Enhancement - Simplified
+    // Partner Logo Carousel Enhancement
     document.addEventListener('DOMContentLoaded', function () {
-        console.log('Initializing partner logo carousel...');
-
         const carousel = document.getElementById('logoCarousel');
+
         if (!carousel) {
-            console.error('Logo carousel container not found!');
+            console.warn('Logo carousel container not found');
             return;
         }
 
         const track = carousel.querySelector('.logo-carousel-track');
+
         if (!track) {
-            console.error('Logo carousel track not found!');
+            console.warn('Logo carousel track not found');
             return;
         }
 
-        console.log('Carousel elements found successfully');
+        // Ensure animation starts properly
+        track.style.animationPlayState = 'running';
 
-        // Simple hover pause/resume
+        // Enhanced hover functionality with smooth transitions
         carousel.addEventListener('mouseenter', function () {
             track.style.animationPlayState = 'paused';
-            console.log('Animation paused');
         });
 
         carousel.addEventListener('mouseleave', function () {
             track.style.animationPlayState = 'running';
-            console.log('Animation resumed');
         });
 
-        // Touch support for mobile
-        carousel.addEventListener('touchstart', function () {
+        // Add touch support for mobile devices
+        let startX = 0;
+        let touchStartTime = 0;
+
+        carousel.addEventListener('touchstart', function (e) {
+            startX = e.touches[0].pageX;
+            touchStartTime = Date.now();
             track.style.animationPlayState = 'paused';
         });
 
-        carousel.addEventListener('touchend', function () {
+        carousel.addEventListener('touchend', function (e) {
+            const touchEndTime = Date.now();
+            const touchDuration = touchEndTime - touchStartTime;
+
+            // Resume animation after a short delay to prevent immediate restart
             setTimeout(() => {
                 track.style.animationPlayState = 'running';
-            }, 300);
+            }, touchDuration < 200 ? 500 : 100);
         });
 
-        console.log('Partner logo carousel initialized successfully!');
-        console.log('Track computed style:', window.getComputedStyle(track).animation);
+        // Accessibility: Pause on focus for keyboard navigation
+        const logoItems = carousel.querySelectorAll('.logo-item');
+        logoItems.forEach(item => {
+            item.addEventListener('focus', function () {
+                track.style.animationPlayState = 'paused';
+            });
+
+            item.addEventListener('blur', function () {
+                track.style.animationPlayState = 'running';
+            });
+        });
+
+        // Debug: Log carousel initialization
+        console.log('Partner logo carousel initialized successfully');
+        console.log('Track width:', track.offsetWidth + 'px');
+        console.log('Container width:', carousel.offsetWidth + 'px');
+        console.log('Logo items count:', logoItems.length);
     });
 
     // Floating WhatsApp Widget

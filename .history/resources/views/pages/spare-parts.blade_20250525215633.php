@@ -686,7 +686,13 @@
                 </div>
             </div>
 
-
+            <!-- Fade edges for smooth appearance -->
+            <div
+                class="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-white to-transparent pointer-events-none z-10">
+            </div>
+            <div
+                class="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10">
+            </div>
         </div>
 
         <!-- Partner Trust Statement -->
@@ -727,22 +733,23 @@
 
 @push('styles')
 <style>
-    /* Partner Logo Carousel Styles - Simplified and Robust */
+    /* Partner Logo Carousel Styles */
     .logo-carousel-container {
         width: 100%;
         overflow: hidden;
         position: relative;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        padding: 20px 0;
     }
 
     .logo-carousel-track {
         display: flex;
-        width: 200%;
-        animation: scroll-infinite 30s linear infinite;
+        width: calc(22 * 170px);
+        /* 22 logos * 170px each (150px + 20px padding) */
+        animation: scroll-logos 30s linear infinite;
         will-change: transform;
+        transform: translateZ(0);
+        /* Force hardware acceleration */
+        backface-visibility: hidden;
+        /* Improve performance */
     }
 
     .logo-carousel-track:hover {
@@ -750,13 +757,12 @@
     }
 
     .logo-item {
-        flex: 0 0 auto;
-        width: 160px;
-        height: 80px;
+        flex: 0 0 150px;
+        padding: 0 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 0 15px;
+        height: 100px;
     }
 
     .logo-placeholder {
@@ -787,55 +793,52 @@
 
     /* Partner Logo Styles for Real Images */
     .partner-logo {
-        max-width: 130px;
-        max-height: 65px;
+        max-width: 140px;
+        max-height: 70px;
         width: auto;
         height: auto;
         object-fit: contain;
-        filter: grayscale(100%) brightness(0.7);
-        transition: all 0.3s ease;
-        opacity: 0.8;
-        border-radius: 8px;
-        padding: 10px;
-        background: rgba(248, 250, 252, 0.8);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        filter: grayscale(100%) brightness(0.8);
+        transition: all 0.4s ease;
+        opacity: 0.75;
+        border-radius: 6px;
+        padding: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
     }
 
     .partner-logo:hover {
         filter: grayscale(0%) brightness(1);
         opacity: 1;
-        transform: translateY(-2px) scale(1.03);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         background: rgba(255, 255, 255, 0.95);
     }
 
-    /* Simplified Animation - More Reliable */
-    @keyframes scroll-infinite {
+    @keyframes scroll-logos {
         0% {
             transform: translateX(0);
         }
 
         100% {
-            transform: translateX(-50%);
+            transform: translateX(calc(-11 * 170px));
+            /* Move by exactly half the track width (11 logos) */
         }
     }
 
     /* Responsive adjustments */
     @media (max-width: 768px) {
         .logo-carousel-track {
+            width: calc(22 * 140px);
+            /* Smaller width for tablet */
             animation-duration: 25s;
         }
 
         .logo-item {
-            width: 140px;
-            height: 70px;
-            padding: 0 12px;
-        }
-
-        .partner-logo {
-            max-width: 110px;
-            max-height: 55px;
-            padding: 8px;
+            flex: 0 0 120px;
+            padding: 0 10px;
+            height: 80px;
         }
 
         .logo-placeholder {
@@ -843,26 +846,38 @@
             height: 50px;
         }
 
+        .partner-logo {
+            max-width: 110px;
+            max-height: 55px;
+            padding: 6px;
+        }
+
         .brand-text {
             font-size: 10px;
+        }
+
+        @keyframes scroll-logos {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(calc(-11 * 140px));
+            }
         }
     }
 
     @media (max-width: 480px) {
         .logo-carousel-track {
+            width: calc(22 * 110px);
+            /* Even smaller width for mobile */
             animation-duration: 20s;
         }
 
         .logo-item {
-            width: 120px;
-            height: 60px;
-            padding: 0 10px;
-        }
-
-        .partner-logo {
-            max-width: 90px;
-            max-height: 45px;
-            padding: 6px;
+            flex: 0 0 100px;
+            padding: 0 5px;
+            height: 70px;
         }
 
         .logo-placeholder {
@@ -870,31 +885,25 @@
             height: 40px;
         }
 
+        .partner-logo {
+            max-width: 90px;
+            max-height: 45px;
+            padding: 4px;
+        }
+
         .brand-text {
             font-size: 9px;
         }
-    }
 
-    /* Fade edges for smooth appearance */
-    .logo-carousel-container::before,
-    .logo-carousel-container::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        width: 40px;
-        height: 100%;
-        z-index: 2;
-        pointer-events: none;
-    }
+        @keyframes scroll-logos {
+            0% {
+                transform: translateX(0);
+            }
 
-    .logo-carousel-container::before {
-        left: 0;
-        background: linear-gradient(to right, white, transparent);
-    }
-
-    .logo-carousel-container::after {
-        right: 0;
-        background: linear-gradient(to left, white, transparent);
+            100% {
+                transform: translateX(calc(-11 * 110px));
+            }
+        }
     }
 </style>
 @endpush
@@ -923,48 +932,71 @@ Terima kasih!`;
         window.open(whatsappUrl, '_blank');
     }
 
-    // Partner Logo Carousel Enhancement - Simplified
+    // Partner Logo Carousel Enhancement
     document.addEventListener('DOMContentLoaded', function () {
-        console.log('Initializing partner logo carousel...');
-
         const carousel = document.getElementById('logoCarousel');
+
         if (!carousel) {
-            console.error('Logo carousel container not found!');
+            console.warn('Logo carousel container not found');
             return;
         }
 
         const track = carousel.querySelector('.logo-carousel-track');
+
         if (!track) {
-            console.error('Logo carousel track not found!');
+            console.warn('Logo carousel track not found');
             return;
         }
 
-        console.log('Carousel elements found successfully');
+        // Ensure animation starts properly
+        track.style.animationPlayState = 'running';
 
-        // Simple hover pause/resume
+        // Enhanced hover functionality with smooth transitions
         carousel.addEventListener('mouseenter', function () {
             track.style.animationPlayState = 'paused';
-            console.log('Animation paused');
         });
 
         carousel.addEventListener('mouseleave', function () {
             track.style.animationPlayState = 'running';
-            console.log('Animation resumed');
         });
 
-        // Touch support for mobile
-        carousel.addEventListener('touchstart', function () {
+        // Add touch support for mobile devices
+        let startX = 0;
+        let touchStartTime = 0;
+
+        carousel.addEventListener('touchstart', function (e) {
+            startX = e.touches[0].pageX;
+            touchStartTime = Date.now();
             track.style.animationPlayState = 'paused';
         });
 
-        carousel.addEventListener('touchend', function () {
+        carousel.addEventListener('touchend', function (e) {
+            const touchEndTime = Date.now();
+            const touchDuration = touchEndTime - touchStartTime;
+
+            // Resume animation after a short delay to prevent immediate restart
             setTimeout(() => {
                 track.style.animationPlayState = 'running';
-            }, 300);
+            }, touchDuration < 200 ? 500 : 100);
         });
 
-        console.log('Partner logo carousel initialized successfully!');
-        console.log('Track computed style:', window.getComputedStyle(track).animation);
+        // Accessibility: Pause on focus for keyboard navigation
+        const logoItems = carousel.querySelectorAll('.logo-item');
+        logoItems.forEach(item => {
+            item.addEventListener('focus', function () {
+                track.style.animationPlayState = 'paused';
+            });
+
+            item.addEventListener('blur', function () {
+                track.style.animationPlayState = 'running';
+            });
+        });
+
+        // Debug: Log carousel initialization
+        console.log('Partner logo carousel initialized successfully');
+        console.log('Track width:', track.offsetWidth + 'px');
+        console.log('Container width:', carousel.offsetWidth + 'px');
+        console.log('Logo items count:', logoItems.length);
     });
 
     // Floating WhatsApp Widget
