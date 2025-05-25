@@ -82,293 +82,13 @@
     </div>
 </section>
 
-<!-- Spare Parts Showcase Section -->
-<section class="py-16 bg-gradient-to-br from-gray-50 to-gray-100">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-12 reveal">
-            <h2 class="text-3xl font-bold mb-4">Sparepart Berkualitas dengan Harga Terbaik</h2>
-            <p class="text-gray-600 max-w-3xl mx-auto">Kami menyediakan berbagai sparepart original dan aftermarket
-                untuk semua merek mobil. Dapatkan produk berkualitas dengan harga kompetitif langsung dari toko kami.
-            </p>
-        </div>
-
-        <!-- Featured Products Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            <!-- Motor Oil -->
-            <div
-                class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up">
-                <div class="relative">
-                    <img src="{{ asset('images/sparepart/sparepart.png') }}" alt="Oli Mesin Berkualitas"
-                        class="w-full h-48 object-cover">
-                    <div class="absolute top-4 left-4">
-                        <span class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">BEST SELLER</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center mb-3">
-                        <div class="bg-red-100 rounded-full p-2 mr-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold">Oli Mesin</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">Shell, Castrol, Mobil 1, dan berbagai merek oli berkualitas untuk
-                        semua jenis mesin.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-red-600 font-bold">Mulai Rp 85.000</span>
-                        <div class="flex space-x-2">
-                            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
-                                title="Beli di Tokopedia">
-                                <img src="{{ asset('images/marketplace/tokopedia.png') }}" alt="Tokopedia"
-                                    class="h-5 w-5">
-                            </a>
-                            <a href="https://shopee.co.id/hartono_motor" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
-                                title="Beli di Shopee">
-                                <img src="{{ asset('images/marketplace/shopee.png') }}" alt="Shopee" class="h-5 w-5">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Brake Pads -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
-                style="transition-delay: 0.1s">
-                <div class="relative">
-                    <img src="{{ asset('images/sparepart/sparepart.png') }}" alt="Kampas Rem Berkualitas"
-                        class="w-full h-48 object-cover">
-                    <div class="absolute top-4 left-4">
-                        <span class="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full">ORIGINAL</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center mb-3">
-                        <div class="bg-red-100 rounded-full p-2 mr-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold">Kampas Rem</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">Brembo, Bendix, dan merek terpercaya lainnya untuk keamanan pengereman
-                        optimal.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-red-600 font-bold">Mulai Rp 150.000</span>
-                        <div class="flex space-x-2">
-                            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
-                                title="Beli di Tokopedia">
-                                <img src="{{ asset('images/marketplace/tokopedia.png') }}" alt="Tokopedia"
-                                    class="h-5 w-5">
-                            </a>
-                            <a href="https://shopee.co.id/hartono_motor" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
-                                title="Beli di Shopee">
-                                <img src="{{ asset('images/marketplace/shopee.png') }}" alt="Shopee" class="h-5 w-5">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Clutch Pads -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
-                style="transition-delay: 0.2s">
-                <div class="relative">
-                    <img src="{{ asset('images/sparepart/sparepart.png') }}" alt="Kampas Kopling Berkualitas"
-                        class="w-full h-48 object-cover">
-                    <div class="absolute top-4 left-4">
-                        <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">PREMIUM</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center mb-3">
-                        <div class="bg-red-100 rounded-full p-2 mr-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold">Kampas Kopling</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">Valeo, Exedy, dan merek berkualitas untuk transmisi manual yang halus
-                        dan awet.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-red-600 font-bold">Mulai Rp 200.000</span>
-                        <div class="flex space-x-2">
-                            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
-                                title="Beli di Tokopedia">
-                                <img src="{{ asset('images/marketplace/tokopedia.png') }}" alt="Tokopedia"
-                                    class="h-5 w-5">
-                            </a>
-                            <a href="https://shopee.co.id/hartono_motor" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
-                                title="Beli di Shopee">
-                                <img src="{{ asset('images/marketplace/shopee.png') }}" alt="Shopee" class="h-5 w-5">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Spark Plugs -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
-                style="transition-delay: 0.3s">
-                <div class="relative">
-                    <img src="{{ asset('images/sparepart/sparepart.png') }}" alt="Busi Berkualitas"
-                        class="w-full h-48 object-cover">
-                    <div class="absolute top-4 left-4">
-                        <span class="bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">HOT ITEM</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center mb-3">
-                        <div class="bg-red-100 rounded-full p-2 mr-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold">Busi</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">NGK, Denso, Bosch untuk performa mesin optimal dan konsumsi BBM
-                        efisien.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-red-600 font-bold">Mulai Rp 25.000</span>
-                        <div class="flex space-x-2">
-                            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
-                                title="Beli di Tokopedia">
-                                <img src="{{ asset('images/marketplace/tokopedia.png') }}" alt="Tokopedia"
-                                    class="h-5 w-5">
-                            </a>
-                            <a href="https://shopee.co.id/hartono_motor" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
-                                title="Beli di Shopee">
-                                <img src="{{ asset('images/marketplace/shopee.png') }}" alt="Shopee" class="h-5 w-5">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Additional Product Categories -->
-        <div class="bg-white rounded-xl shadow-lg p-8 reveal">
-            <h3 class="text-2xl font-bold text-center mb-6">Kategori Sparepart Lainnya</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                <div class="text-center group cursor-pointer">
-                    <div
-                        class="bg-gray-100 group-hover:bg-red-100 rounded-full p-4 mx-auto mb-3 w-16 h-16 flex items-center justify-center transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 group-hover:text-red-600"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700 group-hover:text-red-600">Filter</span>
-                </div>
-                <div class="text-center group cursor-pointer">
-                    <div
-                        class="bg-gray-100 group-hover:bg-red-100 rounded-full p-4 mx-auto mb-3 w-16 h-16 flex items-center justify-center transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 group-hover:text-red-600"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700 group-hover:text-red-600">Aki</span>
-                </div>
-                <div class="text-center group cursor-pointer">
-                    <div
-                        class="bg-gray-100 group-hover:bg-red-100 rounded-full p-4 mx-auto mb-3 w-16 h-16 flex items-center justify-center transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 group-hover:text-red-600"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700 group-hover:text-red-600">Suspensi</span>
-                </div>
-                <div class="text-center group cursor-pointer">
-                    <div
-                        class="bg-gray-100 group-hover:bg-red-100 rounded-full p-4 mx-auto mb-3 w-16 h-16 flex items-center justify-center transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 group-hover:text-red-600"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700 group-hover:text-red-600">Radiator</span>
-                </div>
-                <div class="text-center group cursor-pointer">
-                    <div
-                        class="bg-gray-100 group-hover:bg-red-100 rounded-full p-4 mx-auto mb-3 w-16 h-16 flex items-center justify-center transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 group-hover:text-red-600"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700 group-hover:text-red-600">Aksesoris</span>
-                </div>
-                <div class="text-center group cursor-pointer">
-                    <div
-                        class="bg-gray-100 group-hover:bg-red-100 rounded-full p-4 mx-auto mb-3 w-16 h-16 flex items-center justify-center transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 group-hover:text-red-600"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700 group-hover:text-red-600">Lainnya</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- CTA Section -->
-        <div class="text-center mt-12 reveal">
-            <div class="bg-gradient-to-r from-red-600 to-red-700 rounded-xl p-8 text-white">
-                <h3 class="text-2xl font-bold mb-4">Butuh Sparepart Khusus?</h3>
-                <p class="mb-6 opacity-90">Tidak menemukan sparepart yang Anda cari? Tim kami siap membantu mencari dan
-                    menyediakan sparepart sesuai kebutuhan kendaraan Anda.</p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="{{ route('spare-parts') }}"
-                        class="bg-white text-red-600 hover:bg-gray-100 font-medium py-3 px-6 rounded-md transition-colors">
-                        Lihat Semua Produk
-                    </a>
-                    <a href="https://wa.me/6282135202581" target="_blank"
-                        class="bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-md transition-colors flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor"
-                            viewBox="0 0 24 24">
-                            <path
-                                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                        </svg>
-                        Konsultasi WhatsApp
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Layanan Unggulan Section -->
 <section class="py-16 bg-white">
     <div class="container mx-auto px-4">
         <div class="text-center mb-12 reveal">
-            <h2 class="text-3xl font-bold mb-4">Layanan Servis Profesional</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">Bengkel terpercaya dengan mekanik berpengalaman dan peralatan
-                modern untuk menjaga kendaraan Anda tetap prima dan aman di jalan.</p>
+            <h2 class="text-3xl font-bold mb-4">Layanan Unggulan</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Kami menyediakan berbagai layanan perawatan dan perbaikan untuk
+                menjaga kendaraan Anda tetap prima.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -444,9 +164,9 @@
 <section class="py-16 bg-gray-100">
     <div class="container mx-auto px-4">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold mb-4">Mengapa Memilih Hartono Motor?</h2>
-            <p class="text-gray-600 max-w-3xl mx-auto">Sebagai bengkel dan toko sparepart terpercaya, kami berkomitmen
-                memberikan solusi lengkap untuk kendaraan Anda dengan standar kualitas tinggi dan pelayanan terbaik.</p>
+            <h2 class="text-3xl font-bold mb-4">Keunggulan Hartono Motor</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Kami berkomitmen memberikan layanan terbaik dengan standar
+                kualitas tinggi.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
@@ -459,9 +179,9 @@
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-center">Toko Sparepart Terlengkap</h3>
-                <p class="text-gray-600 text-center">Oli mesin, kampas rem, kopling, busi, dan ribuan sparepart original
-                    & aftermarket untuk semua merek mobil.</p>
+                <h3 class="text-xl font-bold mb-2 text-center">Sparepart Terlengkap</h3>
+                <p class="text-gray-600 text-center">Menyediakan berbagai sparepart asli dan berkualitas untuk semua
+                    jenis mobil.</p>
             </div>
 
             <!-- USP 2 -->
@@ -634,70 +354,55 @@
 <section class="py-16 bg-white">
     <div class="container mx-auto px-4">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold mb-4">Belanja Sparepart Online & Ikuti Media Sosial Kami</h2>
-            <p class="text-gray-600 max-w-3xl mx-auto">Dapatkan sparepart berkualitas dengan harga terbaik di
-                marketplace terpercaya. Ikuti juga media sosial kami untuk tips perawatan mobil dan promo menarik.</p>
+            <h2 class="text-3xl font-bold mb-4">Temukan Kami di</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Kunjungi toko online dan media sosial kami untuk informasi
+                terbaru.</p>
         </div>
 
-        <!-- Marketplace Section -->
-        <div class="mb-12">
-            <h3 class="text-xl font-bold text-center mb-6 text-red-600">🛒 Belanja Sparepart Online</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                <a href="https://www.tokopedia.com/hartono-m" target="_blank"
-                    class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <img src="{{ asset('images/marketplace/tokopedia.png') }}" alt="Tokopedia"
-                        class="h-16 w-16 object-contain mb-3" loading="lazy">
-                    <span class="font-bold text-gray-900 mb-1">Tokopedia</span>
-                    <span class="text-sm text-gray-600 text-center">Sparepart lengkap dengan pengiriman cepat</span>
-                </a>
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-6">
+            <!-- Marketplace -->
+            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
+                class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <img src="{{ asset('images/marketplace/tokopedia.png') }}" alt="Tokopedia"
+                    class="h-16 w-16 object-contain mb-3" loading="lazy">
+                <span class="font-medium text-gray-900">Tokopedia</span>
+            </a>
 
-                <a href="https://shopee.co.id/hartono_motor" target="_blank"
-                    class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 hover:from-orange-100 hover:to-orange-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <img src="{{ asset('images/marketplace/shopee.png') }}" alt="Shopee"
-                        class="h-16 w-16 object-contain mb-3" loading="lazy">
-                    <span class="font-bold text-gray-900 mb-1">Shopee</span>
-                    <span class="text-sm text-gray-600 text-center">Promo menarik dan cashback</span>
-                </a>
+            <a href="https://shopee.co.id/hartono_motor" target="_blank"
+                class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <img src="{{ asset('images/marketplace/shopee.png') }}" alt="Shopee"
+                    class="h-16 w-16 object-contain mb-3" loading="lazy">
+                <span class="font-medium text-gray-900">Shopee</span>
+            </a>
 
-                <a href="https://www.lazada.co.id/shop/hartono-motor-sidoarjo/?spm=a2o4j.pdp_revamp.seller.1.3efb7b46zHzsFf&itemId=8407228578&channelSource=pdp"
-                    target="_blank"
-                    class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <img src="{{ asset('images/marketplace/lazada.png') }}" alt="Lazada"
-                        class="h-16 w-16 object-contain mb-3" loading="lazy">
-                    <span class="font-bold text-gray-900 mb-1">Lazada</span>
-                    <span class="text-sm text-gray-600 text-center">Kualitas terjamin dan bergaransi</span>
-                </a>
-            </div>
-        </div>
+            <a href="https://www.lazada.co.id/shop/hartono-motor-sidoarjo/?spm=a2o4j.pdp_revamp.seller.1.3efb7b46zHzsFf&itemId=8407228578&channelSource=pdp"
+                target="_blank" class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <img src="{{ asset('images/marketplace/lazada.png') }}" alt="Lazada"
+                    class="h-16 w-16 object-contain mb-3" loading="lazy">
+                <span class="font-medium text-gray-900">Lazada</span>
+            </a>
 
-        <!-- Social Media Section -->
-        <div>
-            <h3 class="text-xl font-bold text-center mb-6 text-red-600">📱 Ikuti Media Sosial Kami</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                <a href="https://instagram.com/hartonomotorsidoarjo" target="_blank"
-                    class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-pink-50 to-purple-100 hover:from-pink-100 hover:to-purple-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <img src="{{ asset('images/marketplace/instagram.png') }}" alt="Instagram"
-                        class="h-16 w-16 object-contain mb-3" loading="lazy">
-                    <span class="font-bold text-gray-900 mb-1">Instagram</span>
-                    <span class="text-sm text-gray-600 text-center">Tips perawatan & foto hasil servis</span>
-                </a>
+            <!-- Social Media -->
+            <a href="https://instagram.com/hartonomotorsidoarjo" target="_blank"
+                class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <img src="{{ asset('images/marketplace/instagram.png') }}" alt="Instagram"
+                    class="h-16 w-16 object-contain mb-3" loading="lazy">
+                <span class="font-medium text-gray-900">Instagram</span>
+            </a>
 
-                <a href="https://www.facebook.com/hartonomotorsidoarjo" target="_blank"
-                    class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-100 hover:from-blue-100 hover:to-indigo-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <img src="{{ asset('images/marketplace/facebook.png') }}" alt="Facebook"
-                        class="h-16 w-16 object-contain mb-3" loading="lazy">
-                    <span class="font-bold text-gray-900 mb-1">Facebook</span>
-                    <span class="text-sm text-gray-600 text-center">Komunitas & diskusi otomotif</span>
-                </a>
+            <a href="https://www.facebook.com/hartonomotorsidoarjo" target="_blank"
+                class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <img src="{{ asset('images/marketplace/facebook.png') }}" alt="Facebook"
+                    class="h-16 w-16 object-contain mb-3" loading="lazy">
+                <span class="font-medium text-gray-900">Facebook</span>
+            </a>
 
-                <a href="https://www.tiktok.com/@hartonomotorsidoarjo" target="_blank"
-                    class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <img src="{{ asset('images/marketplace/tiktok.png') }}" alt="TikTok"
-                        class="h-16 w-16 object-contain mb-3" loading="lazy">
-                    <span class="font-bold text-gray-900 mb-1">TikTok</span>
-                    <span class="text-sm text-gray-600 text-center">Video tutorial & tips singkat</span>
-                </a>
-            </div>
+            <a href="https://www.tiktok.com/@hartonomotorsidoarjo" target="_blank"
+                class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <img src="{{ asset('images/marketplace/tiktok.png') }}" alt="TikTok"
+                    class="h-16 w-16 object-contain mb-3" loading="lazy">
+                <span class="font-medium text-gray-900">TikTok</span>
+            </a>
         </div>
     </div>
 </section>

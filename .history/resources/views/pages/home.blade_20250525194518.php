@@ -634,70 +634,55 @@
 <section class="py-16 bg-white">
     <div class="container mx-auto px-4">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold mb-4">Belanja Sparepart Online & Ikuti Media Sosial Kami</h2>
-            <p class="text-gray-600 max-w-3xl mx-auto">Dapatkan sparepart berkualitas dengan harga terbaik di
-                marketplace terpercaya. Ikuti juga media sosial kami untuk tips perawatan mobil dan promo menarik.</p>
+            <h2 class="text-3xl font-bold mb-4">Temukan Kami di</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Kunjungi toko online dan media sosial kami untuk informasi
+                terbaru.</p>
         </div>
 
-        <!-- Marketplace Section -->
-        <div class="mb-12">
-            <h3 class="text-xl font-bold text-center mb-6 text-red-600">🛒 Belanja Sparepart Online</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                <a href="https://www.tokopedia.com/hartono-m" target="_blank"
-                    class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <img src="{{ asset('images/marketplace/tokopedia.png') }}" alt="Tokopedia"
-                        class="h-16 w-16 object-contain mb-3" loading="lazy">
-                    <span class="font-bold text-gray-900 mb-1">Tokopedia</span>
-                    <span class="text-sm text-gray-600 text-center">Sparepart lengkap dengan pengiriman cepat</span>
-                </a>
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-6">
+            <!-- Marketplace -->
+            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
+                class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <img src="{{ asset('images/marketplace/tokopedia.png') }}" alt="Tokopedia"
+                    class="h-16 w-16 object-contain mb-3" loading="lazy">
+                <span class="font-medium text-gray-900">Tokopedia</span>
+            </a>
 
-                <a href="https://shopee.co.id/hartono_motor" target="_blank"
-                    class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 hover:from-orange-100 hover:to-orange-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <img src="{{ asset('images/marketplace/shopee.png') }}" alt="Shopee"
-                        class="h-16 w-16 object-contain mb-3" loading="lazy">
-                    <span class="font-bold text-gray-900 mb-1">Shopee</span>
-                    <span class="text-sm text-gray-600 text-center">Promo menarik dan cashback</span>
-                </a>
+            <a href="https://shopee.co.id/hartono_motor" target="_blank"
+                class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <img src="{{ asset('images/marketplace/shopee.png') }}" alt="Shopee"
+                    class="h-16 w-16 object-contain mb-3" loading="lazy">
+                <span class="font-medium text-gray-900">Shopee</span>
+            </a>
 
-                <a href="https://www.lazada.co.id/shop/hartono-motor-sidoarjo/?spm=a2o4j.pdp_revamp.seller.1.3efb7b46zHzsFf&itemId=8407228578&channelSource=pdp"
-                    target="_blank"
-                    class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <img src="{{ asset('images/marketplace/lazada.png') }}" alt="Lazada"
-                        class="h-16 w-16 object-contain mb-3" loading="lazy">
-                    <span class="font-bold text-gray-900 mb-1">Lazada</span>
-                    <span class="text-sm text-gray-600 text-center">Kualitas terjamin dan bergaransi</span>
-                </a>
-            </div>
-        </div>
+            <a href="https://www.lazada.co.id/shop/hartono-motor-sidoarjo/?spm=a2o4j.pdp_revamp.seller.1.3efb7b46zHzsFf&itemId=8407228578&channelSource=pdp"
+                target="_blank" class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <img src="{{ asset('images/marketplace/lazada.png') }}" alt="Lazada"
+                    class="h-16 w-16 object-contain mb-3" loading="lazy">
+                <span class="font-medium text-gray-900">Lazada</span>
+            </a>
 
-        <!-- Social Media Section -->
-        <div>
-            <h3 class="text-xl font-bold text-center mb-6 text-red-600">📱 Ikuti Media Sosial Kami</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                <a href="https://instagram.com/hartonomotorsidoarjo" target="_blank"
-                    class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-pink-50 to-purple-100 hover:from-pink-100 hover:to-purple-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <img src="{{ asset('images/marketplace/instagram.png') }}" alt="Instagram"
-                        class="h-16 w-16 object-contain mb-3" loading="lazy">
-                    <span class="font-bold text-gray-900 mb-1">Instagram</span>
-                    <span class="text-sm text-gray-600 text-center">Tips perawatan & foto hasil servis</span>
-                </a>
+            <!-- Social Media -->
+            <a href="https://instagram.com/hartonomotorsidoarjo" target="_blank"
+                class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <img src="{{ asset('images/marketplace/instagram.png') }}" alt="Instagram"
+                    class="h-16 w-16 object-contain mb-3" loading="lazy">
+                <span class="font-medium text-gray-900">Instagram</span>
+            </a>
 
-                <a href="https://www.facebook.com/hartonomotorsidoarjo" target="_blank"
-                    class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-100 hover:from-blue-100 hover:to-indigo-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <img src="{{ asset('images/marketplace/facebook.png') }}" alt="Facebook"
-                        class="h-16 w-16 object-contain mb-3" loading="lazy">
-                    <span class="font-bold text-gray-900 mb-1">Facebook</span>
-                    <span class="text-sm text-gray-600 text-center">Komunitas & diskusi otomotif</span>
-                </a>
+            <a href="https://www.facebook.com/hartonomotorsidoarjo" target="_blank"
+                class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <img src="{{ asset('images/marketplace/facebook.png') }}" alt="Facebook"
+                    class="h-16 w-16 object-contain mb-3" loading="lazy">
+                <span class="font-medium text-gray-900">Facebook</span>
+            </a>
 
-                <a href="https://www.tiktok.com/@hartonomotorsidoarjo" target="_blank"
-                    class="flex flex-col items-center p-6 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <img src="{{ asset('images/marketplace/tiktok.png') }}" alt="TikTok"
-                        class="h-16 w-16 object-contain mb-3" loading="lazy">
-                    <span class="font-bold text-gray-900 mb-1">TikTok</span>
-                    <span class="text-sm text-gray-600 text-center">Video tutorial & tips singkat</span>
-                </a>
-            </div>
+            <a href="https://www.tiktok.com/@hartonomotorsidoarjo" target="_blank"
+                class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <img src="{{ asset('images/marketplace/tiktok.png') }}" alt="TikTok"
+                    class="h-16 w-16 object-contain mb-3" loading="lazy">
+                <span class="font-medium text-gray-900">TikTok</span>
+            </a>
         </div>
     </div>
 </section>
