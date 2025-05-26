@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MechanicReportResource\Pages;
 use App\Models\MechanicReport;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
@@ -191,8 +192,56 @@ class MechanicReportResource extends Resource
                         '0' => 'Belum Dibayar',
                     ]),
 
-                // Period filter removed for cumulative reports
-                // Cumulative reports should always be visible regardless of time period
+                Tables\Filters\Filter::make('reset_period')
+                    ->label('Filter Periode Reset')
+                    ->indicateUsing(function (array $data): ?string {
+                        if (!$data['reset_start'] && !$data['reset_end']) {
+                            return null;
+                        }
+
+                        $indicator = 'Reset: ';
+
+                        if ($data['reset_start']) {
+                            $indicator .= 'Dari ' . \Carbon\Carbon::parse($data['reset_start'])->format('d M Y');
+                        }
+
+                        if ($data['reset_end']) {
+                            $indicator .= ($data['reset_start'] ? ' ' : '') . 'Sampai ' . \Carbon\Carbon::parse($data['reset_end'])->format('d M Y');
+                        }
+
+                        return $indicator;
+                    })
+                    ->form([
+                        Forms\Components\DatePicker::make('reset_start')
+                            ->label('Reset Dari Tanggal'),
+                        Forms\Components\DatePicker::make('reset_end')
+                            ->label('Reset Sampai Tanggal'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        // Only apply period filter to non-cumulative reports
+                        // Cumulative reports should always be visible regardless of period
+                        return $query
+                            ->when(
+                                $data['reset_start'] && !$query->getQuery()->wheres,
+                                fn(Builder $query, $date) => $query->where(function ($q) use ($date) {
+                                    $q->where('is_cumulative', true)
+                                        ->orWhere(function ($subQ) use ($date) {
+                                            $subQ->where('is_cumulative', false)
+                                                ->whereDate('period_reset_at', '>=', $date);
+                                        });
+                                })
+                            )
+                            ->when(
+                                $data['reset_end'] && !$query->getQuery()->wheres,
+                                fn(Builder $query, $date) => $query->where(function ($q) use ($date) {
+                                    $q->where('is_cumulative', true)
+                                        ->orWhere(function ($subQ) use ($date) {
+                                            $subQ->where('is_cumulative', false)
+                                                ->whereDate('period_reset_at', '<=', $date);
+                                        });
+                                })
+                            );
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
