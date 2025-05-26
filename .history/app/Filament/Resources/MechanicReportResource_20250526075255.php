@@ -12,24 +12,22 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 class MechanicReportResource extends Resource
 {
     protected static ?string $model = MechanicReport::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static ?string $navigationIcon = 'heroicon-o-calculator';
 
-    protected static ?string $navigationGroup = 'Manajemen Montir';
+    protected static ?string $navigationGroup = 'Servis & Booking';
 
-    protected static ?string $navigationLabel = 'Rekap Montir Kumulatif';
+    protected static ?string $navigationLabel = 'Rekap Montir';
 
-    protected static ?string $modelLabel = 'Rekap Montir Kumulatif';
+    protected static ?string $modelLabel = 'Rekap Montir';
 
-    protected static ?string $pluralModelLabel = 'Rekap Montir Kumulatif';
-
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 3;
 
     public static function canAccess(): bool
     {
@@ -77,16 +75,6 @@ class MechanicReportResource extends Resource
                             ->numeric()
                             ->prefix('Rp')
                             ->disabled(),
-
-                        Forms\Components\DateTimePicker::make('last_calculated_at')
-                            ->label('Terakhir Dihitung')
-                            ->disabled()
-                            ->visible(fn(callable $get) => $get('is_cumulative')),
-
-                        Forms\Components\DateTimePicker::make('period_reset_at')
-                            ->label('Direset Pada')
-                            ->disabled()
-                            ->visible(fn(callable $get) => $get('is_cumulative')),
                     ])->columns(2),
 
                 Forms\Components\Section::make('Status Pembayaran')
@@ -126,19 +114,15 @@ class MechanicReportResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\IconColumn::make('is_cumulative')
-                    ->label('Tipe')
-                    ->boolean()
-                    ->trueIcon('heroicon-o-infinity')
-                    ->falseIcon('heroicon-o-calendar-days')
-                    ->trueColor('primary')
-                    ->falseColor('gray')
-                    ->tooltip(fn($record) => $record->is_cumulative ? 'Laporan Kumulatif' : 'Laporan Periode'),
+                Tables\Columns\TextColumn::make('week_start')
+                    ->label('Mulai Minggu')
+                    ->date('d M Y')
+                    ->sortable(),
 
-                Tables\Columns\TextColumn::make('period_display')
-                    ->label('Periode')
-                    ->searchable(false)
-                    ->sortable(false),
+                Tables\Columns\TextColumn::make('week_end')
+                    ->label('Akhir Minggu')
+                    ->date('d M Y')
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('services_count')
                     ->label('Jumlah Servis')
@@ -177,14 +161,6 @@ class MechanicReportResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('is_cumulative')
-                    ->label('Tipe Laporan')
-                    ->options([
-                        '1' => 'Laporan Kumulatif',
-                        '0' => 'Laporan Periode',
-                    ])
-                    ->default('1'),
-
                 Tables\Filters\SelectFilter::make('is_paid')
                     ->label('Status Pembayaran')
                     ->options([
@@ -192,94 +168,92 @@ class MechanicReportResource extends Resource
                         '0' => 'Belum Dibayar',
                     ]),
 
-                Tables\Filters\Filter::make('reset_period')
-                    ->label('Filter Periode Reset')
+                Tables\Filters\Filter::make('week')
+                    ->label('Filter Tanggal')
                     ->indicateUsing(function (array $data): ?string {
-                        if (!$data['reset_start'] && !$data['reset_end']) {
+                        if (!$data['week_start'] && !$data['week_end']) {
                             return null;
                         }
 
-                        $indicator = 'Reset: ';
+                        $indicator = 'Periode: ';
 
-                        if ($data['reset_start']) {
-                            $indicator .= 'Dari ' . \Carbon\Carbon::parse($data['reset_start'])->format('d M Y');
+                        if ($data['week_start']) {
+                            $indicator .= 'Dari ' . \Carbon\Carbon::parse($data['week_start'])->format('d M Y');
                         }
 
-                        if ($data['reset_end']) {
-                            $indicator .= ($data['reset_start'] ? ' ' : '') . 'Sampai ' . \Carbon\Carbon::parse($data['reset_end'])->format('d M Y');
+                        if ($data['week_end']) {
+                            $indicator .= ($data['week_start'] ? ' ' : '') . 'Sampai ' . \Carbon\Carbon::parse($data['week_end'])->format('d M Y');
                         }
 
                         return $indicator;
                     })
                     ->form([
-                        Forms\Components\DatePicker::make('reset_start')
-                            ->label('Reset Dari Tanggal'),
-                        Forms\Components\DatePicker::make('reset_end')
-                            ->label('Reset Sampai Tanggal'),
+                        Forms\Components\DatePicker::make('week_start')
+                            ->label('Dari Tanggal'),
+                        Forms\Components\DatePicker::make('week_end')
+                            ->label('Sampai Tanggal'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
-                                $data['reset_start'],
-                                fn(Builder $query, $date) => $query->whereDate('period_reset_at', '>=', $date)
+                                $data['week_start'],
+                                function (Builder $query, $date) {
+                                    // If the selected date is not a Monday (start of week),
+                                    // we need to find reports that include this date
+                                    return $query->where(function ($q) use ($date) {
+                                        // Find reports where week_start is before or equal to the selected date
+                                        // AND week_end is after or equal to the selected date
+                                        // OR where week_start is after or equal to the selected date
+                                        $q->where(function ($subQ) use ($date) {
+                                            $subQ->where('week_start', '<=', $date)
+                                                ->where('week_end', '>=', $date);
+                                        })->orWhere('week_start', '>=', $date);
+                                    });
+                                }
                             )
                             ->when(
-                                $data['reset_end'],
-                                fn(Builder $query, $date) => $query->whereDate('period_reset_at', '<=', $date)
+                                $data['week_end'],
+                                function (Builder $query, $date) {
+                                    // Similar logic for end date
+                                    return $query->where(function ($q) use ($date) {
+                                        // Find reports where week_end is before or equal to the selected date
+                                        // OR where week_start is before or equal to the selected date
+                                        // AND week_end is after or equal to the selected date
+                                        $q->where('week_end', '<=', $date)
+                                            ->orWhere(function ($subQ) use ($date) {
+                                                $subQ->where('week_start', '<=', $date)
+                                                    ->where('week_end', '>=', $date);
+                                            });
+                                    });
+                                }
                             );
                     }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-
-                Tables\Actions\Action::make('recalculateReport')
-                    ->label('Perbarui')
+                Tables\Actions\Action::make('refreshReport')
+                    ->label('Refresh')
                     ->icon('heroicon-o-arrow-path')
                     ->color('warning')
-                    ->tooltip('Menghitung ulang statistik kumulatif dari data servis terbaru')
-                    ->visible(fn(MechanicReport $record) => $record->is_cumulative)
+                    ->tooltip('Memperbarui rekap montir ini berdasarkan data servis terbaru')
                     ->action(function (MechanicReport $record) {
+                        // Jalankan command untuk memperbarui rekap montir ini
+                        $output = '';
                         try {
-                            $record->recalculateCumulative();
+                            Artisan::call('mechanic:sync-reports', [
+                                '--mechanic_id' => $record->mechanic_id,
+                            ], $output);
 
                             Notification::make()
-                                ->title('Laporan kumulatif berhasil diperbarui')
+                                ->title('Rekap montir berhasil diperbarui')
                                 ->success()
-                                ->body('Statistik kumulatif telah dihitung ulang dari data servis terbaru.')
+                                ->body('Rekap montir telah diperbarui berdasarkan data servis terbaru.')
                                 ->send();
                         } catch (\Exception $e) {
                             Notification::make()
-                                ->title('Gagal memperbarui laporan')
+                                ->title('Gagal memperbarui rekap montir')
                                 ->danger()
-                                ->body('Terjadi kesalahan: ' . $e->getMessage())
-                                ->send();
-                        }
-                    }),
-
-                Tables\Actions\Action::make('resetCumulative')
-                    ->label('Reset')
-                    ->icon('heroicon-o-arrow-uturn-left')
-                    ->color('danger')
-                    ->tooltip('Reset laporan kumulatif dan arsipkan data saat ini')
-                    ->visible(fn(MechanicReport $record) => $record->is_cumulative)
-                    ->requiresConfirmation()
-                    ->modalHeading('Reset Laporan Kumulatif')
-                    ->modalDescription('Apakah Anda yakin ingin mereset laporan kumulatif? Data saat ini akan diarsipkan dan laporan akan dimulai dari nol.')
-                    ->modalSubmitActionLabel('Ya, Reset')
-                    ->action(function (MechanicReport $record) {
-                        try {
-                            $record->resetCumulative('manual_reset_from_admin');
-
-                            Notification::make()
-                                ->title('Laporan kumulatif berhasil direset')
-                                ->success()
-                                ->body('Data lama telah diarsipkan dan laporan dimulai dari nol.')
-                                ->send();
-                        } catch (\Exception $e) {
-                            Notification::make()
-                                ->title('Gagal mereset laporan')
-                                ->danger()
-                                ->body('Terjadi kesalahan: ' . $e->getMessage())
+                                ->body('Terjadi kesalahan saat memperbarui rekap montir: ' . $e->getMessage())
                                 ->send();
                         }
                     }),
@@ -343,8 +317,6 @@ class MechanicReportResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-            ->with(['mechanic'])
-            ->latest('updated_at');
+        return parent::getEloquentQuery()->latest();
     }
 }

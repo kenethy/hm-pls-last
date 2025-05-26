@@ -12,24 +12,22 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 class MechanicReportResource extends Resource
 {
     protected static ?string $model = MechanicReport::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static ?string $navigationIcon = 'heroicon-o-calculator';
 
-    protected static ?string $navigationGroup = 'Manajemen Montir';
+    protected static ?string $navigationGroup = 'Servis & Booking';
 
-    protected static ?string $navigationLabel = 'Rekap Montir Kumulatif';
+    protected static ?string $navigationLabel = 'Rekap Montir';
 
-    protected static ?string $modelLabel = 'Rekap Montir Kumulatif';
+    protected static ?string $modelLabel = 'Rekap Montir';
 
-    protected static ?string $pluralModelLabel = 'Rekap Montir Kumulatif';
-
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 3;
 
     public static function canAccess(): bool
     {
@@ -177,14 +175,6 @@ class MechanicReportResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('is_cumulative')
-                    ->label('Tipe Laporan')
-                    ->options([
-                        '1' => 'Laporan Kumulatif',
-                        '0' => 'Laporan Periode',
-                    ])
-                    ->default('1'),
-
                 Tables\Filters\SelectFilter::make('is_paid')
                     ->label('Status Pembayaran')
                     ->options([
@@ -192,40 +182,64 @@ class MechanicReportResource extends Resource
                         '0' => 'Belum Dibayar',
                     ]),
 
-                Tables\Filters\Filter::make('reset_period')
-                    ->label('Filter Periode Reset')
+                Tables\Filters\Filter::make('week')
+                    ->label('Filter Tanggal')
                     ->indicateUsing(function (array $data): ?string {
-                        if (!$data['reset_start'] && !$data['reset_end']) {
+                        if (!$data['week_start'] && !$data['week_end']) {
                             return null;
                         }
 
-                        $indicator = 'Reset: ';
+                        $indicator = 'Periode: ';
 
-                        if ($data['reset_start']) {
-                            $indicator .= 'Dari ' . \Carbon\Carbon::parse($data['reset_start'])->format('d M Y');
+                        if ($data['week_start']) {
+                            $indicator .= 'Dari ' . \Carbon\Carbon::parse($data['week_start'])->format('d M Y');
                         }
 
-                        if ($data['reset_end']) {
-                            $indicator .= ($data['reset_start'] ? ' ' : '') . 'Sampai ' . \Carbon\Carbon::parse($data['reset_end'])->format('d M Y');
+                        if ($data['week_end']) {
+                            $indicator .= ($data['week_start'] ? ' ' : '') . 'Sampai ' . \Carbon\Carbon::parse($data['week_end'])->format('d M Y');
                         }
 
                         return $indicator;
                     })
                     ->form([
-                        Forms\Components\DatePicker::make('reset_start')
-                            ->label('Reset Dari Tanggal'),
-                        Forms\Components\DatePicker::make('reset_end')
-                            ->label('Reset Sampai Tanggal'),
+                        Forms\Components\DatePicker::make('week_start')
+                            ->label('Dari Tanggal'),
+                        Forms\Components\DatePicker::make('week_end')
+                            ->label('Sampai Tanggal'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
-                                $data['reset_start'],
-                                fn(Builder $query, $date) => $query->whereDate('period_reset_at', '>=', $date)
+                                $data['week_start'],
+                                function (Builder $query, $date) {
+                                    // If the selected date is not a Monday (start of week),
+                                    // we need to find reports that include this date
+                                    return $query->where(function ($q) use ($date) {
+                                        // Find reports where week_start is before or equal to the selected date
+                                        // AND week_end is after or equal to the selected date
+                                        // OR where week_start is after or equal to the selected date
+                                        $q->where(function ($subQ) use ($date) {
+                                            $subQ->where('week_start', '<=', $date)
+                                                ->where('week_end', '>=', $date);
+                                        })->orWhere('week_start', '>=', $date);
+                                    });
+                                }
                             )
                             ->when(
-                                $data['reset_end'],
-                                fn(Builder $query, $date) => $query->whereDate('period_reset_at', '<=', $date)
+                                $data['week_end'],
+                                function (Builder $query, $date) {
+                                    // Similar logic for end date
+                                    return $query->where(function ($q) use ($date) {
+                                        // Find reports where week_end is before or equal to the selected date
+                                        // OR where week_start is before or equal to the selected date
+                                        // AND week_end is after or equal to the selected date
+                                        $q->where('week_end', '<=', $date)
+                                            ->orWhere(function ($subQ) use ($date) {
+                                                $subQ->where('week_start', '<=', $date)
+                                                    ->where('week_end', '>=', $date);
+                                            });
+                                    });
+                                }
                             );
                     }),
             ])
@@ -343,8 +357,6 @@ class MechanicReportResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-            ->with(['mechanic'])
-            ->latest('updated_at');
+        return parent::getEloquentQuery()->latest();
     }
 }

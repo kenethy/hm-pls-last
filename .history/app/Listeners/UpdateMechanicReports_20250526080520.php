@@ -7,7 +7,7 @@ use App\Events\ServiceStatusChanged;
 use App\Helpers\DebugHelper;
 use App\Models\Mechanic;
 use App\Models\Service;
-
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -251,25 +251,58 @@ class UpdateMechanicReports
         DB::transaction(function () use ($service, $mechanics) {
             // Process each mechanic
             foreach ($mechanics as $mechanic) {
-                try {
-                    Log::info("UpdateMechanicReports: Recalculating cumulative report for mechanic #{$mechanic->id} after service status change");
+                // Get week dates and current labor cost
+                $weekStart = $mechanic->pivot->week_start;
+                $weekEnd = $mechanic->pivot->week_end;
+                $currentLaborCost = $mechanic->pivot->labor_cost;
 
-                    // Get or create cumulative report
-                    $report = $mechanic->getOrCreateCumulativeReport();
+                if (empty($weekStart) || empty($weekEnd)) {
+                    continue;
+                }
 
-                    // Recalculate cumulative statistics from database
-                    $report->recalculateCumulative();
+                Log::info("UpdateMechanicReports: Current labor cost for mechanic #{$mechanic->id} on service #{$service->id}: {$currentLaborCost}");
 
-                    Log::info("UpdateMechanicReports: Successfully recalculated cumulative report for mechanic #{$mechanic->id}", [
+                // Tidak perlu mengubah labor_cost menjadi 0, biarkan nilai aslinya tetap ada
+                // Kita hanya perlu memperbarui rekap montir untuk menghapus servis ini dari hitungan
+                // $service->mechanics()->updateExistingPivot($mechanic->id, [
+                //     'labor_cost' => 0,
+                // ]);
+
+                Log::info("UpdateMechanicReports: Preserving labor cost value for mechanic #{$mechanic->id} on service #{$service->id}");
+
+                // Get the current report
+                $report = DB::table('mechanic_reports')
+                    ->where('mechanic_id', $mechanic->id)
+                    ->where('week_start', $weekStart)
+                    ->where('week_end', $weekEnd)
+                    ->first();
+
+                if ($report) {
+                    // Calculate new total labor cost by subtracting the current labor cost
+                    $newTotalLaborCost = max(0, $report->total_labor_cost - $currentLaborCost);
+                    $newServicesCount = max(0, $report->services_count - 1);
+
+                    Log::info("UpdateMechanicReports: Updating report for mechanic #{$mechanic->id}", [
                         'report_id' => $report->id,
-                        'services_count' => $report->services_count,
-                        'total_labor_cost' => $report->total_labor_cost,
+                        'current_total_labor_cost' => $report->total_labor_cost,
+                        'current_services_count' => $report->services_count,
+                        'labor_cost_to_subtract' => $currentLaborCost,
+                        'new_total_labor_cost' => $newTotalLaborCost,
+                        'new_services_count' => $newServicesCount,
                     ]);
-                } catch (\Exception $e) {
-                    Log::error("UpdateMechanicReports: Error recalculating cumulative report for mechanic #{$mechanic->id}", [
-                        'error' => $e->getMessage(),
-                        'trace' => $e->getTraceAsString(),
-                    ]);
+
+                    // Update the report
+                    DB::table('mechanic_reports')
+                        ->where('id', $report->id)
+                        ->update([
+                            'services_count' => $newServicesCount,
+                            'total_labor_cost' => $newTotalLaborCost,
+                            'updated_at' => now(),
+                        ]);
+
+                    Log::info("UpdateMechanicReports: Updated report #{$report->id} for mechanic #{$mechanic->id}");
+                } else {
+                    Log::info("UpdateMechanicReports: No report found for mechanic #{$mechanic->id} for week {$weekStart} to {$weekEnd}");
                 }
             }
         });
@@ -289,37 +322,149 @@ class UpdateMechanicReports
         ]);
 
         // Process in a transaction to ensure consistency
-        DB::transaction(function () use ($mechanicIds) {
+        DB::transaction(function () use ($service, $mechanicIds) {
+            // Get mechanics data from pivot table before they are removed
+            $mechanicsData = DB::table('mechanic_service')
+                ->where('service_id', $service->id)
+                ->whereIn('mechanic_id', $mechanicIds)
+                ->get();
+
             // Process each mechanic
-            foreach ($mechanicIds as $mechanicId) {
-                try {
-                    // Get the mechanic
-                    $mechanic = Mechanic::find($mechanicId);
+            foreach ($mechanicsData as $mechanicData) {
+                $weekStart = $mechanicData->week_start;
+                $weekEnd = $mechanicData->week_end;
+                $currentLaborCost = $mechanicData->labor_cost;
 
-                    if (!$mechanic) {
-                        continue;
-                    }
+                if (empty($weekStart) || empty($weekEnd)) {
+                    continue;
+                }
 
-                    Log::info("UpdateMechanicReports: Recalculating cumulative report for removed mechanic #{$mechanic->id}");
+                // Get the mechanic
+                $mechanic = Mechanic::find($mechanicData->mechanic_id);
 
-                    // Get or create cumulative report
-                    $report = $mechanic->getOrCreateCumulativeReport();
+                if (!$mechanic) {
+                    continue;
+                }
 
-                    // Recalculate cumulative statistics from database
-                    $report->recalculateCumulative();
+                Log::info("UpdateMechanicReports: Current labor cost for mechanic #{$mechanic->id} on service #{$service->id}: {$currentLaborCost}");
 
-                    Log::info("UpdateMechanicReports: Successfully recalculated cumulative report for removed mechanic #{$mechanic->id}", [
+                // Get the current report
+                $report = DB::table('mechanic_reports')
+                    ->where('mechanic_id', $mechanic->id)
+                    ->where('week_start', $weekStart)
+                    ->where('week_end', $weekEnd)
+                    ->first();
+
+                if ($report) {
+                    // Calculate new total labor cost by subtracting the current labor cost
+                    $newTotalLaborCost = max(0, $report->total_labor_cost - $currentLaborCost);
+                    $newServicesCount = max(0, $report->services_count - 1);
+
+                    Log::info("UpdateMechanicReports: Updating report for removed mechanic #{$mechanic->id}", [
                         'report_id' => $report->id,
-                        'services_count' => $report->services_count,
-                        'total_labor_cost' => $report->total_labor_cost,
+                        'current_total_labor_cost' => $report->total_labor_cost,
+                        'current_services_count' => $report->services_count,
+                        'labor_cost_to_subtract' => $currentLaborCost,
+                        'new_total_labor_cost' => $newTotalLaborCost,
+                        'new_services_count' => $newServicesCount,
                     ]);
-                } catch (\Exception $e) {
-                    Log::error("UpdateMechanicReports: Error recalculating cumulative report for mechanic #{$mechanicId}", [
-                        'error' => $e->getMessage(),
-                        'trace' => $e->getTraceAsString(),
-                    ]);
+
+                    // Update the report
+                    DB::table('mechanic_reports')
+                        ->where('id', $report->id)
+                        ->update([
+                            'services_count' => $newServicesCount,
+                            'total_labor_cost' => $newTotalLaborCost,
+                            'updated_at' => now(),
+                        ]);
+
+                    Log::info("UpdateMechanicReports: Updated report #{$report->id} for mechanic #{$mechanic->id}");
+                } else {
+                    Log::info("UpdateMechanicReports: No report found for mechanic #{$mechanic->id} for week {$weekStart} to {$weekEnd}");
                 }
             }
         });
+    }
+
+    /**
+     * Generate or update a weekly report for a mechanic.
+     */
+    private function generateOrUpdateReport(Mechanic $mechanic, string $weekStart, string $weekEnd): void
+    {
+        try {
+            Log::info("UpdateMechanicReports: Generating report for mechanic #{$mechanic->id} for week {$weekStart} to {$weekEnd}");
+
+            // Validate inputs
+            if (empty($weekStart) || empty($weekEnd)) {
+                Log::error("UpdateMechanicReports: Invalid week dates", [
+                    'mechanic_id' => $mechanic->id,
+                    'week_start' => $weekStart,
+                    'week_end' => $weekEnd,
+                ]);
+                return;
+            }
+
+            // Log SQL query for debugging
+            $query = DB::table('mechanic_service')
+                ->join('services', 'mechanic_service.service_id', '=', 'services.id')
+                ->where('mechanic_service.mechanic_id', $mechanic->id)
+                ->where('mechanic_service.week_start', $weekStart)
+                ->where('mechanic_service.week_end', $weekEnd)
+                ->where('services.status', 'completed');
+
+            Log::info("UpdateMechanicReports: SQL Query", [
+                'query' => $query->toSql(),
+                'bindings' => $query->getBindings(),
+            ]);
+
+            // Calculate total labor cost for completed services
+            $totalLaborCost = $query->sum('mechanic_service.labor_cost');
+
+            // Count completed services
+            $servicesCount = $query->count();
+
+            Log::info("UpdateMechanicReports: Calculated for mechanic #{$mechanic->id}: services_count={$servicesCount}, total_labor_cost={$totalLaborCost}");
+
+            // Find or create the report
+            $report = DB::table('mechanic_reports')
+                ->where('mechanic_id', $mechanic->id)
+                ->where('week_start', $weekStart)
+                ->where('week_end', $weekEnd)
+                ->first();
+
+            if ($report) {
+                // Update existing report
+                DB::table('mechanic_reports')
+                    ->where('id', $report->id)
+                    ->update([
+                        'services_count' => $servicesCount,
+                        'total_labor_cost' => $totalLaborCost,
+                        'updated_at' => now(),
+                    ]);
+
+                Log::info("UpdateMechanicReports: Updated report #{$report->id} for mechanic #{$mechanic->id}");
+            } else {
+                // Create new report
+                $reportId = DB::table('mechanic_reports')->insertGetId([
+                    'mechanic_id' => $mechanic->id,
+                    'week_start' => $weekStart,
+                    'week_end' => $weekEnd,
+                    'services_count' => $servicesCount,
+                    'total_labor_cost' => $totalLaborCost,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                Log::info("UpdateMechanicReports: Created new report #{$reportId} for mechanic #{$mechanic->id}");
+            }
+        } catch (\Exception $e) {
+            Log::error("UpdateMechanicReports: Error generating report for mechanic #{$mechanic->id}: " . $e->getMessage(), [
+                'mechanic_id' => $mechanic->id,
+                'week_start' => $weekStart,
+                'week_end' => $weekEnd,
+                'exception' => $e,
+                'trace' => $e->getTraceAsString(),
+            ]);
+        }
     }
 }

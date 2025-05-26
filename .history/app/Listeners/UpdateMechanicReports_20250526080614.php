@@ -7,7 +7,7 @@ use App\Events\ServiceStatusChanged;
 use App\Helpers\DebugHelper;
 use App\Models\Mechanic;
 use App\Models\Service;
-
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -321,5 +321,87 @@ class UpdateMechanicReports
                 }
             }
         });
+    }
+
+    /**
+     * Generate or update a weekly report for a mechanic.
+     */
+    private function generateOrUpdateReport(Mechanic $mechanic, string $weekStart, string $weekEnd): void
+    {
+        try {
+            Log::info("UpdateMechanicReports: Generating report for mechanic #{$mechanic->id} for week {$weekStart} to {$weekEnd}");
+
+            // Validate inputs
+            if (empty($weekStart) || empty($weekEnd)) {
+                Log::error("UpdateMechanicReports: Invalid week dates", [
+                    'mechanic_id' => $mechanic->id,
+                    'week_start' => $weekStart,
+                    'week_end' => $weekEnd,
+                ]);
+                return;
+            }
+
+            // Log SQL query for debugging
+            $query = DB::table('mechanic_service')
+                ->join('services', 'mechanic_service.service_id', '=', 'services.id')
+                ->where('mechanic_service.mechanic_id', $mechanic->id)
+                ->where('mechanic_service.week_start', $weekStart)
+                ->where('mechanic_service.week_end', $weekEnd)
+                ->where('services.status', 'completed');
+
+            Log::info("UpdateMechanicReports: SQL Query", [
+                'query' => $query->toSql(),
+                'bindings' => $query->getBindings(),
+            ]);
+
+            // Calculate total labor cost for completed services
+            $totalLaborCost = $query->sum('mechanic_service.labor_cost');
+
+            // Count completed services
+            $servicesCount = $query->count();
+
+            Log::info("UpdateMechanicReports: Calculated for mechanic #{$mechanic->id}: services_count={$servicesCount}, total_labor_cost={$totalLaborCost}");
+
+            // Find or create the report
+            $report = DB::table('mechanic_reports')
+                ->where('mechanic_id', $mechanic->id)
+                ->where('week_start', $weekStart)
+                ->where('week_end', $weekEnd)
+                ->first();
+
+            if ($report) {
+                // Update existing report
+                DB::table('mechanic_reports')
+                    ->where('id', $report->id)
+                    ->update([
+                        'services_count' => $servicesCount,
+                        'total_labor_cost' => $totalLaborCost,
+                        'updated_at' => now(),
+                    ]);
+
+                Log::info("UpdateMechanicReports: Updated report #{$report->id} for mechanic #{$mechanic->id}");
+            } else {
+                // Create new report
+                $reportId = DB::table('mechanic_reports')->insertGetId([
+                    'mechanic_id' => $mechanic->id,
+                    'week_start' => $weekStart,
+                    'week_end' => $weekEnd,
+                    'services_count' => $servicesCount,
+                    'total_labor_cost' => $totalLaborCost,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                Log::info("UpdateMechanicReports: Created new report #{$reportId} for mechanic #{$mechanic->id}");
+            }
+        } catch (\Exception $e) {
+            Log::error("UpdateMechanicReports: Error generating report for mechanic #{$mechanic->id}: " . $e->getMessage(), [
+                'mechanic_id' => $mechanic->id,
+                'week_start' => $weekStart,
+                'week_end' => $weekEnd,
+                'exception' => $e,
+                'trace' => $e->getTraceAsString(),
+            ]);
+        }
     }
 }

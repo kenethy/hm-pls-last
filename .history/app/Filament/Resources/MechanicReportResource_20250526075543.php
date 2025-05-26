@@ -19,17 +19,15 @@ class MechanicReportResource extends Resource
 {
     protected static ?string $model = MechanicReport::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static ?string $navigationIcon = 'heroicon-o-calculator';
 
-    protected static ?string $navigationGroup = 'Manajemen Montir';
+    protected static ?string $navigationGroup = 'Servis & Booking';
 
-    protected static ?string $navigationLabel = 'Rekap Montir Kumulatif';
+    protected static ?string $navigationLabel = 'Rekap Montir';
 
-    protected static ?string $modelLabel = 'Rekap Montir Kumulatif';
+    protected static ?string $modelLabel = 'Rekap Montir';
 
-    protected static ?string $pluralModelLabel = 'Rekap Montir Kumulatif';
-
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 3;
 
     public static function canAccess(): bool
     {
@@ -343,8 +341,6 @@ class MechanicReportResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-            ->with(['mechanic'])
-            ->latest('updated_at');
+        return parent::getEloquentQuery()->latest();
     }
 }
