@@ -90,19 +90,19 @@
                     <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Status
                         Servis</label>
                     <div class="flex flex-wrap gap-2">
-                        <a href="?status=completed&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
+                        <a href="?status=completed&payment_status={{ $paymentStatus ?? 'all' }}&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ $status === 'completed' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             Selesai
                         </a>
-                        <a href="?status=in_progress&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
+                        <a href="?status=in_progress&payment_status={{ $paymentStatus ?? 'all' }}&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ $status === 'in_progress' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             Dalam Pengerjaan
                         </a>
-                        <a href="?status=cancelled&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
+                        <a href="?status=cancelled&payment_status={{ $paymentStatus ?? 'all' }}&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ $status === 'cancelled' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             Dibatalkan
                         </a>
-                        <a href="?status=all&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
+                        <a href="?status=all&payment_status={{ $paymentStatus ?? 'all' }}&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ $status === 'all' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             Semua Status
                         </a>
@@ -138,19 +138,19 @@
                     <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Rentang
                         Tanggal</label>
                     <div class="flex flex-wrap gap-2 mb-3">
-                        <a href="?status={{ $status }}&date_range=all_time"
+                        <a href="?status={{ $status }}&payment_status={{ $paymentStatus ?? 'all' }}&date_range=all_time"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ ($dateRange ?? 'all_time') === 'all_time' ? 'bg-purple-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             Semua Waktu
                         </a>
-                        <a href="?status={{ $status }}&date_range=last_7_days"
+                        <a href="?status={{ $status }}&payment_status={{ $paymentStatus ?? 'all' }}&date_range=last_7_days"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ ($dateRange ?? 'all_time') === 'last_7_days' ? 'bg-purple-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             7 Hari Terakhir
                         </a>
-                        <a href="?status={{ $status }}&date_range=last_30_days"
+                        <a href="?status={{ $status }}&payment_status={{ $paymentStatus ?? 'all' }}&date_range=last_30_days"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ ($dateRange ?? 'all_time') === 'last_30_days' ? 'bg-purple-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             30 Hari Terakhir
                         </a>
-                        <a href="?status={{ $status }}&date_range=last_3_months"
+                        <a href="?status={{ $status }}&payment_status={{ $paymentStatus ?? 'all' }}&date_range=last_3_months"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ ($dateRange ?? 'all_time') === 'last_3_months' ? 'bg-purple-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             3 Bulan Terakhir
                         </a>
@@ -159,6 +159,7 @@
                     <!-- Custom Date Range -->
                     <form method="GET" class="flex flex-wrap gap-2 items-end">
                         <input type="hidden" name="status" value="{{ $status }}">
+                        <input type="hidden" name="payment_status" value="{{ $paymentStatus ?? 'all' }}">
                         <input type="hidden" name="date_range" value="custom">
 
                         <div>

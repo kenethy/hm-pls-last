@@ -96,4 +96,15 @@ class MechanicServiceHistoryController extends Controller
             }
         }
     }
+
+    /**
+     * Apply payment status filtering to the services query
+     * Note: Payment status is tracked at the mechanic report level, not individual services
+     */
+    private function applyPaymentStatusFiltering($query, $paymentStatus)
+    {
+        // Since payment status is tracked at the report level, not service level,
+        // we'll show a note about this in the view instead of filtering here
+        // This method is kept for future enhancement if needed
+    }
 }

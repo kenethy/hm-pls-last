@@ -90,45 +90,42 @@
                     <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Status
                         Servis</label>
                     <div class="flex flex-wrap gap-2">
-                        <a href="?status=completed&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
+                        <a href="?status=completed&payment_status={{ $paymentStatus ?? 'all' }}&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ $status === 'completed' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             Selesai
                         </a>
-                        <a href="?status=in_progress&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
+                        <a href="?status=in_progress&payment_status={{ $paymentStatus ?? 'all' }}&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ $status === 'in_progress' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             Dalam Pengerjaan
                         </a>
-                        <a href="?status=cancelled&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
+                        <a href="?status=cancelled&payment_status={{ $paymentStatus ?? 'all' }}&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ $status === 'cancelled' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             Dibatalkan
                         </a>
-                        <a href="?status=all&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
+                        <a href="?status=all&payment_status={{ $paymentStatus ?? 'all' }}&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ $status === 'all' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             Semua Status
                         </a>
                     </div>
                 </div>
 
-                <!-- Payment Status Info -->
-                <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-                    <div class="flex items-center">
-                        <svg class="w-4 h-4 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
-                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <p class="text-sm text-blue-700">
-                            <strong>Status Pembayaran:</strong>
-                            @if($record->is_paid)
-                            <span class="text-green-600 font-medium">Sudah Dibayar</span>
-                            @if($record->paid_at)
-                            pada {{ $record->paid_at->format('d M Y H:i') }}
-                            @endif
-                            @else
-                            <span class="text-red-600 font-medium">Belum Dibayar</span>
-                            @endif
-                            - Status pembayaran berlaku untuk semua servis dalam laporan ini.
-                        </p>
+                <!-- Payment Status Filter -->
+                <div class="mb-4">
+                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Status
+                        Pembayaran</label>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="?status={{ $status }}&payment_status=paid&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
+                            class="px-3 py-1 text-sm font-medium rounded-md {{ ($paymentStatus ?? 'all') === 'paid' ? 'bg-green-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
+                            Sudah Dibayar
+                        </a>
+                        <a href="?status={{ $status }}&payment_status=unpaid&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
+                            class="px-3 py-1 text-sm font-medium rounded-md {{ ($paymentStatus ?? 'all') === 'unpaid' ? 'bg-red-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
+                            Belum Dibayar
+                        </a>
+                        <a href="?status={{ $status }}&payment_status=all&date_range={{ $dateRange ?? 'all_time' }}&start_date={{ $customStartDate }}&end_date={{ $customEndDate }}"
+                            class="px-3 py-1 text-sm font-medium rounded-md {{ ($paymentStatus ?? 'all') === 'all' ? 'bg-gray-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
+                            Semua Pembayaran
+                        </a>
                     </div>
                 </div>
 
@@ -138,19 +135,19 @@
                     <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Rentang
                         Tanggal</label>
                     <div class="flex flex-wrap gap-2 mb-3">
-                        <a href="?status={{ $status }}&date_range=all_time"
+                        <a href="?status={{ $status }}&payment_status={{ $paymentStatus ?? 'all' }}&date_range=all_time"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ ($dateRange ?? 'all_time') === 'all_time' ? 'bg-purple-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             Semua Waktu
                         </a>
-                        <a href="?status={{ $status }}&date_range=last_7_days"
+                        <a href="?status={{ $status }}&payment_status={{ $paymentStatus ?? 'all' }}&date_range=last_7_days"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ ($dateRange ?? 'all_time') === 'last_7_days' ? 'bg-purple-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             7 Hari Terakhir
                         </a>
-                        <a href="?status={{ $status }}&date_range=last_30_days"
+                        <a href="?status={{ $status }}&payment_status={{ $paymentStatus ?? 'all' }}&date_range=last_30_days"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ ($dateRange ?? 'all_time') === 'last_30_days' ? 'bg-purple-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             30 Hari Terakhir
                         </a>
-                        <a href="?status={{ $status }}&date_range=last_3_months"
+                        <a href="?status={{ $status }}&payment_status={{ $paymentStatus ?? 'all' }}&date_range=last_3_months"
                             class="px-3 py-1 text-sm font-medium rounded-md {{ ($dateRange ?? 'all_time') === 'last_3_months' ? 'bg-purple-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' }}">
                             3 Bulan Terakhir
                         </a>
@@ -159,6 +156,7 @@
                     <!-- Custom Date Range -->
                     <form method="GET" class="flex flex-wrap gap-2 items-end">
                         <input type="hidden" name="status" value="{{ $status }}">
+                        <input type="hidden" name="payment_status" value="{{ $paymentStatus ?? 'all' }}">
                         <input type="hidden" name="date_range" value="custom">
 
                         <div>

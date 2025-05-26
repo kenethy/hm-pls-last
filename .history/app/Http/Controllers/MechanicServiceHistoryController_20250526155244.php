@@ -26,12 +26,16 @@ class MechanicServiceHistoryController extends Controller
 
         // Get filter parameters
         $status = request()->query('status', 'completed');
+        $paymentStatus = request()->query('payment_status', 'all');
         $dateRange = request()->query('date_range', 'all_time');
         $customStartDate = request()->query('start_date');
         $customEndDate = request()->query('end_date');
 
         // Apply date filtering
         $this->applyDateFiltering($servicesQuery, $record, $dateRange, $customStartDate, $customEndDate);
+
+        // Apply payment status filtering
+        $this->applyPaymentStatusFiltering($servicesQuery, $paymentStatus);
 
         $allServices = $servicesQuery->orderBy('services.created_at', 'desc')->get();
 
@@ -46,6 +50,7 @@ class MechanicServiceHistoryController extends Controller
             'record',
             'services',
             'status',
+            'paymentStatus',
             'dateRange',
             'customStartDate',
             'customEndDate'
@@ -94,6 +99,25 @@ class MechanicServiceHistoryController extends Controller
                 $query->where('mechanic_service.week_start', $record->week_start)
                     ->where('mechanic_service.week_end', $record->week_end);
             }
+        }
+    }
+
+    /**
+     * Apply payment status filtering to the services query
+     */
+    private function applyPaymentStatusFiltering($query, $paymentStatus)
+    {
+        switch ($paymentStatus) {
+            case 'paid':
+                $query->where('services.is_paid', true);
+                break;
+            case 'unpaid':
+                $query->where('services.is_paid', false);
+                break;
+            case 'all':
+            default:
+                // No payment status filtering
+                break;
         }
     }
 }
