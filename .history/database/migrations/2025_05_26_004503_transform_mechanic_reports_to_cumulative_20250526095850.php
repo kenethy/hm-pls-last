@@ -66,7 +66,7 @@ return new class extends Migration
         // Step 6: Re-enable foreign key checks
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
-        // Step 7: Generate initial cumulative reports for each mechanic
+        // Step 8: Generate initial cumulative reports for each mechanic
         $mechanics = DB::table('mechanics')->where('is_active', true)->get();
 
         foreach ($mechanics as $mechanic) {
@@ -104,32 +104,42 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // MySQL-safe rollback: Create original table structure, restore data, then replace
+        // Step 1: Remove new unique constraint
+        Schema::table('mechanic_reports', function (Blueprint $table) {
+            $table->dropUnique('mechanic_reports_mechanic_cumulative_unique');
+        });
 
-        // Step 1: Create original weekly table structure
-        Schema::create('mechanic_reports_weekly', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('mechanic_id')->constrained('mechanics')->onDelete('cascade');
-            $table->date('week_start');
-            $table->date('week_end');
-            $table->integer('services_count')->default(0);
-            $table->decimal('total_labor_cost', 10, 2)->default(0);
-            $table->text('notes')->nullable();
-            $table->boolean('is_paid')->default(false);
-            $table->timestamp('paid_at')->nullable();
-            $table->timestamps();
+        // Step 2: Add back week columns
+        Schema::table('mechanic_reports', function (Blueprint $table) {
+            $table->date('week_start')->nullable()->after('mechanic_id');
+            $table->date('week_end')->nullable()->after('week_start');
+        });
 
-            // Original unique constraint
+        // Step 3: Copy data from period columns to week columns
+        DB::statement('UPDATE mechanic_reports SET week_start = period_start, week_end = period_end WHERE period_start IS NOT NULL AND period_end IS NOT NULL');
+
+        // Step 4: Remove cumulative columns
+        Schema::table('mechanic_reports', function (Blueprint $table) {
+            $table->dropColumn(['is_cumulative', 'last_calculated_at', 'period_reset_at', 'period_start', 'period_end']);
+        });
+
+        // Step 5: Make week dates required and restore original unique constraint
+        Schema::table('mechanic_reports', function (Blueprint $table) {
+            $table->date('week_start')->nullable(false)->change();
+            $table->date('week_end')->nullable(false)->change();
             $table->unique(['mechanic_id', 'week_start', 'week_end']);
         });
 
-        // Step 2: Restore archived weekly reports to new table
+        // Step 6: Clear cumulative reports
+        DB::table('mechanic_reports')->truncate();
+
+        // Step 7: Restore archived weekly reports
         $archivedReports = DB::table('mechanic_report_archives')
             ->where('archive_reason', 'weekly_to_cumulative_migration')
             ->get();
 
         foreach ($archivedReports as $report) {
-            DB::table('mechanic_reports_weekly')->insert([
+            DB::table('mechanic_reports')->insert([
                 'mechanic_id' => $report->mechanic_id,
                 'week_start' => $report->week_start,
                 'week_end' => $report->week_end,
@@ -142,17 +152,5 @@ return new class extends Migration
                 'updated_at' => $report->updated_at,
             ]);
         }
-
-        // Step 3: Disable foreign key checks temporarily for table replacement
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
-
-        // Step 4: Drop the cumulative table
-        Schema::dropIfExists('mechanic_reports');
-
-        // Step 5: Rename weekly table to original name
-        Schema::rename('mechanic_reports_weekly', 'mechanic_reports');
-
-        // Step 6: Re-enable foreign key checks
-        DB::statement('SET FOREIGN_KEY_CHECKS=1');
     }
 };
