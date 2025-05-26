@@ -87,40 +87,24 @@ class MechanicReport extends Model
             throw new \Exception('This method can only be called on cumulative reports');
         }
 
-        // Use a database transaction to ensure data integrity
-        return \Illuminate\Support\Facades\DB::transaction(function () {
-            // Calculate cumulative statistics from all completed services
-            $stats = \Illuminate\Support\Facades\DB::table('mechanic_service')
-                ->join('services', 'mechanic_service.service_id', '=', 'services.id')
-                ->where('mechanic_service.mechanic_id', $this->mechanic_id)
-                ->where('services.status', 'completed')
-                ->selectRaw('
-                    COUNT(*) as total_services,
-                    COALESCE(SUM(mechanic_service.labor_cost), 0) as total_labor_cost
-                ')
-                ->first();
+        // Calculate cumulative statistics from all completed services
+        $stats = \Illuminate\Support\Facades\DB::table('mechanic_service')
+            ->join('services', 'mechanic_service.service_id', '=', 'services.id')
+            ->where('mechanic_service.mechanic_id', $this->mechanic_id)
+            ->where('services.status', 'completed')
+            ->selectRaw('
+                COUNT(*) as total_services,
+                COALESCE(SUM(mechanic_service.labor_cost), 0) as total_labor_cost
+            ')
+            ->first();
 
-            // Log the calculation for debugging
-            \Illuminate\Support\Facades\Log::info("Recalculating cumulative report for mechanic {$this->mechanic_id}", [
-                'report_id' => $this->id,
-                'calculated_services' => $stats->total_services ?? 0,
-                'calculated_labor_cost' => $stats->total_labor_cost ?? 0,
-                'current_services' => $this->services_count,
-                'current_labor_cost' => $this->total_labor_cost,
-            ]);
+        // Update the report
+        $this->services_count = $stats->total_services ?? 0;
+        $this->total_labor_cost = $stats->total_labor_cost ?? 0;
+        $this->last_calculated_at = now();
+        $this->save();
 
-            // Update the report using update() method to ensure it's saved properly
-            $this->update([
-                'services_count' => $stats->total_services ?? 0,
-                'total_labor_cost' => $stats->total_labor_cost ?? 0,
-                'last_calculated_at' => now(),
-            ]);
-
-            // Refresh the model to get the latest data
-            $this->refresh();
-
-            return $this;
-        });
+        return $this;
     }
 
     /**
