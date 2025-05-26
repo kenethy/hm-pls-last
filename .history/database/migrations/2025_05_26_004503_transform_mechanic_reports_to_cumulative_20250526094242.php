@@ -67,7 +67,7 @@ return new class extends Migration
             $table->unique(['mechanic_id', 'is_cumulative'], 'mechanic_reports_mechanic_cumulative_unique');
         });
 
-        // Step 8: Generate initial cumulative reports for each mechanic
+        // Step 4: Generate initial cumulative reports for each mechanic
         $mechanics = DB::table('mechanics')->where('is_active', true)->get();
 
         foreach ($mechanics as $mechanic) {
@@ -105,36 +105,28 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Step 1: Remove new unique constraint
+        // Step 1: Restore original structure
         Schema::table('mechanic_reports', function (Blueprint $table) {
-            $table->dropUnique('mechanic_reports_mechanic_cumulative_unique');
-        });
+            // Remove cumulative fields
+            $table->dropUnique(['mechanic_id', 'is_cumulative']);
+            $table->dropColumn(['is_cumulative', 'last_calculated_at', 'period_reset_at']);
 
-        // Step 2: Add back week columns
-        Schema::table('mechanic_reports', function (Blueprint $table) {
-            $table->date('week_start')->nullable()->after('mechanic_id');
-            $table->date('week_end')->nullable()->after('week_start');
-        });
+            // Rename back to week fields
+            $table->renameColumn('period_start', 'week_start');
+            $table->renameColumn('period_end', 'week_end');
 
-        // Step 3: Copy data from period columns to week columns
-        DB::statement('UPDATE mechanic_reports SET week_start = period_start, week_end = period_end WHERE period_start IS NOT NULL AND period_end IS NOT NULL');
-
-        // Step 4: Remove cumulative columns
-        Schema::table('mechanic_reports', function (Blueprint $table) {
-            $table->dropColumn(['is_cumulative', 'last_calculated_at', 'period_reset_at', 'period_start', 'period_end']);
-        });
-
-        // Step 5: Make week dates required and restore original unique constraint
-        Schema::table('mechanic_reports', function (Blueprint $table) {
+            // Make week dates required again
             $table->date('week_start')->nullable(false)->change();
             $table->date('week_end')->nullable(false)->change();
+
+            // Restore unique constraint
             $table->unique(['mechanic_id', 'week_start', 'week_end']);
         });
 
-        // Step 6: Clear cumulative reports
+        // Step 2: Clear cumulative reports
         DB::table('mechanic_reports')->truncate();
 
-        // Step 7: Restore archived weekly reports
+        // Step 3: Restore archived weekly reports
         $archivedReports = DB::table('mechanic_report_archives')
             ->where('archive_reason', 'weekly_to_cumulative_migration')
             ->get();
