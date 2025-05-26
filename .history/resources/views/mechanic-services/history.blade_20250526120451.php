@@ -53,11 +53,7 @@
 
             <div class="mt-4">
                 <p class="text-sm font-medium text-gray-700">
-                    @if($record->is_cumulative)
-                    Berikut adalah daftar semua servis yang telah dikerjakan oleh montir ini.
-                    @else
                     Berikut adalah daftar servis yang telah diselesaikan oleh montir pada periode ini.
-                    @endif
                 </p>
             </div>
         </div>

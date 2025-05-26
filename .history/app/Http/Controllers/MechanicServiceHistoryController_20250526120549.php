@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MechanicReport;
 use App\Models\Service;
+use Illuminate\Http\Request;
 
 class MechanicServiceHistoryController extends Controller
 {
