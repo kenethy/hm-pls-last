@@ -119,19 +119,6 @@ The Enhanced Spare Parts Management System is a comprehensive solution for manag
 - ✅ Stock status badges
 - ✅ Bulk operations
 
-### **Marketplace Integration**
-- ✅ Multi-platform link management (Shopee, Tokopedia, Lazada, Bukalapak)
-- ✅ Dynamic URL validation
-- ✅ Platform-specific placeholders
-- ✅ Visual marketplace indicators
-
-### **Pricing Notification Management**
-- ✅ Configurable notification settings
-- ✅ Multiple display types (banner, modal, sticky)
-- ✅ Editable messages and CTA text
-- ✅ WhatsApp integration settings
-- ✅ Cache management for settings
-
 ### **Image Management**
 - ✅ Featured image selection
 - ✅ Multiple product images
@@ -193,17 +180,9 @@ GET /sparepart/{slug} - Product detail page
 6. **Kelistrikan** - Electrical and electronic components
 
 ### **Sample Products**
-1. **Shell Helix Ultra 5W-40** - Premium synthetic engine oil (with Tokopedia, Shopee, Lazada links)
-2. **Castrol GTX 20W-50** - Conventional engine oil (with Tokopedia, Shopee links)
-3. **NGK Spark Plug Iridium** - Premium spark plugs (with Tokopedia, Shopee, Bukalapak links)
-
-### **Default Pricing Notification Settings**
-- **Enabled**: Yes
-- **Title**: "Harga Toko Lebih Murah!"
-- **Message**: Professional message about offline vs online pricing
-- **Display Type**: Banner (configurable to modal or sticky)
-- **WhatsApp Integration**: Direct link to inquiry
-- **CTA Text**: "Hubungi WhatsApp untuk Harga Terbaik"
+1. **Shell Helix Ultra 5W-40** - Premium synthetic engine oil
+2. **Castrol GTX 20W-50** - Conventional engine oil
+3. **NGK Spark Plug Iridium** - Premium spark plugs
 
 ## 🚀 Installation Instructions
 
@@ -252,25 +231,6 @@ docker exec [container] php artisan storage:link
    - Compatibility (vehicle models)
    - Display settings (featured, best seller flags)
    - SEO optimization
-
-### **Marketplace Links Management**
-1. Navigate to product edit form
-2. Scroll to "Link Marketplace" section
-3. Click "Tambah Link Marketplace"
-4. Select platform (Shopee, Tokopedia, Lazada, Bukalapak)
-5. Enter complete product URL
-6. Save changes
-
-### **Pricing Notification Configuration**
-1. Navigate to "Manajemen Sparepart" → "Pengaturan Sparepart"
-2. Edit notification settings:
-   - **pricing_notification_enabled**: Enable/disable notifications
-   - **pricing_notification_title**: Notification title
-   - **pricing_notification_message**: Main message content
-   - **pricing_notification_cta_text**: Button text
-   - **pricing_notification_whatsapp_number**: WhatsApp number
-   - **pricing_notification_display_type**: banner/modal/sticky
-3. Use "Bersihkan Cache" button to apply changes immediately
 
 ### **Image Upload Guidelines**
 - **Featured Image**: Main product photo (recommended: 800x600px)

@@ -143,20 +143,6 @@ class SparePartSeeder extends Seeder
                 'meta_title' => 'NGK Spark Plug Iridium - Busi Premium Tahan Lama',
                 'meta_description' => 'Busi NGK Iridium dengan teknologi elektroda iridium. Pembakaran sempurna dan tahan hingga 100.000 km.',
                 'meta_keywords' => 'ngk busi, busi iridium, spark plug, busi premium',
-                'marketplace_links' => [
-                    [
-                        'platform' => 'tokopedia',
-                        'url' => 'https://www.tokopedia.com/hartono-m/ngk-spark-plug-iridium',
-                    ],
-                    [
-                        'platform' => 'shopee',
-                        'url' => 'https://shopee.co.id/hartono_motor/ngk-spark-plug-iridium',
-                    ],
-                    [
-                        'platform' => 'bukalapak',
-                        'url' => 'https://www.bukalapak.com/p/otomotif/ngk-spark-plug-iridium',
-                    ],
-                ],
             ],
         ];
 

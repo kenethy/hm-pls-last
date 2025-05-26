@@ -1,0 +1,128 @@
+/* Marketplace Icons CSS */
+.marketplace-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    font-size: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.marketplace-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.marketplace-icon.shopee {
+    background-color: #ee4d2d;
+}
+
+.marketplace-icon.tokopedia {
+    background-color: #42b549;
+}
+
+.marketplace-icon.lazada {
+    background-color: #0f146d;
+}
+
+.marketplace-icon.bukalapak {
+    background-color: #e31e24;
+}
+
+/* Larger marketplace buttons */
+.marketplace-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.marketplace-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    color: white;
+    text-decoration: none;
+}
+
+.marketplace-button.shopee {
+    background-color: #ee4d2d;
+}
+
+.marketplace-button.shopee:hover {
+    background-color: #d73211;
+}
+
+.marketplace-button.tokopedia {
+    background-color: #42b549;
+}
+
+.marketplace-button.tokopedia:hover {
+    background-color: #369e3d;
+}
+
+.marketplace-button.lazada {
+    background-color: #0f146d;
+}
+
+.marketplace-button.lazada:hover {
+    background-color: #0c1158;
+}
+
+.marketplace-button.bukalapak {
+    background-color: #e31e24;
+}
+
+.marketplace-button.bukalapak:hover {
+    background-color: #c71920;
+}
+
+/* Marketplace icons using text */
+.marketplace-icon-text {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 1;
+}
+
+/* Responsive marketplace buttons */
+@media (max-width: 768px) {
+    .marketplace-button {
+        padding: 6px 12px;
+        font-size: 12px;
+        gap: 6px;
+    }
+    
+    .marketplace-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 8px;
+    }
+}
+
+/* Marketplace grid layout */
+.marketplace-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+@media (max-width: 480px) {
+    .marketplace-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+}

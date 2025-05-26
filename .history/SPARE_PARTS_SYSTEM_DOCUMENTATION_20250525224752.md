@@ -19,24 +19,10 @@ The Enhanced Spare Parts Management System is a comprehensive solution for manag
 - **Comprehensive Tables**: Filtering, searching, sorting, bulk actions
 - **Permission System**: Admin-only access (staff users excluded)
 
-### **3. Marketplace Integration**
-- **Multi-Platform Support**: Shopee, Tokopedia, Lazada, Bukalapak
-- **Dynamic Links**: Admin-configurable marketplace URLs
-- **Visual Integration**: Marketplace icons and buttons
-- **Professional Styling**: Color-coded platform buttons
-
-### **4. Pricing Notification System**
-- **Multiple Display Types**: Banner, modal popup, sticky notification
-- **Admin Configurable**: Editable messages and settings
-- **Session Management**: Prevents repeated notifications
-- **WhatsApp Integration**: Direct CTA to WhatsApp inquiry
-- **Mobile Responsive**: Optimized for all devices
-
-### **5. Frontend Integration**
+### **3. Frontend Integration**
 - **Updated Controller**: Fetches data from database instead of hardcoded
 - **New Routes**: Category and product detail pages
 - **Backward Compatibility**: Maintains existing page structure and styling
-- **Enhanced UX**: Pricing notifications and marketplace integration
 
 ## 🗂️ Database Schema
 
@@ -78,19 +64,7 @@ The Enhanced Spare Parts Management System is a comprehensive solution for manag
 - order (Display order)
 - warranty_period (Warranty information)
 - installation_notes (Installation instructions)
-- marketplace_links (JSON array of marketplace platform links)
 - meta_title, meta_description, meta_keywords (SEO)
-- timestamps
-```
-
-### **spare_part_settings Table**
-```sql
-- id (Primary Key)
-- key (Setting key/identifier)
-- value (Setting value)
-- description (Setting description)
-- type (text/textarea/boolean/number)
-- is_active (Active status)
 - timestamps
 ```
 
@@ -118,19 +92,6 @@ The Enhanced Spare Parts Management System is a comprehensive solution for manag
 - ✅ Low stock alerts
 - ✅ Stock status badges
 - ✅ Bulk operations
-
-### **Marketplace Integration**
-- ✅ Multi-platform link management (Shopee, Tokopedia, Lazada, Bukalapak)
-- ✅ Dynamic URL validation
-- ✅ Platform-specific placeholders
-- ✅ Visual marketplace indicators
-
-### **Pricing Notification Management**
-- ✅ Configurable notification settings
-- ✅ Multiple display types (banner, modal, sticky)
-- ✅ Editable messages and CTA text
-- ✅ WhatsApp integration settings
-- ✅ Cache management for settings
 
 ### **Image Management**
 - ✅ Featured image selection
@@ -193,17 +154,9 @@ GET /sparepart/{slug} - Product detail page
 6. **Kelistrikan** - Electrical and electronic components
 
 ### **Sample Products**
-1. **Shell Helix Ultra 5W-40** - Premium synthetic engine oil (with Tokopedia, Shopee, Lazada links)
-2. **Castrol GTX 20W-50** - Conventional engine oil (with Tokopedia, Shopee links)
-3. **NGK Spark Plug Iridium** - Premium spark plugs (with Tokopedia, Shopee, Bukalapak links)
-
-### **Default Pricing Notification Settings**
-- **Enabled**: Yes
-- **Title**: "Harga Toko Lebih Murah!"
-- **Message**: Professional message about offline vs online pricing
-- **Display Type**: Banner (configurable to modal or sticky)
-- **WhatsApp Integration**: Direct link to inquiry
-- **CTA Text**: "Hubungi WhatsApp untuk Harga Terbaik"
+1. **Shell Helix Ultra 5W-40** - Premium synthetic engine oil
+2. **Castrol GTX 20W-50** - Conventional engine oil
+3. **NGK Spark Plug Iridium** - Premium spark plugs
 
 ## 🚀 Installation Instructions
 
@@ -252,25 +205,6 @@ docker exec [container] php artisan storage:link
    - Compatibility (vehicle models)
    - Display settings (featured, best seller flags)
    - SEO optimization
-
-### **Marketplace Links Management**
-1. Navigate to product edit form
-2. Scroll to "Link Marketplace" section
-3. Click "Tambah Link Marketplace"
-4. Select platform (Shopee, Tokopedia, Lazada, Bukalapak)
-5. Enter complete product URL
-6. Save changes
-
-### **Pricing Notification Configuration**
-1. Navigate to "Manajemen Sparepart" → "Pengaturan Sparepart"
-2. Edit notification settings:
-   - **pricing_notification_enabled**: Enable/disable notifications
-   - **pricing_notification_title**: Notification title
-   - **pricing_notification_message**: Main message content
-   - **pricing_notification_cta_text**: Button text
-   - **pricing_notification_whatsapp_number**: WhatsApp number
-   - **pricing_notification_display_type**: banner/modal/sticky
-3. Use "Bersihkan Cache" button to apply changes immediately
 
 ### **Image Upload Guidelines**
 - **Featured Image**: Main product photo (recommended: 800x600px)

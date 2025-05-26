@@ -253,25 +253,6 @@ docker exec [container] php artisan storage:link
    - Display settings (featured, best seller flags)
    - SEO optimization
 
-### **Marketplace Links Management**
-1. Navigate to product edit form
-2. Scroll to "Link Marketplace" section
-3. Click "Tambah Link Marketplace"
-4. Select platform (Shopee, Tokopedia, Lazada, Bukalapak)
-5. Enter complete product URL
-6. Save changes
-
-### **Pricing Notification Configuration**
-1. Navigate to "Manajemen Sparepart" → "Pengaturan Sparepart"
-2. Edit notification settings:
-   - **pricing_notification_enabled**: Enable/disable notifications
-   - **pricing_notification_title**: Notification title
-   - **pricing_notification_message**: Main message content
-   - **pricing_notification_cta_text**: Button text
-   - **pricing_notification_whatsapp_number**: WhatsApp number
-   - **pricing_notification_display_type**: banner/modal/sticky
-3. Use "Bersihkan Cache" button to apply changes immediately
-
 ### **Image Upload Guidelines**
 - **Featured Image**: Main product photo (recommended: 800x600px)
 - **Gallery Images**: Additional product photos (max 10 images)

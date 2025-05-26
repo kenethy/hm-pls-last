@@ -1086,58 +1086,6 @@
 
 @push('scripts')
 <script>
-    // Pricing Notification Functions
-    function showPricingModal() {
-        const modal = document.getElementById('pricingModal');
-        if (modal) {
-            modal.classList.add('show');
-        }
-    }
-
-    function closePricingModal() {
-        const modal = document.getElementById('pricingModal');
-        if (modal) {
-            modal.classList.remove('show');
-            // Set session storage to prevent showing again
-            sessionStorage.setItem('pricingNotificationShown', 'true');
-        }
-    }
-
-    function showPricingSticky() {
-        const sticky = document.getElementById('pricingSticky');
-        if (sticky) {
-            setTimeout(() => {
-                sticky.classList.add('show');
-            }, 3000); // Show after 3 seconds
-        }
-    }
-
-    function closePricingSticky() {
-        const sticky = document.getElementById('pricingSticky');
-        if (sticky) {
-            sticky.classList.remove('show');
-            // Set session storage to prevent showing again
-            sessionStorage.setItem('pricingNotificationShown', 'true');
-        }
-    }
-
-    // Initialize pricing notifications
-    document.addEventListener('DOMContentLoaded', function () {
-        @if (isset($pricingNotification) && $pricingNotification['enabled'])
-            const notificationShown = sessionStorage.getItem('pricingNotificationShown');
-
-        @if ($pricingNotification['display_type'] === 'modal')
-            if (!notificationShown) {
-                setTimeout(showPricingModal, 2000); // Show modal after 2 seconds
-            }
-        @elseif($pricingNotification['display_type'] === 'sticky')
-        if (!notificationShown) {
-            showPricingSticky();
-        }
-        @endif
-        @endif
-    });
-
     // WhatsApp Product Inquiry Function
     function askAboutProduct(productName, productDetails) {
         const message = `Halo Hartono Motor,

@@ -53,20 +53,6 @@ class SparePartSeeder extends Seeder
                 'meta_title' => 'Shell Helix Ultra 5W-40 - Oli Mesin Sintetis Premium',
                 'meta_description' => 'Beli Shell Helix Ultra 5W-40 oli mesin sintetis premium di Hartono Motor. Perlindungan maksimal untuk mesin modern dengan harga terbaik.',
                 'meta_keywords' => 'shell helix ultra, oli mesin sintetis, 5w-40, oli premium',
-                'marketplace_links' => [
-                    [
-                        'platform' => 'tokopedia',
-                        'url' => 'https://www.tokopedia.com/hartono-m/shell-helix-ultra-5w-40',
-                    ],
-                    [
-                        'platform' => 'shopee',
-                        'url' => 'https://shopee.co.id/hartono_motor/shell-helix-ultra-5w-40',
-                    ],
-                    [
-                        'platform' => 'lazada',
-                        'url' => 'https://www.lazada.co.id/shop/hartono-motor-sidoarjo/shell-helix-ultra',
-                    ],
-                ],
             ],
             [
                 'name' => 'Castrol GTX 20W-50',
@@ -100,16 +86,6 @@ class SparePartSeeder extends Seeder
                 'meta_title' => 'Castrol GTX 20W-50 - Oli Mesin Konvensional Terpercaya',
                 'meta_description' => 'Oli mesin Castrol GTX 20W-50 dengan Double Action Formula. Perlindungan optimal untuk mesin dengan harga ekonomis.',
                 'meta_keywords' => 'castrol gtx, oli mesin konvensional, 20w-50, oli murah',
-                'marketplace_links' => [
-                    [
-                        'platform' => 'tokopedia',
-                        'url' => 'https://www.tokopedia.com/hartono-m/castrol-gtx-20w-50',
-                    ],
-                    [
-                        'platform' => 'shopee',
-                        'url' => 'https://shopee.co.id/hartono_motor/castrol-gtx-20w-50',
-                    ],
-                ],
             ],
             [
                 'name' => 'NGK Spark Plug Iridium',
@@ -143,20 +119,6 @@ class SparePartSeeder extends Seeder
                 'meta_title' => 'NGK Spark Plug Iridium - Busi Premium Tahan Lama',
                 'meta_description' => 'Busi NGK Iridium dengan teknologi elektroda iridium. Pembakaran sempurna dan tahan hingga 100.000 km.',
                 'meta_keywords' => 'ngk busi, busi iridium, spark plug, busi premium',
-                'marketplace_links' => [
-                    [
-                        'platform' => 'tokopedia',
-                        'url' => 'https://www.tokopedia.com/hartono-m/ngk-spark-plug-iridium',
-                    ],
-                    [
-                        'platform' => 'shopee',
-                        'url' => 'https://shopee.co.id/hartono_motor/ngk-spark-plug-iridium',
-                    ],
-                    [
-                        'platform' => 'bukalapak',
-                        'url' => 'https://www.bukalapak.com/p/otomotif/ngk-spark-plug-iridium',
-                    ],
-                ],
             ],
         ];
 

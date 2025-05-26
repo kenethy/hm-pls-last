@@ -100,16 +100,6 @@ class SparePartSeeder extends Seeder
                 'meta_title' => 'Castrol GTX 20W-50 - Oli Mesin Konvensional Terpercaya',
                 'meta_description' => 'Oli mesin Castrol GTX 20W-50 dengan Double Action Formula. Perlindungan optimal untuk mesin dengan harga ekonomis.',
                 'meta_keywords' => 'castrol gtx, oli mesin konvensional, 20w-50, oli murah',
-                'marketplace_links' => [
-                    [
-                        'platform' => 'tokopedia',
-                        'url' => 'https://www.tokopedia.com/hartono-m/castrol-gtx-20w-50',
-                    ],
-                    [
-                        'platform' => 'shopee',
-                        'url' => 'https://shopee.co.id/hartono_motor/castrol-gtx-20w-50',
-                    ],
-                ],
             ],
             [
                 'name' => 'NGK Spark Plug Iridium',
@@ -143,20 +133,6 @@ class SparePartSeeder extends Seeder
                 'meta_title' => 'NGK Spark Plug Iridium - Busi Premium Tahan Lama',
                 'meta_description' => 'Busi NGK Iridium dengan teknologi elektroda iridium. Pembakaran sempurna dan tahan hingga 100.000 km.',
                 'meta_keywords' => 'ngk busi, busi iridium, spark plug, busi premium',
-                'marketplace_links' => [
-                    [
-                        'platform' => 'tokopedia',
-                        'url' => 'https://www.tokopedia.com/hartono-m/ngk-spark-plug-iridium',
-                    ],
-                    [
-                        'platform' => 'shopee',
-                        'url' => 'https://shopee.co.id/hartono_motor/ngk-spark-plug-iridium',
-                    ],
-                    [
-                        'platform' => 'bukalapak',
-                        'url' => 'https://www.bukalapak.com/p/otomotif/ngk-spark-plug-iridium',
-                    ],
-                ],
             ],
         ];
 

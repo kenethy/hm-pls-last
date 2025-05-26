@@ -82,7 +82,6 @@ class AdminPanelProvider extends PanelProvider
                 ServiceReportTemplateResource::class,
                 SparePartCategoryResource::class,
                 SparePartResource::class,
-                SparePartSettingResource::class,
             ])
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

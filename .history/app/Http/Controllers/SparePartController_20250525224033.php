@@ -34,9 +34,6 @@ class SparePartController extends Controller
             ->limit(4)
             ->get();
 
-        // Get pricing notification settings
-        $pricingNotification = SparePartSetting::getPricingNotificationSettings();
-
         return view('pages.spare-parts', [
             'title' => 'Toko Sparepart Mobil Terlengkap di Sidoarjo - Hartono Motor',
             'metaDescription' => 'Toko sparepart mobil terlengkap di Sidoarjo. Oli mesin, kampas rem, kopling, busi, dan ribuan sparepart original & aftermarket. Belanja online di Tokopedia, Shopee, Lazada. Konsultasi gratis via WhatsApp!',
@@ -46,7 +43,6 @@ class SparePartController extends Controller
             'categories' => $categories,
             'featuredProducts' => $featuredProducts,
             'bestSellerProducts' => $bestSellerProducts,
-            'pricingNotification' => $pricingNotification,
         ]);
     }
 

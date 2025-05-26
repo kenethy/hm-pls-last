@@ -22,9 +22,6 @@ echo "🌱 Running seeders..."
 docker exec $CONTAINER_NAME php artisan db:seed --class=SparePartCategorySeeder --force
 docker exec $CONTAINER_NAME php artisan db:seed --class=SparePartSeeder --force
 
-echo "⚙️ Setting up pricing notification settings..."
-# The settings are automatically created by the migration
-
 # Clear cache
 echo "🧹 Clearing cache..."
 docker exec $CONTAINER_NAME php artisan cache:clear
@@ -40,14 +37,11 @@ echo "✅ Spare Parts Management System setup complete!"
 echo ""
 echo "📋 What's been created:"
 echo "   • Spare Part Categories table and model"
-echo "   • Spare Parts table and model with marketplace links"
-echo "   • Spare Part Settings table for pricing notifications"
-echo "   • Filament admin resources for all components"
-echo "   • Sample categories and products with marketplace links"
+echo "   • Spare Parts table and model"
+echo "   • Filament admin resources for both"
+echo "   • Sample categories and products"
 echo "   • Updated controller with database integration"
 echo "   • New routes for category and product pages"
-echo "   • Pricing notification system (banner/modal/sticky)"
-echo "   • Marketplace integration (Shopee, Tokopedia, Lazada, Bukalapak)"
 echo ""
 echo "🎯 Next steps:"
 echo "   1. Login to admin panel: /admin"
@@ -64,7 +58,4 @@ echo "   • SEO fields"
 echo "   • Product specifications and compatibility"
 echo "   • Featured and best seller flags"
 echo "   • Advanced filtering and search"
-echo "   • Marketplace links management (Shopee, Tokopedia, Lazada, Bukalapak)"
-echo "   • Pricing notification settings (banner/modal/sticky)"
-echo "   • Customizable notification messages and WhatsApp integration"
 echo ""

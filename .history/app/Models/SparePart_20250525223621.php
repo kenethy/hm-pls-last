@@ -49,7 +49,6 @@ class SparePart extends Model
         'images' => 'array',
         'specifications' => 'array',
         'compatibility' => 'array',
-        'marketplace_links' => 'array',
         'is_featured' => 'boolean',
         'is_best_seller' => 'boolean',
         'is_original' => 'boolean',
@@ -214,78 +213,5 @@ class SparePart extends Model
         return array_map(function ($image) {
             return asset('storage/' . $image);
         }, $this->images);
-    }
-
-    /**
-     * Get available marketplace links.
-     */
-    public function getAvailableMarketplacesAttribute(): array
-    {
-        if (!$this->marketplace_links) {
-            return [];
-        }
-
-        return array_filter($this->marketplace_links, function ($link) {
-            return !empty($link['url']);
-        });
-    }
-
-    /**
-     * Check if product has marketplace links.
-     */
-    public function getHasMarketplaceLinksAttribute(): bool
-    {
-        return count($this->available_marketplaces) > 0;
-    }
-
-    /**
-     * Get marketplace link by platform.
-     */
-    public function getMarketplaceLink(string $platform): ?string
-    {
-        if (!$this->marketplace_links) {
-            return null;
-        }
-
-        foreach ($this->marketplace_links as $link) {
-            if (isset($link['platform']) && $link['platform'] === $platform && !empty($link['url'])) {
-                return $link['url'];
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Get marketplace platforms configuration.
-     */
-    public static function getMarketplacePlatforms(): array
-    {
-        return [
-            'shopee' => [
-                'name' => 'Shopee',
-                'icon' => 'shopee-icon.svg',
-                'color' => '#ee4d2d',
-                'placeholder' => 'https://shopee.co.id/product/...',
-            ],
-            'tokopedia' => [
-                'name' => 'Tokopedia',
-                'icon' => 'tokopedia-icon.svg',
-                'color' => '#42b549',
-                'placeholder' => 'https://www.tokopedia.com/...',
-            ],
-            'lazada' => [
-                'name' => 'Lazada',
-                'icon' => 'lazada-icon.svg',
-                'color' => '#0f146d',
-                'placeholder' => 'https://www.lazada.co.id/products/...',
-            ],
-            'bukalapak' => [
-                'name' => 'Bukalapak',
-                'icon' => 'bukalapak-icon.svg',
-                'color' => '#e31e24',
-                'placeholder' => 'https://www.bukalapak.com/p/...',
-            ],
-        ];
     }
 }

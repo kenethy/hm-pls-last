@@ -207,7 +207,13 @@ class SparePartResource extends Resource
                                     ->label('URL Produk')
                                     ->url()
                                     ->required()
-                                    ->placeholder('https://...')
+                                    ->placeholder(fn (Forms\Get $get) => {
+                                        $platforms = \App\Models\SparePart::getMarketplacePlatforms();
+                                        $platform = $get('platform');
+                                        return $platform && isset($platforms[$platform])
+                                            ? $platforms[$platform]['placeholder']
+                                            : 'https://...';
+                                    })
                                     ->helperText('Masukkan URL lengkap produk di marketplace'),
 
                                 Forms\Components\Hidden::make('placeholder'),
