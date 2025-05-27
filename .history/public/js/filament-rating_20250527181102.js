@@ -312,87 +312,38 @@ class FilamentRatingSystem {
      * Display mechanics for rating
      */
     displayMechanics(mechanics) {
-        console.log('🔧 displayMechanics called with:', mechanics);
-
         this.mechanics = mechanics;
         const container = document.getElementById('mechanicsContainer');
         const template = document.getElementById('mechanicRatingTemplate');
 
-        if (!container) {
-            console.error('❌ mechanicsContainer not found');
-            return;
-        }
-
-        if (!template) {
-            console.error('❌ mechanicRatingTemplate not found');
-            return;
-        }
-
-        console.log('✅ Container and template found');
         container.innerHTML = '';
 
-        mechanics.forEach((mechanic, index) => {
-            console.log(`🔧 Processing mechanic ${index + 1}:`, mechanic);
-
+        mechanics.forEach(mechanic => {
             const mechanicCard = template.content.cloneNode(true);
 
             // Set mechanic info
-            const nameElement = mechanicCard.querySelector('.mechanic-name');
-            const specializationElement = mechanicCard.querySelector('.mechanic-specialization');
-
-            if (nameElement) {
-                nameElement.textContent = mechanic.name;
-                console.log(`✅ Set name: ${mechanic.name}`);
-            } else {
-                console.error('❌ .mechanic-name element not found in template');
-            }
-
-            if (specializationElement) {
-                specializationElement.textContent = mechanic.specialization || 'Montir Umum';
-                console.log(`✅ Set specialization: ${mechanic.specialization || 'Montir Umum'}`);
-            } else {
-                console.error('❌ .mechanic-specialization element not found in template');
-            }
+            mechanicCard.querySelector('.mechanic-name').textContent = mechanic.name;
+            mechanicCard.querySelector('.mechanic-specialization').textContent = mechanic.specialization || 'Montir Umum';
 
             // Set mechanic ID for star rating and submit button
             const starRating = mechanicCard.querySelector('.star-rating');
             const submitBtn = mechanicCard.querySelector('.submit-individual-rating');
-
-            if (starRating) {
-                starRating.setAttribute('data-mechanic-id', mechanic.id);
-                console.log(`✅ Set star rating mechanic ID: ${mechanic.id}`);
-
-                // Debug: Check if stars exist
-                const stars = starRating.querySelectorAll('.star');
-                console.log(`⭐ Found ${stars.length} stars in template`);
-            } else {
-                console.error('❌ .star-rating element not found in template');
-            }
-
-            if (submitBtn) {
-                submitBtn.setAttribute('data-mechanic-id', mechanic.id);
-                console.log(`✅ Set submit button mechanic ID: ${mechanic.id}`);
-            } else {
-                console.error('❌ .submit-individual-rating element not found in template');
-            }
+            starRating.setAttribute('data-mechanic-id', mechanic.id);
+            submitBtn.setAttribute('data-mechanic-id', mechanic.id);
 
             // Handle already rated mechanics
             if (mechanic.has_rating && mechanic.existing_rating) {
-                console.log(`📊 Mechanic ${mechanic.id} already has rating`);
                 this.displayExistingRating(mechanicCard, mechanic.existing_rating);
             } else {
-                console.log(`⭐ Setting up rating for mechanic ${mechanic.id}`);
                 this.setupStarRating(mechanicCard, mechanic.id);
                 this.setupSubmitButton(mechanicCard, mechanic.id);
                 this.updateStatusBadge(mechanicCard, 'pending');
             }
 
             container.appendChild(mechanicCard);
-            console.log(`✅ Mechanic ${mechanic.id} card added to container`);
         });
 
         this.updateSubmitAllButton();
-        console.log('✅ displayMechanics completed');
     }
 
     /**
