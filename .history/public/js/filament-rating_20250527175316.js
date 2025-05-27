@@ -94,20 +94,6 @@ class FilamentRatingSystem {
         console.log('✅ Modal element found:', modal);
         console.log('🔍 Modal Alpine.js data:', modal.__x);
 
-        // Debug modal styles BEFORE opening
-        console.log('📊 Modal styles BEFORE opening:', {
-            display: modal.style.display,
-            visibility: modal.style.visibility,
-            opacity: modal.style.opacity,
-            zIndex: modal.style.zIndex,
-            position: modal.style.position,
-            classes: modal.className,
-            computedDisplay: window.getComputedStyle(modal).display,
-            computedVisibility: window.getComputedStyle(modal).visibility,
-            computedOpacity: window.getComputedStyle(modal).opacity,
-            computedZIndex: window.getComputedStyle(modal).zIndex
-        });
-
         // Try multiple methods to show the modal
         let modalOpened = false;
 
@@ -127,23 +113,10 @@ class FilamentRatingSystem {
         if (!modalOpened) {
             try {
                 console.log('🎯 Opening modal using class manipulation...');
-                this.forceShowModal(modal);
+                modal.classList.remove('hidden');
+                modal.style.display = 'block';
                 modalOpened = true;
                 console.log('✅ Modal opened using class manipulation');
-
-                // Debug modal styles AFTER opening
-                console.log('📊 Modal styles AFTER opening:', {
-                    display: modal.style.display,
-                    visibility: modal.style.visibility,
-                    opacity: modal.style.opacity,
-                    zIndex: modal.style.zIndex,
-                    position: modal.style.position,
-                    classes: modal.className,
-                    computedDisplay: window.getComputedStyle(modal).display,
-                    computedVisibility: window.getComputedStyle(modal).visibility,
-                    computedOpacity: window.getComputedStyle(modal).opacity,
-                    computedZIndex: window.getComputedStyle(modal).zIndex
-                });
             } catch (error) {
                 console.warn('⚠️ Class manipulation method failed:', error);
             }
@@ -190,7 +163,8 @@ class FilamentRatingSystem {
         // Method 4: Emergency fallback if Alpine.js is not available
         if (!modalOpened) {
             console.log('🚨 Emergency fallback - showing modal without Alpine.js');
-            this.forceShowModal(modal);
+            modal.classList.remove('hidden');
+            modal.style.display = 'block';
             modalOpened = true;
             console.log('✅ Modal opened using emergency fallback');
         }
@@ -212,54 +186,6 @@ class FilamentRatingSystem {
         } else {
             console.error('❌ Failed to open modal using any method');
         }
-    }
-
-    /**
-     * Force show modal with aggressive styling
-     */
-    forceShowModal(modal) {
-        console.log('💪 Force showing modal with aggressive styling...');
-
-        // Remove all hiding classes
-        modal.classList.remove('hidden');
-        modal.classList.remove('opacity-0');
-        modal.classList.add('opacity-100');
-
-        // Set aggressive inline styles
-        modal.style.cssText = `
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            z-index: 99999 !important;
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            background: rgba(0, 0, 0, 0.5) !important;
-        `;
-
-        // Also force show child elements
-        const modalWindow = modal.querySelector('.fi-modal-window');
-        if (modalWindow) {
-            modalWindow.style.cssText = `
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-                transform: scale(1) !important;
-            `;
-        }
-
-        const overlay = modal.querySelector('.fi-modal-close-overlay');
-        if (overlay) {
-            overlay.style.cssText = `
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-            `;
-        }
-
-        console.log('💪 Modal forced to show with aggressive styling');
     }
 
     /**

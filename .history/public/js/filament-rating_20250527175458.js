@@ -127,7 +127,12 @@ class FilamentRatingSystem {
         if (!modalOpened) {
             try {
                 console.log('🎯 Opening modal using class manipulation...');
-                this.forceShowModal(modal);
+                modal.classList.remove('hidden');
+                modal.style.display = 'block';
+                modal.style.visibility = 'visible';
+                modal.style.opacity = '1';
+                modal.style.zIndex = '9999';
+                modal.style.position = 'fixed';
                 modalOpened = true;
                 console.log('✅ Modal opened using class manipulation');
 
@@ -190,7 +195,8 @@ class FilamentRatingSystem {
         // Method 4: Emergency fallback if Alpine.js is not available
         if (!modalOpened) {
             console.log('🚨 Emergency fallback - showing modal without Alpine.js');
-            this.forceShowModal(modal);
+            modal.classList.remove('hidden');
+            modal.style.display = 'block';
             modalOpened = true;
             console.log('✅ Modal opened using emergency fallback');
         }
@@ -212,54 +218,6 @@ class FilamentRatingSystem {
         } else {
             console.error('❌ Failed to open modal using any method');
         }
-    }
-
-    /**
-     * Force show modal with aggressive styling
-     */
-    forceShowModal(modal) {
-        console.log('💪 Force showing modal with aggressive styling...');
-
-        // Remove all hiding classes
-        modal.classList.remove('hidden');
-        modal.classList.remove('opacity-0');
-        modal.classList.add('opacity-100');
-
-        // Set aggressive inline styles
-        modal.style.cssText = `
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            z-index: 99999 !important;
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            background: rgba(0, 0, 0, 0.5) !important;
-        `;
-
-        // Also force show child elements
-        const modalWindow = modal.querySelector('.fi-modal-window');
-        if (modalWindow) {
-            modalWindow.style.cssText = `
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-                transform: scale(1) !important;
-            `;
-        }
-
-        const overlay = modal.querySelector('.fi-modal-close-overlay');
-        if (overlay) {
-            overlay.style.cssText = `
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-            `;
-        }
-
-        console.log('💪 Modal forced to show with aggressive styling');
     }
 
     /**

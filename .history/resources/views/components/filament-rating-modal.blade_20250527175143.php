@@ -176,8 +176,7 @@
                     </button>
 
                     <div class="ms-auto flex items-center gap-x-3">
-                        <button type="button"
-                            onclick="if (window.filamentRatingSystem) { window.filamentRatingSystem.closeModal(); }"
+                        <button type="button" onclick="closeRatingModal()"
                             class="fi-btn relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg fi-color-gray fi-btn-color-gray fi-size-sm fi-btn-size-sm gap-1 px-2.5 py-1.5 text-sm inline-grid fi-btn-outlined ring-1 text-gray-950 ring-gray-300 hover:bg-gray-400/10 focus-visible:ring-gray-400/40 dark:text-white dark:ring-gray-700">
                             Tutup
                         </button>

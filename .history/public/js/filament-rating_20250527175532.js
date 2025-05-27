@@ -127,7 +127,12 @@ class FilamentRatingSystem {
         if (!modalOpened) {
             try {
                 console.log('🎯 Opening modal using class manipulation...');
-                this.forceShowModal(modal);
+                modal.classList.remove('hidden');
+                modal.style.display = 'block';
+                modal.style.visibility = 'visible';
+                modal.style.opacity = '1';
+                modal.style.zIndex = '9999';
+                modal.style.position = 'fixed';
                 modalOpened = true;
                 console.log('✅ Modal opened using class manipulation');
 
