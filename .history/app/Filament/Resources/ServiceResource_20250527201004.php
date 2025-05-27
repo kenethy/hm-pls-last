@@ -422,37 +422,27 @@ class ServiceResource extends Resource
                 Tables\Columns\TextColumn::make('car_model')
                     ->label('Model Mobil')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('license_plate')
                     ->label('Nomor Plat')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('vehicle.full_details')
                     ->label('Kendaraan')
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('service_type')
                     ->label('Jenis Servis')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('mechanics.name')
                     ->label('Montir')
                     ->listWithLineBreaks()
                     ->limitList(2)
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('total_cost')
                     ->label('Total Biaya')
@@ -492,17 +482,13 @@ class ServiceResource extends Resource
                     ->label('Jam Masuk')
                     ->dateTime('d F Y H:i')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('exit_time')
                     ->label('Jam Keluar')
                     ->dateTime('d F Y H:i')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('invoice_number')
                     ->label('Nomor Nota')

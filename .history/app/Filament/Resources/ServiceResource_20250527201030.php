@@ -492,17 +492,13 @@ class ServiceResource extends Resource
                     ->label('Jam Masuk')
                     ->dateTime('d F Y H:i')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('exit_time')
                     ->label('Jam Keluar')
                     ->dateTime('d F Y H:i')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('invoice_number')
                     ->label('Nomor Nota')

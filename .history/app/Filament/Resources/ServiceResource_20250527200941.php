@@ -422,37 +422,27 @@ class ServiceResource extends Resource
                 Tables\Columns\TextColumn::make('car_model')
                     ->label('Model Mobil')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('license_plate')
                     ->label('Nomor Plat')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('vehicle.full_details')
                     ->label('Kendaraan')
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('service_type')
                     ->label('Jenis Servis')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('mechanics.name')
                     ->label('Montir')
                     ->listWithLineBreaks()
                     ->limitList(2)
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('total_cost')
                     ->label('Total Biaya')
@@ -492,62 +482,19 @@ class ServiceResource extends Resource
                     ->label('Jam Masuk')
                     ->dateTime('d F Y H:i')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('exit_time')
                     ->label('Jam Keluar')
                     ->dateTime('d F Y H:i')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: function () {
-                        return session('services_simplified_view', false);
-                    }),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('invoice_number')
                     ->label('Nomor Nota')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-            ])
-            ->headerActions([
-                Tables\Actions\Action::make('toggleSimplifiedView')
-                    ->label(function () {
-                        $isSimplified = session('services_simplified_view', false);
-                        return $isSimplified ? '📋 Tampilan Lengkap' : '📝 Tampilan Sederhana';
-                    })
-                    ->icon(function () {
-                        $isSimplified = session('services_simplified_view', false);
-                        return $isSimplified ? 'heroicon-o-view-columns' : 'heroicon-o-minus';
-                    })
-                    ->color(function () {
-                        $isSimplified = session('services_simplified_view', false);
-                        return $isSimplified ? 'success' : 'warning';
-                    })
-                    ->action(function () {
-                        $currentState = session('services_simplified_view', false);
-                        $newState = !$currentState;
-                        session(['services_simplified_view' => $newState]);
-
-                        Notification::make()
-                            ->title($newState ? '📝 Tampilan Sederhana Aktif' : '📋 Tampilan Lengkap Aktif')
-                            ->body(
-                                $newState ?
-                                    'Kolom detail disembunyikan untuk mengurangi kekacauan visual. Pencarian tetap berfungsi untuk semua kolom.' :
-                                    'Semua kolom ditampilkan kembali.'
-                            )
-                            ->success()
-                            ->send();
-
-                        // Refresh the page to apply changes
-                        return redirect()->request()->url();
-                    })
-                    ->tooltip(function () {
-                        $isSimplified = session('services_simplified_view', false);
-                        return $isSimplified ?
-                            'Klik untuk menampilkan semua kolom' :
-                            'Klik untuk menyembunyikan kolom detail dan mengurangi kekacauan visual';
-                    }),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
