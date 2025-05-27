@@ -837,39 +837,19 @@ function showEnhancedRatingNotification(serviceData) {
 
 // Initialize the rating system when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('🚀 Rating system initializing...');
-
     window.ratingSystem = new MechanicRatingSystem();
-    console.log('✅ Rating system initialized:', !!window.ratingSystem);
 
     // Check for pending rating reminders every 5 minutes
     checkRatingReminders();
     setInterval(checkRatingReminders, 5 * 60 * 1000);
 
-    // Check for session-based rating triggers more aggressively
-    console.log('⏰ Setting up rating trigger checks...');
-    setTimeout(checkSessionRatingTriggers, 1000);  // Reduced delay
-    setTimeout(checkSessionRatingTriggers, 3000);  // Additional check
-    setTimeout(checkSessionRatingTriggers, 5000);  // Another check
+    // Check for session-based rating triggers
+    setTimeout(checkSessionRatingTriggers, 2000);
 
     // Also check when page becomes visible (user switches back to tab)
     document.addEventListener('visibilitychange', function () {
         if (!document.hidden) {
-            console.log('👁️ Page became visible, checking for rating triggers...');
-            setTimeout(checkSessionRatingTriggers, 500);
+            setTimeout(checkSessionRatingTriggers, 1000);
         }
     });
-
-    // Check periodically for the first minute after page load
-    let checkCount = 0;
-    const periodicCheck = setInterval(() => {
-        checkCount++;
-        console.log(`🔄 Periodic check #${checkCount}`);
-        checkSessionRatingTriggers();
-
-        if (checkCount >= 6) { // Stop after 6 checks (1 minute)
-            clearInterval(periodicCheck);
-            console.log('⏹️ Stopped periodic checking');
-        }
-    }, 10000); // Every 10 seconds
 });

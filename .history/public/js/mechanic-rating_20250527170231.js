@@ -782,24 +782,16 @@ function checkSessionRatingTriggers() {
  * Open rating modal directly without intermediate notification
  */
 function openRatingModalDirectly(serviceData) {
-    console.log('🎯 openRatingModalDirectly called with:', serviceData);
-    console.log('🔧 Rating system available:', !!window.ratingSystem);
-
     // Ensure rating system is initialized
     if (window.ratingSystem) {
-        console.log('✅ Rating system found, opening modal for service:', serviceData.service_id);
         // Open the rating modal directly
         window.ratingSystem.openRatingModal(serviceData.service_id);
     } else {
-        console.log('⚠️ Rating system not initialized, setting up fallback...');
         // Fallback if rating system not initialized
         setTimeout(() => {
-            console.log('🔄 Fallback attempt - Rating system available:', !!window.ratingSystem);
             if (window.ratingSystem) {
-                console.log('✅ Rating system now available, opening modal');
                 window.ratingSystem.openRatingModal(serviceData.service_id);
             } else {
-                console.log('❌ Rating system still not available, showing notification popup as final fallback');
                 // Final fallback - show notification popup
                 showRatingNotificationPopup(serviceData);
             }
@@ -837,39 +829,19 @@ function showEnhancedRatingNotification(serviceData) {
 
 // Initialize the rating system when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('🚀 Rating system initializing...');
-
     window.ratingSystem = new MechanicRatingSystem();
-    console.log('✅ Rating system initialized:', !!window.ratingSystem);
 
     // Check for pending rating reminders every 5 minutes
     checkRatingReminders();
     setInterval(checkRatingReminders, 5 * 60 * 1000);
 
-    // Check for session-based rating triggers more aggressively
-    console.log('⏰ Setting up rating trigger checks...');
-    setTimeout(checkSessionRatingTriggers, 1000);  // Reduced delay
-    setTimeout(checkSessionRatingTriggers, 3000);  // Additional check
-    setTimeout(checkSessionRatingTriggers, 5000);  // Another check
+    // Check for session-based rating triggers
+    setTimeout(checkSessionRatingTriggers, 2000);
 
     // Also check when page becomes visible (user switches back to tab)
     document.addEventListener('visibilitychange', function () {
         if (!document.hidden) {
-            console.log('👁️ Page became visible, checking for rating triggers...');
-            setTimeout(checkSessionRatingTriggers, 500);
+            setTimeout(checkSessionRatingTriggers, 1000);
         }
     });
-
-    // Check periodically for the first minute after page load
-    let checkCount = 0;
-    const periodicCheck = setInterval(() => {
-        checkCount++;
-        console.log(`🔄 Periodic check #${checkCount}`);
-        checkSessionRatingTriggers();
-
-        if (checkCount >= 6) { // Stop after 6 checks (1 minute)
-            clearInterval(periodicCheck);
-            console.log('⏹️ Stopped periodic checking');
-        }
-    }, 10000); // Every 10 seconds
 });
