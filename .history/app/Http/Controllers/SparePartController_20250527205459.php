@@ -63,11 +63,7 @@ class SparePartController extends Controller
             ->paginate(12);
 
         return view('pages.spare-parts-category', [
-            'title' => $category->name . ' - Sparepart Hartono Motor Sidoarjo',
-            'metaDescription' => 'Koleksi lengkap ' . $category->name . ' berkualitas di Hartono Motor Sidoarjo. ' . $category->description . ' Harga terbaik, stok lengkap, konsultasi gratis via WhatsApp!',
-            'metaKeywords' => $category->name . ', sparepart mobil sidoarjo, hartono motor, ' . strtolower($category->name) . ' mobil, sparepart original, sparepart aftermarket',
-            'ogImage' => asset('images/sparepart/sparepart.png'),
-            'canonicalUrl' => route('spare-parts.category', $category->slug),
+            'title' => $category->name . ' - Sparepart',
             'category' => $category,
             'products' => $products,
         ]);

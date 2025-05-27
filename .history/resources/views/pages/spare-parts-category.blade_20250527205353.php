@@ -225,7 +225,7 @@
 <script>
     // WhatsApp Product Inquiry Function
     function askAboutProduct(productName, productDescription) {
-        const phoneNumber = '6282135202581'; // Hartono Motor WhatsApp number
+        const phoneNumber = '6281234567890'; // Replace with actual WhatsApp number
         const message = `Halo Hartono Motor! 👋
 
 Saya tertarik dengan produk:
