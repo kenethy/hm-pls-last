@@ -7,11 +7,9 @@
                 <i class="fas fa-star text-yellow-500 mr-2"></i>
                 Berikan Rating untuk Montir
             </h3>
-            <button type="button" class="text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                onclick="closeRatingModal()">
+            <button type="button" class="text-gray-400 hover:text-gray-600 transition-colors duration-200" onclick="closeRatingModal()">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                    </path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
         </div>
@@ -54,33 +52,23 @@
                     <i class="fas fa-exclamation-triangle text-2xl"></i>
                 </div>
                 <p class="text-red-600">Terjadi kesalahan saat memuat data</p>
-                <button onclick="retryLoadRatingModal()"
-                    class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors">
+                <button onclick="retryLoadRatingModal()" class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors">
                     Coba Lagi
                 </button>
             </div>
         </div>
 
         <!-- Modal Footer -->
-        <div class="flex items-center justify-between pt-4 border-t border-gray-200">
-            <div class="flex space-x-3">
-                <button type="button" onclick="remindRatingLaterFromModal()"
-                    class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors duration-200">
-                    <i class="fas fa-clock mr-2"></i>
-                    Ingatkan Nanti
-                </button>
-            </div>
-            <div class="flex space-x-3">
-                <button type="button" onclick="closeRatingModal()"
-                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-colors duration-200">
-                    Tutup
-                </button>
-                <button type="button" id="submitAllRatings" onclick="submitAllRatings()"
-                    class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200 hidden">
-                    <i class="fas fa-paper-plane mr-2"></i>
-                    Kirim Semua Rating
-                </button>
-            </div>
+        <div class="flex items-center justify-end pt-4 border-t border-gray-200 space-x-3">
+            <button type="button" onclick="closeRatingModal()" 
+                class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-colors duration-200">
+                Tutup
+            </button>
+            <button type="button" id="submitAllRatings" onclick="submitAllRatings()" 
+                class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200 hidden">
+                <i class="fas fa-paper-plane mr-2"></i>
+                Kirim Semua Rating
+            </button>
         </div>
     </div>
 </div>
@@ -108,29 +96,19 @@
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Rating (1-5 bintang)</label>
                 <div class="star-rating flex space-x-1" data-mechanic-id="">
-                    <button type="button"
-                        class="star text-2xl text-gray-300 hover:text-yellow-400 transition-colors duration-150"
-                        data-rating="1">
+                    <button type="button" class="star text-2xl text-gray-300 hover:text-yellow-400 transition-colors duration-150" data-rating="1">
                         <i class="fas fa-star"></i>
                     </button>
-                    <button type="button"
-                        class="star text-2xl text-gray-300 hover:text-yellow-400 transition-colors duration-150"
-                        data-rating="2">
+                    <button type="button" class="star text-2xl text-gray-300 hover:text-yellow-400 transition-colors duration-150" data-rating="2">
                         <i class="fas fa-star"></i>
                     </button>
-                    <button type="button"
-                        class="star text-2xl text-gray-300 hover:text-yellow-400 transition-colors duration-150"
-                        data-rating="3">
+                    <button type="button" class="star text-2xl text-gray-300 hover:text-yellow-400 transition-colors duration-150" data-rating="3">
                         <i class="fas fa-star"></i>
                     </button>
-                    <button type="button"
-                        class="star text-2xl text-gray-300 hover:text-yellow-400 transition-colors duration-150"
-                        data-rating="4">
+                    <button type="button" class="star text-2xl text-gray-300 hover:text-yellow-400 transition-colors duration-150" data-rating="4">
                         <i class="fas fa-star"></i>
                     </button>
-                    <button type="button"
-                        class="star text-2xl text-gray-300 hover:text-yellow-400 transition-colors duration-150"
-                        data-rating="5">
+                    <button type="button" class="star text-2xl text-gray-300 hover:text-yellow-400 transition-colors duration-150" data-rating="5">
                         <i class="fas fa-star"></i>
                     </button>
                 </div>
@@ -142,16 +120,15 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2">
                     Komentar (Opsional)
                 </label>
-                <textarea
-                    class="rating-comment w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                    rows="3" placeholder="Bagikan pengalaman Anda dengan montir ini..."></textarea>
+                <textarea class="rating-comment w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" 
+                    rows="3" 
+                    placeholder="Bagikan pengalaman Anda dengan montir ini..."></textarea>
                 <p class="text-xs text-gray-500 mt-1">Maksimal 1000 karakter</p>
             </div>
 
             <!-- Submit Button for Individual Rating -->
             <div class="flex justify-end">
-                <button type="button"
-                    class="submit-individual-rating px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                <button type="button" class="submit-individual-rating px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed" 
                     data-mechanic-id="" disabled>
                     <i class="fas fa-check mr-2"></i>
                     Kirim Rating
@@ -193,8 +170,7 @@
 </template>
 
 <!-- Success Toast Notification -->
-<div id="successToast"
-    class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 hidden transform transition-transform duration-300">
+<div id="successToast" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 hidden transform transition-transform duration-300">
     <div class="flex items-center">
         <i class="fas fa-check-circle mr-2"></i>
         <span id="successMessage">Rating berhasil dikirim!</span>
@@ -202,8 +178,7 @@
 </div>
 
 <!-- Error Toast Notification -->
-<div id="errorToast"
-    class="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 hidden transform transition-transform duration-300">
+<div id="errorToast" class="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 hidden transform transition-transform duration-300">
     <div class="flex items-center">
         <i class="fas fa-exclamation-circle mr-2"></i>
         <span id="errorMessage">Terjadi kesalahan!</span>

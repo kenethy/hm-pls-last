@@ -497,23 +497,6 @@ function submitAllRatings() {
     alert('Fitur kirim semua rating akan segera tersedia');
 }
 
-function remindRatingLaterFromModal() {
-    if (window.ratingSystem && window.ratingSystem.currentServiceId) {
-        // Use the existing remind later functionality
-        remindRatingLater(window.ratingSystem.currentServiceId);
-
-        // Close the modal
-        closeRatingModal();
-
-        // Show confirmation
-        if (window.ratingSystem) {
-            window.ratingSystem.showSuccessToast('Pengingat rating telah diatur untuk 2 jam ke depan');
-        }
-    } else {
-        alert('Tidak dapat mengatur pengingat. Silakan coba lagi.');
-    }
-}
-
 /**
  * Show automatic rating popup notification after service completion
  */
