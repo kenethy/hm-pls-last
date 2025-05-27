@@ -219,28 +219,6 @@
         <div class="bg-white rounded-xl shadow-lg p-8 reveal">
             <h3 class="text-2xl font-bold text-center mb-6">Kategori Sparepart Lainnya</h3>
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                @forelse($sparePartCategories as $category)
-                <a href="{{ route('spare-parts.category', $category->slug) }}" class="text-center group cursor-pointer">
-                    <div class="rounded-full p-4 mx-auto mb-3 w-16 h-16 flex items-center justify-center transition-colors"
-                        style="background-color: {{ $category->color }}20; color: {{ $category->color }};">
-                        @if($category->icon)
-                        <i class="{{ $category->icon }} h-8 w-8"></i>
-                        @else
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                        </svg>
-                        @endif
-                    </div>
-                    <span class="text-sm font-medium text-gray-700 group-hover:text-red-600">{{ $category->name
-                        }}</span>
-                    @if($category->spare_parts_count > 0)
-                    <p class="text-xs text-gray-500 mt-1">{{ $category->spare_parts_count }} produk</p>
-                    @endif
-                </a>
-                @empty
-                <!-- Fallback to hardcoded categories if no database data -->
                 <div class="text-center group cursor-pointer">
                     <div
                         class="bg-gray-100 group-hover:bg-red-100 rounded-full p-4 mx-auto mb-3 w-16 h-16 flex items-center justify-center transition-colors">
@@ -307,7 +285,6 @@
                     </div>
                     <span class="text-sm font-medium text-gray-700 group-hover:text-red-600">Lainnya</span>
                 </div>
-                @endforelse
             </div>
         </div>
 
@@ -772,36 +749,3 @@
     </div>
 </section>
 @endsection
-
-@push('styles')
-<style>
-    /* Marketplace Styles */
-    .marketplace-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 1.25rem;
-        height: 1.25rem;
-        border-radius: 50%;
-        font-size: 0.75rem;
-        font-weight: bold;
-        color: white;
-    }
-
-    .marketplace-icon.tokopedia {
-        background-color: #42b883;
-    }
-
-    .marketplace-icon.shopee {
-        background-color: #ee4d2d;
-    }
-
-    .marketplace-icon.lazada {
-        background-color: #0f146d;
-    }
-
-    .marketplace-icon.bukalapak {
-        background-color: #e31e24;
-    }
-</style>
-@endpush

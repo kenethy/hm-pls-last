@@ -111,6 +111,86 @@
                 <p class="text-gray-500">Kategori sparepart akan segera tersedia.</p>
             </div>
             @endforelse
+
+            <!-- Category 2: Rem -->
+            <a href="#rem"
+                class="group bg-white rounded-xl p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
+                style="transition-delay: 0.1s">
+                <div
+                    class="bg-red-100 group-hover:bg-red-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+                <h3 class="font-bold text-lg group-hover:text-red-600 transition-colors">Sistem Rem</h3>
+                <p class="text-sm text-gray-500 mt-2">Kampas Rem, Cakram, Minyak Rem</p>
+            </a>
+
+            <!-- Category 3: Suspensi -->
+            <a href="#suspensi"
+                class="group bg-white rounded-xl p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
+                style="transition-delay: 0.2s">
+                <div
+                    class="bg-red-100 group-hover:bg-red-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                    </svg>
+                </div>
+                <h3 class="font-bold text-lg group-hover:text-red-600 transition-colors">Suspensi</h3>
+                <p class="text-sm text-gray-500 mt-2">Shock Absorber, Per, Bushing</p>
+            </a>
+
+            <!-- Category 4: Elektrikal -->
+            <a href="#elektrikal"
+                class="group bg-white rounded-xl p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
+                style="transition-delay: 0.3s">
+                <div
+                    class="bg-red-100 group-hover:bg-red-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h3 class="font-bold text-lg group-hover:text-red-600 transition-colors">Elektrikal</h3>
+                <p class="text-sm text-gray-500 mt-2">Aki, Alternator, Starter</p>
+            </a>
+
+            <!-- Category 5: Oli & Cairan -->
+            <a href="#oli"
+                class="group bg-white rounded-xl p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
+                style="transition-delay: 0.4s">
+                <div
+                    class="bg-red-100 group-hover:bg-red-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    </svg>
+                </div>
+                <h3 class="font-bold text-lg group-hover:text-red-600 transition-colors">Oli & Cairan</h3>
+                <p class="text-sm text-gray-500 mt-2">Oli Mesin, Coolant, Power Steering</p>
+            </a>
+
+            <!-- Category 6: Aksesoris -->
+            <a href="#aksesoris"
+                class="group bg-white rounded-xl p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
+                style="transition-delay: 0.5s">
+                <div
+                    class="bg-red-100 group-hover:bg-red-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                    </svg>
+                </div>
+                <h3 class="font-bold text-lg group-hover:text-red-600 transition-colors">Aksesoris</h3>
+                <p class="text-sm text-gray-500 mt-2">Lampu, Klakson, Kaca Film</p>
+            </a>
         </div>
 
         <!-- Quick Help Section -->
@@ -172,233 +252,59 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            @forelse($featuredProducts as $index => $product)
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
-                style="transition-delay: {{ $index * 0.1 }}s">
+            <!-- Product 1: Oli Mesin -->
+            <div
+                class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up">
                 <div class="relative">
-                    <img src="{{ $product->main_image_url }}" alt="{{ $product->name }}"
+                    <img src="{{ asset('images/sparepart/sparepart.png') }}" alt="Oli Mesin Berkualitas"
                         class="w-full h-48 object-cover">
-
-                    <!-- Product Badges -->
-                    <div class="absolute top-4 left-4 flex flex-col gap-2">
-                        @if($product->is_best_seller)
-                        <span class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">BEST SELLER</span>
-                        @endif
-                        @if($product->is_featured)
-                        <span class="bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">UNGGULAN</span>
-                        @endif
-                    </div>
-
-                    <div class="absolute top-4 right-4 flex flex-col gap-2">
-                        @if($product->is_original)
-                        <span class="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full">ORIGINAL</span>
-                        @endif
-                        @if($product->condition === 'new')
-                        <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">BARU</span>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="p-6">
-                    <div class="flex items-center mb-3">
-                        <div class="rounded-full p-2 mr-3"
-                            style="background-color: {{ $product->category->color ?? '#dc2626' }}20;">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                style="color: {{ $product->category->color ?? '#dc2626' }};" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                            </svg>
-                        </div>
-                        <div>
-                            <span class="inline-block text-xs font-medium px-2 py-1 rounded-full mb-1"
-                                style="background-color: {{ $product->category->color ?? '#dc2626' }}20; color: {{ $product->category->color ?? '#dc2626' }};">
-                                {{ $product->category->name }}
-                            </span>
-                            <h3 class="text-xl font-bold">{{ $product->name }}</h3>
-                        </div>
-                    </div>
-
-                    <p class="text-gray-600 mb-4">{{ Str::limit($product->short_description, 100) }}</p>
-
-                    <!-- Specifications -->
-                    @if($product->specifications && count($product->specifications) > 0)
-                    <div class="bg-gray-50 rounded-lg p-3 mb-4">
-                        <h4 class="font-semibold text-sm mb-2">Spesifikasi:</h4>
-                        <ul class="text-xs text-gray-600 space-y-1">
-                            @foreach(array_slice($product->specifications, 0, 3) as $spec)
-                            <li>• {{ $spec['name'] }}: {{ $spec['value'] }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-
-                    <div class="flex items-center justify-between mb-4">
-                        <div>
-                            @if($product->original_price && $product->original_price > $product->price)
-                            <span class="text-gray-400 line-through text-sm">{{ $product->formatted_original_price
-                                }}</span>
-                            <span class="text-red-600 font-bold text-lg block">{{ $product->formatted_price }}</span>
-                            <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full">
-                                Hemat {{ $product->discount_percentage }}%
-                            </span>
-                            @else
-                            <span class="text-red-600 font-bold text-lg">{{ $product->formatted_price }}</span>
-                            @endif
-                        </div>
-                        <div class="text-right">
-                            <span class="text-xs {{ $product->stock_status_color }} font-medium">
-                                {{ $product->stock_status_text }}
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="space-y-3">
-                        <!-- WhatsApp Inquiry -->
-                        <button onclick="askAboutProduct('{{ $product->name }}', '{{ $product->short_description }}')"
-                            class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="currentColor"
-                                viewBox="0 0 24 24">
-                                <path
-                                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                            </svg>
-                            Tanya Produk Ini
-                        </button>
-
-                        <!-- Marketplace Links -->
-                        @if($product->has_marketplace_links)
-                        <div class="marketplace-grid">
-                            @foreach($product->available_marketplaces as $marketplace)
-                            @php
-                            $platforms = \App\Models\SparePart::getMarketplacePlatforms();
-                            $platform = $platforms[$marketplace['platform']] ?? null;
-                            @endphp
-                            @if($platform)
-                            <a href="{{ $marketplace['url'] }}" target="_blank"
-                                class="marketplace-button {{ $marketplace['platform'] }}">
-                                <span class="marketplace-icon-text">
-                                    {{ strtoupper(substr($platform['name'], 0, 1)) }}
-                                </span>
-                                {{ $platform['name'] }}
-                            </a>
-                            @endif
-                            @endforeach
-                        </div>
-                        @else
-                        <!-- Default marketplace links if no specific links -->
-                        <div class="flex space-x-2">
-                            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
-                                class="flex-1 bg-green-100 hover:bg-green-200 text-green-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
-                                Tokopedia
-                            </a>
-                            <a href="https://shopee.co.id/hartono_motor" target="_blank"
-                                class="flex-1 bg-orange-100 hover:bg-orange-200 text-orange-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
-                                Shopee
-                            </a>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            @empty
-            <!-- Fallback if no featured products -->
-            <div class="col-span-full text-center py-12">
-                <div class="max-w-md mx-auto">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                    </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">Belum ada produk unggulan</h3>
-                    <p class="mt-1 text-sm text-gray-500">Produk unggulan akan segera ditambahkan.</p>
-                </div>
-            </div>
-            @endforelse
-        </div>
-    </div>
-</section>
-
-<!-- Best Seller Products Section -->
-@if(isset($bestSellerProducts) && $bestSellerProducts->count() > 0)
-<section class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4 max-w-7xl">
-        <!-- Section Header -->
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Produk Best Seller</h2>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                Produk sparepart paling laris dan terpercaya pilihan pelanggan Hartono Motor
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            @foreach($bestSellerProducts as $index => $product)
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
-                style="transition-delay: {{ $index * 0.1 }}s">
-                <div class="relative">
-                    <img src="{{ $product->main_image_url }}" alt="{{ $product->name }}"
-                        class="w-full h-48 object-cover">
-
-                    <!-- Best Seller Badge -->
                     <div class="absolute top-4 left-4">
                         <span class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">BEST SELLER</span>
                     </div>
-
-                    <div class="absolute top-4 right-4 flex flex-col gap-2">
-                        @if($product->is_original)
+                    <div class="absolute top-4 right-4">
                         <span class="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full">ORIGINAL</span>
-                        @endif
-                        @if($product->condition === 'new')
-                        <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">BARU</span>
-                        @endif
                     </div>
                 </div>
-
                 <div class="p-6">
                     <div class="flex items-center mb-3">
-                        <div class="rounded-full p-2 mr-3"
-                            style="background-color: {{ $product->category->color ?? '#dc2626' }}20;">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                style="color: {{ $product->category->color ?? '#dc2626' }};" fill="none"
+                        <div class="bg-red-100 rounded-full p-2 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                             </svg>
                         </div>
                         <div>
-                            <span class="inline-block text-xs font-medium px-2 py-1 rounded-full mb-1"
-                                style="background-color: {{ $product->category->color ?? '#dc2626' }}20; color: {{ $product->category->color ?? '#dc2626' }};">
-                                {{ $product->category->name }}
-                            </span>
-                            <h3 class="text-xl font-bold">{{ $product->name }}</h3>
+                            <span
+                                class="inline-block bg-blue-100 text-blue-600 text-xs font-medium px-2 py-1 rounded-full mb-1">Oli
+                                & Cairan</span>
+                            <h3 class="text-xl font-bold">Oli Mesin Premium</h3>
                         </div>
                     </div>
+                    <p class="text-gray-600 mb-4">Shell, Castrol, Mobil 1, dan berbagai merek oli berkualitas. Cocok
+                        untuk semua jenis mesin bensin dan diesel.</p>
 
-                    <p class="text-gray-600 mb-4">{{ Str::limit($product->short_description, 80) }}</p>
+                    <!-- Specifications -->
+                    <div class="bg-gray-50 rounded-lg p-3 mb-4">
+                        <h4 class="font-semibold text-sm mb-2">Spesifikasi:</h4>
+                        <ul class="text-xs text-gray-600 space-y-1">
+                            <li>• Viskositas: 5W-30, 5W-40, 10W-40</li>
+                            <li>• Kemasan: 1L, 4L, 5L</li>
+                            <li>• Cocok untuk: Semua merek mobil</li>
+                        </ul>
+                    </div>
 
                     <div class="flex items-center justify-between mb-4">
                         <div>
-                            @if($product->original_price && $product->original_price > $product->price)
-                            <span class="text-gray-400 line-through text-sm">{{ $product->formatted_original_price
-                                }}</span>
-                            <span class="text-red-600 font-bold text-lg block">{{ $product->formatted_price }}</span>
-                            <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full">
-                                Hemat {{ $product->discount_percentage }}%
-                            </span>
-                            @else
-                            <span class="text-red-600 font-bold text-lg">{{ $product->formatted_price }}</span>
-                            @endif
-                        </div>
-                        <div class="text-right">
-                            <span class="text-xs {{ $product->stock_status_color }} font-medium">
-                                {{ $product->stock_status_text }}
-                            </span>
+                            <span class="text-red-600 font-bold text-lg">Mulai Rp 85.000</span>
+                            <p class="text-xs text-gray-500">*Harga bervariasi per merek</p>
                         </div>
                     </div>
 
                     <!-- Action Buttons -->
                     <div class="space-y-3">
                         <!-- WhatsApp Inquiry -->
-                        <button onclick="askAboutProduct('{{ $product->name }}', '{{ $product->short_description }}')"
+                        <button onclick="askAboutProduct('Oli Mesin Premium', 'Berbagai merek dan viskositas tersedia')"
                             class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="currentColor"
                                 viewBox="0 0 24 24">
@@ -409,26 +315,6 @@
                         </button>
 
                         <!-- Marketplace Links -->
-                        @if($product->has_marketplace_links)
-                        <div class="marketplace-grid">
-                            @foreach($product->available_marketplaces as $marketplace)
-                            @php
-                            $platforms = \App\Models\SparePart::getMarketplacePlatforms();
-                            $platform = $platforms[$marketplace['platform']] ?? null;
-                            @endphp
-                            @if($platform)
-                            <a href="{{ $marketplace['url'] }}" target="_blank"
-                                class="marketplace-button {{ $marketplace['platform'] }}">
-                                <span class="marketplace-icon-text">
-                                    {{ strtoupper(substr($platform['name'], 0, 1)) }}
-                                </span>
-                                {{ $platform['name'] }}
-                            </a>
-                            @endif
-                            @endforeach
-                        </div>
-                        @else
-                        <!-- Default marketplace links if no specific links -->
                         <div class="flex space-x-2">
                             <a href="https://www.tokopedia.com/hartono-m" target="_blank"
                                 class="flex-1 bg-green-100 hover:bg-green-200 text-green-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
@@ -438,20 +324,259 @@
                                 class="flex-1 bg-orange-100 hover:bg-orange-200 text-orange-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
                                 Shopee
                             </a>
+                            <a href="https://www.lazada.co.id/shop/hartono-motor-sidoarjo" target="_blank"
+                                class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
+                                Lazada
+                            </a>
                         </div>
-                        @endif
                     </div>
                 </div>
             </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
 
-<!-- Enhanced CTA Section -->
-<section class="py-16 bg-white">
-    <div class="container mx-auto px-4 max-w-7xl">
+            <!-- Product 2: Kampas Rem -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
+                style="transition-delay: 0.1s">
+                <div class="relative">
+                    <img src="{{ asset('images/sparepart/sparepart.png') }}" alt="Kampas Rem Berkualitas"
+                        class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full">ORIGINAL</span>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">PREMIUM</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-3">
+                        <div class="bg-red-100 rounded-full p-2 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <span
+                                class="inline-block bg-red-100 text-red-600 text-xs font-medium px-2 py-1 rounded-full mb-1">Sistem
+                                Rem</span>
+                            <h3 class="text-xl font-bold">Kampas Rem</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">Brembo, Bendix, dan merek terpercaya lainnya. Keamanan pengereman
+                        optimal untuk semua jenis kendaraan.</p>
+
+                    <!-- Specifications -->
+                    <div class="bg-gray-50 rounded-lg p-3 mb-4">
+                        <h4 class="font-semibold text-sm mb-2">Spesifikasi:</h4>
+                        <ul class="text-xs text-gray-600 space-y-1">
+                            <li>• Tipe: Depan & Belakang</li>
+                            <li>• Material: Ceramic, Semi-Metallic</li>
+                            <li>• Cocok untuk: Semua merek mobil</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-red-600 font-bold text-lg">Mulai Rp 150.000</span>
+                            <p class="text-xs text-gray-500">*Harga per set</p>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="space-y-3">
+                        <!-- WhatsApp Inquiry -->
+                        <button onclick="askAboutProduct('Kampas Rem', 'Tersedia untuk semua merek mobil')"
+                            class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                            </svg>
+                            Tanya Produk Ini
+                        </button>
+
+                        <!-- Marketplace Links -->
+                        <div class="flex space-x-2">
+                            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
+                                class="flex-1 bg-green-100 hover:bg-green-200 text-green-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
+                                Tokopedia
+                            </a>
+                            <a href="https://shopee.co.id/hartono_motor" target="_blank"
+                                class="flex-1 bg-orange-100 hover:bg-orange-200 text-orange-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
+                                Shopee
+                            </a>
+                            <a href="https://www.lazada.co.id/shop/hartono-motor-sidoarjo" target="_blank"
+                                class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
+                                Lazada
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3: Kampas Kopling -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
+                style="transition-delay: 0.2s">
+                <div class="relative">
+                    <img src="{{ asset('images/sparepart/sparepart.png') }}" alt="Kampas Kopling Berkualitas"
+                        class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">PREMIUM</span>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full">ORIGINAL</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-3">
+                        <div class="bg-red-100 rounded-full p-2 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                        </div>
+                        <div>
+                            <span
+                                class="inline-block bg-purple-100 text-purple-600 text-xs font-medium px-2 py-1 rounded-full mb-1">Transmisi</span>
+                            <h3 class="text-xl font-bold">Kampas Kopling</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">Valeo, Exedy, dan merek berkualitas untuk transmisi manual yang halus
+                        dan awet. Daya cengkeram optimal.</p>
+
+                    <!-- Specifications -->
+                    <div class="bg-gray-50 rounded-lg p-3 mb-4">
+                        <h4 class="font-semibold text-sm mb-2">Spesifikasi:</h4>
+                        <ul class="text-xs text-gray-600 space-y-1">
+                            <li>• Material: Organic, Ceramic</li>
+                            <li>• Tipe: Set Lengkap (Plat + Cover)</li>
+                            <li>• Cocok untuk: Manual Transmission</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-red-600 font-bold text-lg">Mulai Rp 200.000</span>
+                            <p class="text-xs text-gray-500">*Harga per set lengkap</p>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="space-y-3">
+                        <!-- WhatsApp Inquiry -->
+                        <button onclick="askAboutProduct('Kampas Kopling', 'Set lengkap untuk transmisi manual')"
+                            class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                            </svg>
+                            Tanya Produk Ini
+                        </button>
+
+                        <!-- Marketplace Links -->
+                        <div class="flex space-x-2">
+                            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
+                                class="flex-1 bg-green-100 hover:bg-green-200 text-green-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
+                                Tokopedia
+                            </a>
+                            <a href="https://shopee.co.id/hartono_motor" target="_blank"
+                                class="flex-1 bg-orange-100 hover:bg-orange-200 text-orange-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
+                                Shopee
+                            </a>
+                            <a href="https://www.lazada.co.id/shop/hartono-motor-sidoarjo" target="_blank"
+                                class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
+                                Lazada
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4: Busi -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
+                style="transition-delay: 0.3s">
+                <div class="relative">
+                    <img src="{{ asset('images/sparepart/sparepart.png') }}" alt="Busi Berkualitas"
+                        class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">HOT ITEM</span>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">BEST SELLER</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-3">
+                        <div class="bg-red-100 rounded-full p-2 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <span
+                                class="inline-block bg-yellow-100 text-yellow-600 text-xs font-medium px-2 py-1 rounded-full mb-1">Sistem
+                                Pengapian</span>
+                            <h3 class="text-xl font-bold">Busi</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">NGK, Denso, Bosch untuk performa mesin optimal dan konsumsi BBM
+                        efisien. Heat range sesuai spesifikasi.</p>
+
+                    <!-- Specifications -->
+                    <div class="bg-gray-50 rounded-lg p-3 mb-4">
+                        <h4 class="font-semibold text-sm mb-2">Spesifikasi:</h4>
+                        <ul class="text-xs text-gray-600 space-y-1">
+                            <li>• Tipe: Standard, Iridium, Platinum</li>
+                            <li>• Heat Range: Dingin, Normal, Panas</li>
+                            <li>• Cocok untuk: Semua merek mobil</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-red-600 font-bold text-lg">Mulai Rp 25.000</span>
+                            <p class="text-xs text-gray-500">*Harga per pcs</p>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="space-y-3">
+                        <!-- WhatsApp Inquiry -->
+                        <button onclick="askAboutProduct('Busi', 'Tersedia berbagai merek dan heat range')"
+                            class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                            </svg>
+                            Tanya Produk Ini
+                        </button>
+
+                        <!-- Marketplace Links -->
+                        <div class="flex space-x-2">
+                            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
+                                class="flex-1 bg-green-100 hover:bg-green-200 text-green-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
+                                Tokopedia
+                            </a>
+                            <a href="https://shopee.co.id/hartono_motor" target="_blank"
+                                class="flex-1 bg-orange-100 hover:bg-orange-200 text-orange-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
+                                Shopee
+                            </a>
+                            <a href="https://www.lazada.co.id/shop/hartono-motor-sidoarjo" target="_blank"
+                                class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-medium py-2 px-3 rounded-lg transition-colors text-center text-sm">
+                                Lazada
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced CTA Section -->
         <div class="text-center mt-12 reveal">
             <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-xl p-8 text-white max-w-4xl mx-auto shadow-lg">
                 <h3 class="text-2xl font-bold mb-4">Jelajahi Ribuan Produk Sparepart Lainnya</h3>
@@ -969,96 +1094,6 @@
         .pricing-notification-banner {
             padding: 12px 0;
         }
-    }
-
-    /* Marketplace Styles */
-    .marketplace-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-        gap: 0.5rem;
-    }
-
-    .marketplace-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-        font-size: 0.75rem;
-        font-weight: 500;
-        text-decoration: none;
-        transition: all 0.2s ease;
-        min-height: 2.5rem;
-    }
-
-    .marketplace-button.tokopedia {
-        background-color: #42b883;
-        color: white;
-    }
-
-    .marketplace-button.tokopedia:hover {
-        background-color: #369870;
-    }
-
-    .marketplace-button.shopee {
-        background-color: #ee4d2d;
-        color: white;
-    }
-
-    .marketplace-button.shopee:hover {
-        background-color: #d73211;
-    }
-
-    .marketplace-button.lazada {
-        background-color: #0f146d;
-        color: white;
-    }
-
-    .marketplace-button.lazada:hover {
-        background-color: #0a0f4a;
-    }
-
-    .marketplace-button.bukalapak {
-        background-color: #e31e24;
-        color: white;
-    }
-
-    .marketplace-button.bukalapak:hover {
-        background-color: #c01a1f;
-    }
-
-    .marketplace-icon-text {
-        font-weight: bold;
-        margin-right: 0.25rem;
-        font-size: 0.875rem;
-    }
-
-    .marketplace-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 1.25rem;
-        height: 1.25rem;
-        border-radius: 50%;
-        font-size: 0.75rem;
-        font-weight: bold;
-        color: white;
-    }
-
-    .marketplace-icon.tokopedia {
-        background-color: #42b883;
-    }
-
-    .marketplace-icon.shopee {
-        background-color: #ee4d2d;
-    }
-
-    .marketplace-icon.lazada {
-        background-color: #0f146d;
-    }
-
-    .marketplace-icon.bukalapak {
-        background-color: #e31e24;
     }
 </style>
 @endpush

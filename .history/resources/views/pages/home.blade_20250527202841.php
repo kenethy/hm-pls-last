@@ -772,36 +772,3 @@
     </div>
 </section>
 @endsection
-
-@push('styles')
-<style>
-    /* Marketplace Styles */
-    .marketplace-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 1.25rem;
-        height: 1.25rem;
-        border-radius: 50%;
-        font-size: 0.75rem;
-        font-weight: bold;
-        color: white;
-    }
-
-    .marketplace-icon.tokopedia {
-        background-color: #42b883;
-    }
-
-    .marketplace-icon.shopee {
-        background-color: #ee4d2d;
-    }
-
-    .marketplace-icon.lazada {
-        background-color: #0f146d;
-    }
-
-    .marketplace-icon.bukalapak {
-        background-color: #e31e24;
-    }
-</style>
-@endpush

@@ -213,34 +213,138 @@
                 </div>
             </div>
             @endforelse
+
+            <!-- Brake Pads -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
+                style="transition-delay: 0.1s">
+                <div class="relative">
+                    <img src="{{ asset('images/sparepart/sparepart.png') }}" alt="Kampas Rem Berkualitas"
+                        class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full">ORIGINAL</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-3">
+                        <div class="bg-red-100 rounded-full p-2 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">Kampas Rem</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Brembo, Bendix, dan merek terpercaya lainnya untuk keamanan pengereman
+                        optimal.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-red-600 font-bold">Mulai Rp 150.000</span>
+                        <div class="flex space-x-2">
+                            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
+                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
+                                title="Beli di Tokopedia">
+                                <img src="{{ asset('images/marketplace/tokopedia.png') }}" alt="Tokopedia"
+                                    class="h-5 w-5">
+                            </a>
+                            <a href="https://shopee.co.id/hartono_motor" target="_blank"
+                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
+                                title="Beli di Shopee">
+                                <img src="{{ asset('images/marketplace/shopee.png') }}" alt="Shopee" class="h-5 w-5">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clutch Pads -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
+                style="transition-delay: 0.2s">
+                <div class="relative">
+                    <img src="{{ asset('images/sparepart/sparepart.png') }}" alt="Kampas Kopling Berkualitas"
+                        class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">PREMIUM</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-3">
+                        <div class="bg-red-100 rounded-full p-2 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">Kampas Kopling</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Valeo, Exedy, dan merek berkualitas untuk transmisi manual yang halus
+                        dan awet.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-red-600 font-bold">Mulai Rp 200.000</span>
+                        <div class="flex space-x-2">
+                            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
+                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
+                                title="Beli di Tokopedia">
+                                <img src="{{ asset('images/marketplace/tokopedia.png') }}" alt="Tokopedia"
+                                    class="h-5 w-5">
+                            </a>
+                            <a href="https://shopee.co.id/hartono_motor" target="_blank"
+                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
+                                title="Beli di Shopee">
+                                <img src="{{ asset('images/marketplace/shopee.png') }}" alt="Shopee" class="h-5 w-5">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spark Plugs -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 reveal-up"
+                style="transition-delay: 0.3s">
+                <div class="relative">
+                    <img src="{{ asset('images/sparepart/sparepart.png') }}" alt="Busi Berkualitas"
+                        class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">HOT ITEM</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-3">
+                        <div class="bg-red-100 rounded-full p-2 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">Busi</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">NGK, Denso, Bosch untuk performa mesin optimal dan konsumsi BBM
+                        efisien.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-red-600 font-bold">Mulai Rp 25.000</span>
+                        <div class="flex space-x-2">
+                            <a href="https://www.tokopedia.com/hartono-m" target="_blank"
+                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
+                                title="Beli di Tokopedia">
+                                <img src="{{ asset('images/marketplace/tokopedia.png') }}" alt="Tokopedia"
+                                    class="h-5 w-5">
+                            </a>
+                            <a href="https://shopee.co.id/hartono_motor" target="_blank"
+                                class="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors"
+                                title="Beli di Shopee">
+                                <img src="{{ asset('images/marketplace/shopee.png') }}" alt="Shopee" class="h-5 w-5">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Additional Product Categories -->
         <div class="bg-white rounded-xl shadow-lg p-8 reveal">
             <h3 class="text-2xl font-bold text-center mb-6">Kategori Sparepart Lainnya</h3>
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                @forelse($sparePartCategories as $category)
-                <a href="{{ route('spare-parts.category', $category->slug) }}" class="text-center group cursor-pointer">
-                    <div class="rounded-full p-4 mx-auto mb-3 w-16 h-16 flex items-center justify-center transition-colors"
-                        style="background-color: {{ $category->color }}20; color: {{ $category->color }};">
-                        @if($category->icon)
-                        <i class="{{ $category->icon }} h-8 w-8"></i>
-                        @else
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                        </svg>
-                        @endif
-                    </div>
-                    <span class="text-sm font-medium text-gray-700 group-hover:text-red-600">{{ $category->name
-                        }}</span>
-                    @if($category->spare_parts_count > 0)
-                    <p class="text-xs text-gray-500 mt-1">{{ $category->spare_parts_count }} produk</p>
-                    @endif
-                </a>
-                @empty
-                <!-- Fallback to hardcoded categories if no database data -->
                 <div class="text-center group cursor-pointer">
                     <div
                         class="bg-gray-100 group-hover:bg-red-100 rounded-full p-4 mx-auto mb-3 w-16 h-16 flex items-center justify-center transition-colors">
@@ -307,7 +411,6 @@
                     </div>
                     <span class="text-sm font-medium text-gray-700 group-hover:text-red-600">Lainnya</span>
                 </div>
-                @endforelse
             </div>
         </div>
 
@@ -772,36 +875,3 @@
     </div>
 </section>
 @endsection
-
-@push('styles')
-<style>
-    /* Marketplace Styles */
-    .marketplace-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 1.25rem;
-        height: 1.25rem;
-        border-radius: 50%;
-        font-size: 0.75rem;
-        font-weight: bold;
-        color: white;
-    }
-
-    .marketplace-icon.tokopedia {
-        background-color: #42b883;
-    }
-
-    .marketplace-icon.shopee {
-        background-color: #ee4d2d;
-    }
-
-    .marketplace-icon.lazada {
-        background-color: #0f146d;
-    }
-
-    .marketplace-icon.bukalapak {
-        background-color: #e31e24;
-    }
-</style>
-@endpush
