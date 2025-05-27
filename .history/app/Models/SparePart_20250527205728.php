@@ -187,11 +187,19 @@ class SparePart extends Model
     }
 
     /**
-     * Get the main image URL (deprecated - use main_image_url instead).
+     * Get the main image URL.
      */
     public function getMainImageAttribute(): ?string
     {
-        return $this->main_image_url;
+        if ($this->featured_image) {
+            return asset('storage/' . $this->featured_image);
+        }
+
+        if ($this->images && count($this->images) > 0) {
+            return asset('storage/' . $this->images[0]);
+        }
+
+        return asset('images/sparepart/sparepart.png'); // Default image
     }
 
     /**

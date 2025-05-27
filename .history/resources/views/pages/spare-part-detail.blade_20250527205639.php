@@ -104,7 +104,10 @@
                 <div class="prose prose-gray max-w-none">
                     <h3 class="text-lg font-semibold mb-3">Deskripsi Produk</h3>
                     <div class="text-gray-600 leading-relaxed description-content">
-                        {!! $product->formatted_description !!}
+                        {!! nl2br(strip_tags($product->description, '<br><strong><b><em><i><u>
+                                            <ul>
+                                                <ol>
+                                                    <li>')) !!}
                     </div>
                 </div>
 
@@ -298,36 +301,6 @@
 
     .product-image-gallery img:hover {
         opacity: 0.75;
-    }
-
-    /* Description Content Styling */
-    .description-content {
-        line-height: 1.7;
-    }
-
-    .description-content br {
-        margin-bottom: 0.5rem;
-    }
-
-    .description-content strong,
-    .description-content b {
-        font-weight: 600;
-        color: #374151;
-    }
-
-    .description-content em,
-    .description-content i {
-        font-style: italic;
-    }
-
-    .description-content ul,
-    .description-content ol {
-        margin: 1rem 0;
-        padding-left: 1.5rem;
-    }
-
-    .description-content li {
-        margin-bottom: 0.25rem;
     }
 
     /* Responsive adjustments */

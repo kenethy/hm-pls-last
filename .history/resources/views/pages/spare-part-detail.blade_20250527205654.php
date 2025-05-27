@@ -104,7 +104,10 @@
                 <div class="prose prose-gray max-w-none">
                     <h3 class="text-lg font-semibold mb-3">Deskripsi Produk</h3>
                     <div class="text-gray-600 leading-relaxed description-content">
-                        {!! $product->formatted_description !!}
+                        {!! nl2br(strip_tags($product->description, '<br><strong><b><em><i><u>
+                                            <ul>
+                                                <ol>
+                                                    <li>')) !!}
                     </div>
                 </div>
 
