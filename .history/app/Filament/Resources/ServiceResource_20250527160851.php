@@ -1221,7 +1221,7 @@ class ServiceResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                        ->visible(fn() => Auth::user()->email === 'admin@hartonomotor.com'),
+                        ->visible(fn() => Auth::user()->isAdmin()),
                     Tables\Actions\BulkAction::make('markAsCompletedBulk')
                         ->label('Tandai Selesai')
                         ->icon('heroicon-o-check-circle')
@@ -1586,7 +1586,7 @@ class ServiceResource extends Resource
     /**
      * Trigger rating popup notification after service completion
      */
-    protected static function triggerRatingPopup(Service $service): void
+    protected function triggerRatingPopup(Service $service): void
     {
         // Prepare service data for JavaScript
         $serviceData = [

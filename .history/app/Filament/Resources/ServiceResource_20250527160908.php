@@ -1221,7 +1221,7 @@ class ServiceResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                        ->visible(fn() => Auth::user()->email === 'admin@hartonomotor.com'),
+                        ->visible(fn() => Auth::user()->isAdmin()),
                     Tables\Actions\BulkAction::make('markAsCompletedBulk')
                         ->label('Tandai Selesai')
                         ->icon('heroicon-o-check-circle')
