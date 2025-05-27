@@ -244,12 +244,7 @@
                                 style="background-color: {{ $product->category->color ?? '#dc2626' }}20; color: {{ $product->category->color ?? '#dc2626' }};">
                                 {{ $product->category->name }}
                             </span>
-                            <h3 class="text-xl font-bold">
-                                <a href="{{ route('spare-parts.show', $product->slug) }}"
-                                    class="hover:text-red-600 transition-colors">
-                                    {{ $product->name }}
-                                </a>
-                            </h3>
+                            <h3 class="text-xl font-bold">{{ $product->name }}</h3>
                         </div>
                     </div>
 
@@ -403,12 +398,7 @@
                                 style="background-color: {{ $product->category->color ?? '#dc2626' }}20; color: {{ $product->category->color ?? '#dc2626' }};">
                                 {{ $product->category->name }}
                             </span>
-                            <h3 class="text-xl font-bold">
-                                <a href="{{ route('spare-parts.show', $product->slug) }}"
-                                    class="hover:text-red-600 transition-colors">
-                                    {{ $product->name }}
-                                </a>
-                            </h3>
+                            <h3 class="text-xl font-bold">{{ $product->name }}</h3>
                         </div>
                     </div>
 
