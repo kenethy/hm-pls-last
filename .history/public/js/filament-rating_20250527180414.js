@@ -368,50 +368,28 @@ class FilamentRatingSystem {
     }
 
     /**
-     * Setup star rating interaction with enhanced feedback
+     * Setup star rating interaction
      */
     setupStarRating(mechanicCard, mechanicId) {
         const stars = mechanicCard.querySelectorAll('.star');
-        const statusBadge = mechanicCard.querySelector('.rating-status-badge');
-
-        console.log(`🔧 Setting up star rating for mechanic ${mechanicId}`);
 
         stars.forEach((star, index) => {
-            // Enhanced hover effects
+            // Hover effects
             star.addEventListener('mouseenter', () => {
                 this.highlightStars(stars, index + 1);
-                // Update status badge during hover
-                statusBadge.textContent = `Rating ${index + 1} bintang`;
-                statusBadge.className = 'rating-status-badge text-xs px-2 py-1 rounded-full bg-amber-100 dark:bg-amber-700 text-amber-600 dark:text-amber-300';
             });
 
             star.addEventListener('mouseleave', () => {
                 const currentRating = this.ratings[mechanicId]?.rating || 0;
                 this.highlightStars(stars, currentRating);
-                // Reset status badge
-                if (currentRating > 0) {
-                    statusBadge.textContent = `${currentRating} bintang`;
-                    statusBadge.className = 'rating-status-badge text-xs px-2 py-1 rounded-full bg-green-100 dark:bg-green-700 text-green-600 dark:text-green-300';
-                } else {
-                    statusBadge.textContent = 'Belum Rating';
-                    statusBadge.className = 'rating-status-badge text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300';
-                }
             });
 
-            // Enhanced click to select rating
+            // Click to select rating
             star.addEventListener('click', () => {
                 const rating = index + 1;
-                console.log(`⭐ Star clicked: Rating ${rating} for mechanic ${mechanicId}`);
-
                 this.setRating(mechanicId, rating);
                 this.highlightStars(stars, rating);
                 this.updateSubmitButton(mechanicCard, mechanicId);
-
-                // Update status badge immediately
-                statusBadge.textContent = `${rating} bintang`;
-                statusBadge.className = 'rating-status-badge text-xs px-2 py-1 rounded-full bg-green-100 dark:bg-green-700 text-green-600 dark:text-green-300';
-
-                console.log(`✅ Rating ${rating} set for mechanic ${mechanicId}`);
             });
         });
     }
