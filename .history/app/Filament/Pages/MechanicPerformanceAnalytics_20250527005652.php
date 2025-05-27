@@ -179,6 +179,6 @@ class MechanicPerformanceAnalytics extends Page implements HasForms
 
     public static function canAccess(): bool
     {
-        return Auth::check() && Auth::user()->email === 'admin@hartonomotor.com';
+        return auth()->check() && auth()->user()->email === 'admin@hartonomotor.com';
     }
 }

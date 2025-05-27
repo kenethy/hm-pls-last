@@ -209,8 +209,6 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Tanggal Selesai</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Rating</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Aksi</th>
                         </tr>
                     </thead>
@@ -245,13 +243,6 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $service->completed_at ?
                                 $service->completed_at->format('d M Y H:i') : '-' }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                @if($service->status === 'completed')
-                                <x-rating-button :service-id="$service->id" size="sm" variant="outline" />
-                                @else
-                                <span class="text-gray-400 text-xs">Belum selesai</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 <a href="{{ route('filament.admin.resources.services.edit', ['record' => $service->id]) }}"
                                     class="text-blue-600 hover:text-blue-900">Lihat Detail</a>
                             </td>
@@ -263,12 +254,6 @@
             @endif
         </div>
     </div>
-
-    <!-- Include Rating Modal Component -->
-    <x-rating-modal />
-
-    <!-- Include Rating JavaScript -->
-    <script src="{{ asset('js/mechanic-rating.js') }}"></script>
 </body>
 
 </html>

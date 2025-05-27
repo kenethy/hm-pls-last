@@ -263,12 +263,6 @@
             @endif
         </div>
     </div>
-
-    <!-- Include Rating Modal Component -->
-    <x-rating-modal />
-
-    <!-- Include Rating JavaScript -->
-    <script src="{{ asset('js/mechanic-rating.js') }}"></script>
 </body>
 
 </html>

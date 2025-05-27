@@ -11,7 +11,7 @@ use Filament\Forms\Contracts\HasForms;
 use App\Services\MechanicRatingService;
 use App\Models\Mechanic;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class MechanicPerformanceAnalytics extends Page implements HasForms
 {
@@ -104,7 +104,7 @@ class MechanicPerformanceAnalytics extends Page implements HasForms
         }
     }
 
-    public function exportData()
+    public function exportData(): Response
     {
         $startDate = $this->data['start_date'] ?? null;
         $endDate = $this->data['end_date'] ?? null;
@@ -179,6 +179,6 @@ class MechanicPerformanceAnalytics extends Page implements HasForms
 
     public static function canAccess(): bool
     {
-        return Auth::check() && Auth::user()->email === 'admin@hartonomotor.com';
+        return auth()->user()->hasRole('admin');
     }
 }

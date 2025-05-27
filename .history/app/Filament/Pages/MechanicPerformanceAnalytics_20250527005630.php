@@ -11,7 +11,7 @@ use Filament\Forms\Contracts\HasForms;
 use App\Services\MechanicRatingService;
 use App\Models\Mechanic;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MechanicPerformanceAnalytics extends Page implements HasForms
 {
@@ -179,6 +179,6 @@ class MechanicPerformanceAnalytics extends Page implements HasForms
 
     public static function canAccess(): bool
     {
-        return Auth::check() && Auth::user()->email === 'admin@hartonomotor.com';
+        return auth()->user()->hasRole('admin');
     }
 }
