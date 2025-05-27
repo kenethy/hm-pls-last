@@ -524,7 +524,7 @@ class ServiceResource extends Resource
                         $isSimplified = session('services_simplified_view', false);
                         return $isSimplified ? 'success' : 'warning';
                     })
-                    ->action(function ($livewire) {
+                    ->action(function () {
                         $currentState = session('services_simplified_view', false);
                         $newState = !$currentState;
                         session(['services_simplified_view' => $newState]);
@@ -539,8 +539,8 @@ class ServiceResource extends Resource
                             ->success()
                             ->send();
 
-                        // Refresh the page using JavaScript
-                        $livewire->js('window.location.reload()');
+                        // Refresh the page using Livewire's redirect method
+                        return redirect(request()->url());
                     })
                     ->tooltip(function () {
                         $isSimplified = session('services_simplified_view', false);
