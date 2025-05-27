@@ -39,8 +39,7 @@ class SparePartCategoryResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(
-                                fn(string $context, $state, Forms\Set $set) =>
+                            ->afterStateUpdated(fn (string $context, $state, Forms\Set $set) => 
                                 $context === 'create' ? $set('slug', Str::slug($state)) : null
                             ),
 
@@ -56,12 +55,10 @@ class SparePartCategoryResource extends Resource
                             ->rows(3)
                             ->columnSpanFull(),
 
-                        Forms\Components\Textarea::make('icon')
-                            ->label('Icon (SVG Code)')
-                            ->placeholder('Paste SVG code here, contoh: <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">...</svg>')
-                            ->rows(4)
-                            ->columnSpanFull()
-                            ->helperText('Paste complete SVG code including <svg> tags. The SVG will be displayed with h-8 w-8 classes automatically.'),
+                        Forms\Components\TextInput::make('icon')
+                            ->label('Icon (SVG atau CSS Class)')
+                            ->placeholder('heroicon-o-cog-6-tooth atau <svg>...</svg>')
+                            ->columnSpanFull(),
 
                         Forms\Components\ColorPicker::make('color')
                             ->label('Warna Kategori')
