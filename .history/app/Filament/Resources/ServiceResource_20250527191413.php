@@ -882,9 +882,8 @@ class ServiceResource extends Resource
                     ->icon('heroicon-o-star')
                     ->color('warning')
                     ->visible(function (Service $record) {
-                        $isVisible = $record->status === 'completed';
-                        Log::info("🔍 Rating action visibility check - Service {$record->id}, Status: '{$record->status}', Visible: " . ($isVisible ? 'YES' : 'NO'));
-                        return $isVisible;
+                        Log::info("🔍 Checking visibility for rating action - Service {$record->id}, Status: {$record->status}");
+                        return $record->status === 'completed';
                     })
                     ->modalHeading('Rating Montir')
                     ->modalDescription(fn(Service $record) => "Berikan rating untuk montir yang menangani servis {$record->service_type}")
@@ -899,20 +898,6 @@ class ServiceResource extends Resource
                     ->action(function () {
                         Log::info("✅ Rating modal closed");
                         // Just close the modal - ratings are submitted individually
-                    }),
-
-                // 🔧 DEBUG ACTION - Always visible to test if actions work
-                Tables\Actions\Action::make('debugAction')
-                    ->label('🔧 Debug')
-                    ->icon('heroicon-o-wrench')
-                    ->color('gray')
-                    ->action(function (Service $record) {
-                        Log::info("🔧 Debug action clicked for service {$record->id}, status: {$record->status}");
-                        Notification::make()
-                            ->title('Debug Info')
-                            ->body("Service ID: {$record->id}, Status: {$record->status}, Mechanics: " . $record->mechanics->count())
-                            ->info()
-                            ->send();
                     }),
 
                 Tables\Actions\Action::make('generateDigitalReport')
