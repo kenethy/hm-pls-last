@@ -167,7 +167,7 @@ class MechanicRatingController extends Controller
 
             // Check for immediate modal trigger (new Filament-integrated behavior)
             if (session('trigger_rating_modal') && session('current_rating_service')) {
-                Log::info('✅ Immediate modal trigger found!');
+                \Log::info('✅ Immediate modal trigger found!');
                 $response['trigger_modal'] = true;
                 $response['service_data'] = session('current_rating_service');
 

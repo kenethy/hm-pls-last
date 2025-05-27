@@ -647,27 +647,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.filamentRatingSystem = new FilamentRatingSystem();
 
-    // Check for immediate triggers multiple times
-    console.log('⏰ Setting up trigger checks...');
-    setTimeout(() => {
-        console.log('🔄 First trigger check (500ms)');
-        checkImmediateRatingTriggers();
-    }, 500);
-
-    setTimeout(() => {
-        console.log('🔄 Second trigger check (2000ms)');
-        checkImmediateRatingTriggers();
-    }, 2000);
-
-    setTimeout(() => {
-        console.log('🔄 Third trigger check (5000ms)');
-        checkImmediateRatingTriggers();
-    }, 5000);
+    // Check for immediate triggers
+    setTimeout(checkImmediateRatingTriggers, 500);
 
     // Also check when page becomes visible (user switches back to tab)
     document.addEventListener('visibilitychange', function () {
         if (!document.hidden) {
-            console.log('👁️ Page became visible, checking triggers...');
             setTimeout(checkImmediateRatingTriggers, 500);
         }
     });

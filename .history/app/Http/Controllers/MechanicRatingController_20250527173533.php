@@ -9,7 +9,6 @@ use App\Services\MechanicRatingService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
 
 class MechanicRatingController extends Controller
 {
@@ -147,8 +146,8 @@ class MechanicRatingController extends Controller
     public function checkRatingPopup(Request $request): JsonResponse
     {
         try {
-            Log::info('🔍 API checkRatingPopup called');
-            Log::info('📊 Session data check:', [
+            \Log::info('🔍 API checkRatingPopup called');
+            \Log::info('📊 Session data check:', [
                 'trigger_rating_modal' => session('trigger_rating_modal'),
                 'current_rating_service' => session('current_rating_service'),
                 'show_rating_modal_direct' => session('show_rating_modal_direct'),
@@ -167,7 +166,7 @@ class MechanicRatingController extends Controller
 
             // Check for immediate modal trigger (new Filament-integrated behavior)
             if (session('trigger_rating_modal') && session('current_rating_service')) {
-                Log::info('✅ Immediate modal trigger found!');
+                \Log::info('✅ Immediate modal trigger found!');
                 $response['trigger_modal'] = true;
                 $response['service_data'] = session('current_rating_service');
 

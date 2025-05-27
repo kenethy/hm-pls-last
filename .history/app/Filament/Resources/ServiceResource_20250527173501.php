@@ -1633,14 +1633,14 @@ class ServiceResource extends Resource
             })->toArray()
         ];
 
-        Log::info('📊 Service data prepared:', $serviceData);
+        \Log::info('📊 Service data prepared:', $serviceData);
 
         // Store service data and trigger immediate modal display
         session(['current_rating_service' => $serviceData]);
         session(['trigger_rating_modal' => true]);
 
-        Log::info('✅ Session data stored - trigger_rating_modal: ' . session('trigger_rating_modal'));
-        Log::info('✅ Session data stored - current_rating_service: ' . json_encode(session('current_rating_service')));
+        \Log::info('✅ Session data stored - trigger_rating_modal: ' . session('trigger_rating_modal'));
+        \Log::info('✅ Session data stored - current_rating_service: ' . json_encode(session('current_rating_service')));
     }
 
     public static function getPages(): array
