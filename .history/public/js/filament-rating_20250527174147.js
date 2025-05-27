@@ -97,51 +97,34 @@ class FilamentRatingSystem {
             }
         }
 
-        // Method 3: Force Alpine.js initialization and try again
-        if (!modalOpened && window.Alpine) {
-            console.log('🔧 Attempting to force Alpine.js initialization...');
-            try {
-                // Try to initialize Alpine on the modal
-                window.Alpine.initTree(modal);
-
-                // Wait a moment for initialization to complete
-                setTimeout(() => {
-                    if (modal.__x && modal.__x.$data) {
-                        try {
-                            modal.__x.$data.isOpen = true;
-                            modalOpened = true;
-                            console.log('✅ Modal opened after forced Alpine.js initialization');
-                        } catch (error) {
-                            console.warn('⚠️ Alpine.js still not working after forced init:', error);
-                        }
-                    }
-
-                    // Final fallback if still not opened
-                    if (!modalOpened) {
-                        console.log('🔧 Using final fallback method...');
-                        modal.classList.remove('hidden');
-                        modal.style.display = 'block';
-                        modalOpened = true;
-                        console.log('✅ Modal opened using final fallback');
-                    }
-                }, 100);
-            } catch (error) {
-                console.warn('⚠️ Failed to force Alpine.js initialization:', error);
-                // Final fallback - force show modal
-                modal.classList.remove('hidden');
-                modal.style.display = 'block';
-                modalOpened = true;
-                console.log('✅ Modal opened using emergency fallback');
-            }
-        }
-
-        // Method 4: Emergency fallback if Alpine.js is not available
+        // Method 3: Wait for Alpine.js to initialize (last resort)
         if (!modalOpened) {
-            console.log('🚨 Emergency fallback - showing modal without Alpine.js');
-            modal.classList.remove('hidden');
-            modal.style.display = 'block';
-            modalOpened = true;
-            console.log('✅ Modal opened using emergency fallback');
+            console.log('🔄 Waiting for Alpine.js to initialize...');
+            let attempts = 0;
+            const maxAttempts = 10;
+
+            const waitForAlpine = setInterval(() => {
+                attempts++;
+                console.log(`🔄 Alpine.js check attempt ${attempts}/${maxAttempts}`);
+
+                if (modal.__x && modal.__x.$data) {
+                    try {
+                        modal.__x.$data.isOpen = true;
+                        modalOpened = true;
+                        console.log('✅ Modal opened after Alpine.js initialization');
+                        clearInterval(waitForAlpine);
+                    } catch (error) {
+                        console.warn('⚠️ Alpine.js still not ready:', error);
+                    }
+                } else if (attempts >= maxAttempts) {
+                    console.error('❌ Alpine.js failed to initialize after maximum attempts');
+                    // Final fallback - force show modal
+                    modal.classList.remove('hidden');
+                    modal.style.display = 'block';
+                    modalOpened = true;
+                    clearInterval(waitForAlpine);
+                }
+            }, 200); // Check every 200ms
         }
 
         if (modalOpened) {
@@ -563,37 +546,9 @@ class FilamentRatingSystem {
      * Close the rating modal
      */
     closeModal() {
-        console.log('🔒 Closing rating modal...');
         const modal = document.getElementById('ratingModal');
-
-        if (!modal) {
-            console.warn('⚠️ Modal element not found when trying to close');
-            return;
-        }
-
-        let modalClosed = false;
-
-        // Method 1: Alpine.js (preferred)
-        if (modal.__x && modal.__x.$data) {
-            try {
-                modal.__x.$data.isOpen = false;
-                modalClosed = true;
-                console.log('✅ Modal closed using Alpine.js');
-            } catch (error) {
-                console.warn('⚠️ Alpine.js close method failed:', error);
-            }
-        }
-
-        // Method 2: Direct class manipulation (fallback)
-        if (!modalClosed) {
-            try {
-                modal.classList.add('hidden');
-                modal.style.display = 'none';
-                modalClosed = true;
-                console.log('✅ Modal closed using class manipulation');
-            } catch (error) {
-                console.warn('⚠️ Class manipulation close method failed:', error);
-            }
+        if (modal && modal.__x) {
+            modal.__x.$data.isOpen = false;
         }
 
         // Reset state
@@ -602,15 +557,10 @@ class FilamentRatingSystem {
         this.ratings = {};
 
         // Clear content
-        const mechanicsContainer = document.getElementById('mechanicsContainer');
-        if (mechanicsContainer) {
-            mechanicsContainer.innerHTML = '';
-        }
+        document.getElementById('mechanicsContainer').innerHTML = '';
 
         // Check for pending bulk ratings
         this.checkPendingBulkRatings();
-
-        console.log('✅ Modal state reset complete');
     }
 
     /**
@@ -755,95 +705,36 @@ function checkImmediateRatingTriggers() {
         });
 }
 
-/**
- * Wait for Alpine.js to be ready
- */
-function waitForAlpine(callback, maxAttempts = 20) {
-    let attempts = 0;
-
-    const checkAlpine = () => {
-        attempts++;
-        console.log(`🔄 Checking for Alpine.js... attempt ${attempts}/${maxAttempts}`);
-
-        if (window.Alpine) {
-            console.log('✅ Alpine.js found!');
-            callback();
-        } else if (attempts >= maxAttempts) {
-            console.warn('⚠️ Alpine.js not found after maximum attempts, proceeding anyway...');
-            callback();
-        } else {
-            setTimeout(checkAlpine, 100);
-        }
-    };
-
-    checkAlpine();
-}
-
-/**
- * Initialize Alpine.js on modal if not already initialized
- */
-function initializeModalAlpine() {
-    const modal = document.getElementById('ratingModal');
-    if (!modal) {
-        console.warn('⚠️ Modal not found for Alpine initialization');
-        return;
-    }
-
-    console.log('🔧 Checking modal Alpine.js initialization...');
-
-    // Check if Alpine is already initialized on this element
-    if (!modal.__x && window.Alpine) {
-        console.log('🔧 Manually initializing Alpine.js on modal...');
-        try {
-            // Force Alpine to initialize this element
-            window.Alpine.initTree(modal);
-            console.log('✅ Alpine.js manually initialized on modal');
-        } catch (error) {
-            console.warn('⚠️ Failed to manually initialize Alpine.js:', error);
-        }
-    } else if (modal.__x) {
-        console.log('✅ Alpine.js already initialized on modal');
-    } else {
-        console.warn('⚠️ Alpine.js not available for manual initialization');
-    }
-}
-
 // Initialize the Filament rating system when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
     console.log('🚀 Initializing Filament Rating System...');
 
     window.filamentRatingSystem = new FilamentRatingSystem();
 
-    // Wait for Alpine.js to be ready before setting up triggers
-    waitForAlpine(() => {
-        console.log('🎯 Alpine.js ready, initializing modal...');
-        initializeModalAlpine();
+    // Check for immediate triggers multiple times
+    console.log('⏰ Setting up trigger checks...');
+    setTimeout(() => {
+        console.log('🔄 First trigger check (500ms)');
+        checkImmediateRatingTriggers();
+    }, 500);
 
-        // Check for immediate triggers multiple times
-        console.log('⏰ Setting up trigger checks...');
-        setTimeout(() => {
-            console.log('🔄 First trigger check (500ms)');
-            checkImmediateRatingTriggers();
-        }, 500);
+    setTimeout(() => {
+        console.log('🔄 Second trigger check (2000ms)');
+        checkImmediateRatingTriggers();
+    }, 2000);
 
-        setTimeout(() => {
-            console.log('🔄 Second trigger check (2000ms)');
-            checkImmediateRatingTriggers();
-        }, 2000);
+    setTimeout(() => {
+        console.log('🔄 Third trigger check (5000ms)');
+        checkImmediateRatingTriggers();
+    }, 5000);
 
-        setTimeout(() => {
-            console.log('🔄 Third trigger check (5000ms)');
-            checkImmediateRatingTriggers();
-        }, 5000);
-
-        // Also check when page becomes visible (user switches back to tab)
-        document.addEventListener('visibilitychange', function () {
-            if (!document.hidden) {
-                console.log('👁️ Page became visible, checking triggers...');
-                setTimeout(checkImmediateRatingTriggers, 500);
-            }
-        });
-
-        console.log('✅ Filament Rating System ready');
+    // Also check when page becomes visible (user switches back to tab)
+    document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) {
+            console.log('👁️ Page became visible, checking triggers...');
+            setTimeout(checkImmediateRatingTriggers, 500);
+        }
     });
+
+    console.log('✅ Filament Rating System ready');
 });

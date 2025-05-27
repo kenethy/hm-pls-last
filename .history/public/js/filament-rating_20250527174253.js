@@ -97,51 +97,34 @@ class FilamentRatingSystem {
             }
         }
 
-        // Method 3: Force Alpine.js initialization and try again
-        if (!modalOpened && window.Alpine) {
-            console.log('🔧 Attempting to force Alpine.js initialization...');
-            try {
-                // Try to initialize Alpine on the modal
-                window.Alpine.initTree(modal);
-
-                // Wait a moment for initialization to complete
-                setTimeout(() => {
-                    if (modal.__x && modal.__x.$data) {
-                        try {
-                            modal.__x.$data.isOpen = true;
-                            modalOpened = true;
-                            console.log('✅ Modal opened after forced Alpine.js initialization');
-                        } catch (error) {
-                            console.warn('⚠️ Alpine.js still not working after forced init:', error);
-                        }
-                    }
-
-                    // Final fallback if still not opened
-                    if (!modalOpened) {
-                        console.log('🔧 Using final fallback method...');
-                        modal.classList.remove('hidden');
-                        modal.style.display = 'block';
-                        modalOpened = true;
-                        console.log('✅ Modal opened using final fallback');
-                    }
-                }, 100);
-            } catch (error) {
-                console.warn('⚠️ Failed to force Alpine.js initialization:', error);
-                // Final fallback - force show modal
-                modal.classList.remove('hidden');
-                modal.style.display = 'block';
-                modalOpened = true;
-                console.log('✅ Modal opened using emergency fallback');
-            }
-        }
-
-        // Method 4: Emergency fallback if Alpine.js is not available
+        // Method 3: Wait for Alpine.js to initialize (last resort)
         if (!modalOpened) {
-            console.log('🚨 Emergency fallback - showing modal without Alpine.js');
-            modal.classList.remove('hidden');
-            modal.style.display = 'block';
-            modalOpened = true;
-            console.log('✅ Modal opened using emergency fallback');
+            console.log('🔄 Waiting for Alpine.js to initialize...');
+            let attempts = 0;
+            const maxAttempts = 10;
+
+            const waitForAlpine = setInterval(() => {
+                attempts++;
+                console.log(`🔄 Alpine.js check attempt ${attempts}/${maxAttempts}`);
+
+                if (modal.__x && modal.__x.$data) {
+                    try {
+                        modal.__x.$data.isOpen = true;
+                        modalOpened = true;
+                        console.log('✅ Modal opened after Alpine.js initialization');
+                        clearInterval(waitForAlpine);
+                    } catch (error) {
+                        console.warn('⚠️ Alpine.js still not ready:', error);
+                    }
+                } else if (attempts >= maxAttempts) {
+                    console.error('❌ Alpine.js failed to initialize after maximum attempts');
+                    // Final fallback - force show modal
+                    modal.classList.remove('hidden');
+                    modal.style.display = 'block';
+                    modalOpened = true;
+                    clearInterval(waitForAlpine);
+                }
+            }, 200); // Check every 200ms
         }
 
         if (modalOpened) {
