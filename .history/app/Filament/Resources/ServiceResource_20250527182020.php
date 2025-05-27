@@ -1349,8 +1349,9 @@ class ServiceResource extends Resource
 
                             if ($completedServices->count() > 0) {
                                 // For bulk completion, trigger modal for the first service
+                                // and store others for sequential rating
                                 $firstService = $completedServices->first();
-                                static::injectRatingModalScript($firstService);
+                                static::triggerRatingModal($firstService);
 
                                 // Store remaining services for sequential rating
                                 if ($completedServices->count() > 1) {

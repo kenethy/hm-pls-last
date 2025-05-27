@@ -1349,8 +1349,9 @@ class ServiceResource extends Resource
 
                             if ($completedServices->count() > 0) {
                                 // For bulk completion, trigger modal for the first service
+                                // and store others for sequential rating
                                 $firstService = $completedServices->first();
-                                static::injectRatingModalScript($firstService);
+                                static::triggerRatingModal($firstService);
 
                                 // Store remaining services for sequential rating
                                 if ($completedServices->count() > 1) {
@@ -1615,12 +1616,11 @@ class ServiceResource extends Resource
     }
 
     /**
-     * 🚀 NEW APPROACH: Inject JavaScript directly to show rating modal
-     * This bypasses all session/API complexity and works immediately
+     * Trigger rating modal immediately after service completion
      */
-    protected static function injectRatingModalScript(Service $service): void
+    protected static function triggerRatingModal(Service $service): void
     {
-        Log::info('🚀 injectRatingModalScript called for service: ' . $service->id);
+        Log::info('🎯 triggerRatingModal called for service: ' . $service->id);
 
         // Prepare service data for JavaScript
         $serviceData = [
@@ -1637,38 +1637,14 @@ class ServiceResource extends Resource
             })->toArray()
         ];
 
-        Log::info('📊 Service data prepared for injection:', $serviceData);
+        Log::info('📊 Service data prepared:', $serviceData);
 
-        // Create JavaScript that will execute immediately
-        $jsCode = "
-        <script>
-        console.log('🚀 Rating modal script injected for service: {$service->id}');
+        // Store service data and trigger immediate modal display
+        session(['current_rating_service' => $serviceData]);
+        session(['trigger_rating_modal' => true]);
 
-        // Wait for DOM to be ready, then show modal
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', function() {
-                setTimeout(function() {
-                    openSimpleRatingModal(" . json_encode($serviceData) . ");
-                }, 500);
-            });
-        } else {
-            // DOM is already ready
-            setTimeout(function() {
-                openSimpleRatingModal(" . json_encode($serviceData) . ");
-            }, 500);
-        }
-        </script>
-        ";
-
-        // Inject the script into the page using Filament's notification system
-        Notification::make()
-            ->title('Rating Modal')
-            ->body($jsCode)
-            ->success()
-            ->persistent()
-            ->send();
-
-        Log::info('✅ Rating modal script injected successfully');
+        Log::info('✅ Session data stored - trigger_rating_modal: ' . session('trigger_rating_modal'));
+        Log::info('✅ Session data stored - current_rating_service: ' . json_encode(session('current_rating_service')));
     }
 
     public static function getPages(): array
