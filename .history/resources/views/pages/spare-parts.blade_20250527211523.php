@@ -1271,67 +1271,6 @@
         color: #374151;
     }
 
-    /* Responsive Design */
-    @media (max-width: 640px) {
-        .pricing-notification-content {
-            width: 95%;
-            margin: 10px;
-        }
-
-        .modal-header {
-            padding: 30px 20px 15px;
-        }
-
-        .modal-icon {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 15px;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-        }
-
-        .modal-subtitle {
-            font-size: 0.875rem;
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .price-comparison {
-            flex-direction: column;
-            gap: 15px;
-            padding: 15px;
-        }
-
-        .vs-divider {
-            margin: 0;
-            transform: rotate(90deg);
-        }
-
-        .modal-footer {
-            padding: 15px 20px 30px;
-        }
-
-        .whatsapp-cta-button {
-            padding: 14px 20px;
-        }
-
-        .button-content {
-            align-items: center;
-        }
-
-        .benefit-item {
-            padding: 10px 12px;
-        }
-
-        .benefit-item span {
-            font-size: 0.8rem;
-        }
-    }
-
     .pricing-notification-close {
         position: absolute;
         top: 16px;
@@ -1528,15 +1467,20 @@
         }
     }
 
-    // Initialize pricing notifications (Always show modal now)
+    // Initialize pricing notifications
     document.addEventListener('DOMContentLoaded', function () {
         @if (isset($pricingNotification) && $pricingNotification['enabled'])
             const notificationShown = sessionStorage.getItem('pricingNotificationShown');
 
-        // Always show modal regardless of display_type setting
+        @if ($pricingNotification['display_type'] === 'modal')
+            if (!notificationShown) {
+                setTimeout(showPricingModal, 2000); // Show modal after 2 seconds
+            }
+        @elseif($pricingNotification['display_type'] === 'sticky')
         if (!notificationShown) {
-            setTimeout(showPricingModal, 2500); // Show modal after 2.5 seconds
+            showPricingSticky();
         }
+        @endif
         @endif
     });
 

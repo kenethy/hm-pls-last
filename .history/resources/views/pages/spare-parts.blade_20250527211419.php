@@ -944,22 +944,20 @@
         }
     }
 
-    /* Aesthetic Modal Styles */
     .pricing-notification-modal {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(8px);
+        background: rgba(0, 0, 0, 0.5);
         display: flex;
         align-items: center;
         justify-content: center;
         z-index: 9999;
         opacity: 0;
         visibility: hidden;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.3s ease;
     }
 
     .pricing-notification-modal.show {
@@ -968,368 +966,18 @@
     }
 
     .pricing-notification-content {
-        background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-        border-radius: 24px;
-        padding: 0;
-        max-width: 520px;
-        width: 90%;
+        background: white;
+        border-radius: 16px;
+        padding: 32px;
+        max-width: 500px;
         margin: 20px;
         position: relative;
-        transform: scale(0.8) translateY(40px);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25),
-            0 0 0 1px rgba(255, 255, 255, 0.1);
-        overflow: hidden;
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
     }
 
     .pricing-notification-modal.show .pricing-notification-content {
-        transform: scale(1) translateY(0);
-    }
-
-    /* Modal Close Button */
-    .modal-close-btn {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.9);
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        z-index: 10;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .modal-close-btn:hover {
-        background: rgba(239, 68, 68, 0.1);
-        color: #ef4444;
-        transform: scale(1.1);
-    }
-
-    /* Modal Header */
-    .modal-header {
-        text-align: center;
-        padding: 40px 40px 20px;
-        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-        color: white;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .modal-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-        animation: shimmer 3s infinite;
-    }
-
-    .modal-icon {
-        width: 80px;
-        height: 80px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px;
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .modal-title {
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin-bottom: 8px;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .modal-subtitle {
-        font-size: 1rem;
-        opacity: 0.9;
-        line-height: 1.5;
-    }
-
-    /* Modal Body */
-    .modal-body {
-        padding: 30px 40px;
-    }
-
-    /* Price Comparison */
-    .price-comparison {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 30px;
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-        border-radius: 16px;
-        padding: 20px;
-        position: relative;
-    }
-
-    .price-item {
-        text-align: center;
-        flex: 1;
-    }
-
-    .price-item.online {
-        opacity: 0.7;
-    }
-
-    .price-item.offline {
-        position: relative;
-    }
-
-    .price-item.offline::before {
-        content: '';
-        position: absolute;
-        top: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 0;
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        border-bottom: 8px solid #22c55e;
-    }
-
-    .price-label {
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: #64748b;
-        margin-bottom: 8px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .price-value {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #1e293b;
-        margin-bottom: 4px;
-    }
-
-    .price-item.offline .price-value {
-        color: #22c55e;
-    }
-
-    .price-note {
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: #64748b;
-    }
-
-    .price-item.offline .price-note {
-        color: #22c55e;
-        background: rgba(34, 197, 94, 0.1);
-        padding: 4px 8px;
-        border-radius: 12px;
-        display: inline-block;
-    }
-
-    .vs-divider {
-        margin: 0 20px;
-        position: relative;
-    }
-
-    .vs-divider span {
-        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-        color: white;
-        padding: 8px 12px;
-        border-radius: 50%;
-        font-weight: 700;
-        font-size: 0.75rem;
-        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    }
-
-    /* Benefits List */
-    .benefits-list {
-        margin-bottom: 20px;
-    }
-
-    .benefit-item {
-        display: flex;
-        align-items: center;
-        padding: 12px 16px;
-        background: rgba(34, 197, 94, 0.05);
-        border-radius: 12px;
-        border-left: 4px solid #22c55e;
-        margin-bottom: 12px;
-        transition: all 0.3s ease;
-    }
-
-    .benefit-item:hover {
-        background: rgba(34, 197, 94, 0.1);
-        transform: translateX(4px);
-    }
-
-    .benefit-item svg {
-        color: #22c55e;
-        margin-right: 12px;
-        flex-shrink: 0;
-    }
-
-    .benefit-item span {
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: #374151;
-    }
-
-    /* Modal Footer */
-    .modal-footer {
-        padding: 20px 40px 40px;
-        text-align: center;
-    }
-
-    /* WhatsApp CTA Button */
-    .whatsapp-cta-button {
-        display: inline-flex;
-        align-items: center;
-        background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-        color: white;
-        padding: 16px 24px;
-        border-radius: 16px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
-        margin-bottom: 16px;
-        width: 100%;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .whatsapp-cta-button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: left 0.5s ease;
-    }
-
-    .whatsapp-cta-button:hover::before {
-        left: 100%;
-    }
-
-    .whatsapp-cta-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 35px rgba(37, 211, 102, 0.4);
-    }
-
-    .button-icon {
-        margin-right: 12px;
-        display: flex;
-        align-items: center;
-    }
-
-    .button-content {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .button-text {
-        font-size: 1rem;
-        font-weight: 700;
-        line-height: 1.2;
-    }
-
-    .button-subtext {
-        font-size: 0.75rem;
-        opacity: 0.9;
-        font-weight: 400;
-    }
-
-    /* Modal Dismiss Button */
-    .modal-dismiss-btn {
-        background: transparent;
-        border: 2px solid #e5e7eb;
-        color: #6b7280;
-        padding: 12px 24px;
-        border-radius: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 0.875rem;
-    }
-
-    .modal-dismiss-btn:hover {
-        border-color: #d1d5db;
-        background: #f9fafb;
-        color: #374151;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 640px) {
-        .pricing-notification-content {
-            width: 95%;
-            margin: 10px;
-        }
-
-        .modal-header {
-            padding: 30px 20px 15px;
-        }
-
-        .modal-icon {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 15px;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-        }
-
-        .modal-subtitle {
-            font-size: 0.875rem;
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .price-comparison {
-            flex-direction: column;
-            gap: 15px;
-            padding: 15px;
-        }
-
-        .vs-divider {
-            margin: 0;
-            transform: rotate(90deg);
-        }
-
-        .modal-footer {
-            padding: 15px 20px 30px;
-        }
-
-        .whatsapp-cta-button {
-            padding: 14px 20px;
-        }
-
-        .button-content {
-            align-items: center;
-        }
-
-        .benefit-item {
-            padding: 10px 12px;
-        }
-
-        .benefit-item span {
-            font-size: 0.8rem;
-        }
+        transform: scale(1);
     }
 
     .pricing-notification-close {
@@ -1528,15 +1176,20 @@
         }
     }
 
-    // Initialize pricing notifications (Always show modal now)
+    // Initialize pricing notifications
     document.addEventListener('DOMContentLoaded', function () {
         @if (isset($pricingNotification) && $pricingNotification['enabled'])
             const notificationShown = sessionStorage.getItem('pricingNotificationShown');
 
-        // Always show modal regardless of display_type setting
+        @if ($pricingNotification['display_type'] === 'modal')
+            if (!notificationShown) {
+                setTimeout(showPricingModal, 2000); // Show modal after 2 seconds
+            }
+        @elseif($pricingNotification['display_type'] === 'sticky')
         if (!notificationShown) {
-            setTimeout(showPricingModal, 2500); // Show modal after 2.5 seconds
+            showPricingSticky();
         }
+        @endif
         @endif
     });
 
