@@ -1612,9 +1612,9 @@ class ServiceResource extends Resource
     }
 
     /**
-     * Trigger rating modal immediately after service completion
+     * Trigger rating popup notification after service completion
      */
-    protected static function triggerRatingModal(Service $service): void
+    protected static function triggerRatingPopup(Service $service): void
     {
         // Prepare service data for JavaScript
         $serviceData = [
@@ -1631,9 +1631,17 @@ class ServiceResource extends Resource
             })->toArray()
         ];
 
-        // Store service data and trigger immediate modal display
-        session(['current_rating_service' => $serviceData]);
-        session(['trigger_rating_modal' => true]);
+        // Store service data for immediate rating modal display
+        session(['pending_rating_service' => $serviceData]);
+        session(['show_rating_modal_direct' => true]);
+
+        // Send a simple success notification (optional)
+        Notification::make()
+            ->title('✅ Servis Selesai')
+            ->body("Servis untuk {$service->customer_name} telah selesai. Modal rating akan muncul untuk mengumpulkan feedback.")
+            ->success()
+            ->duration(3000) // Short duration
+            ->send();
     }
 
     public static function getPages(): array

@@ -1344,43 +1344,17 @@ class ServiceResource extends Resource
                                 }
                             });
 
-                            // Trigger rating modal for each completed service
-                            $completedServices = $records->filter(fn($record) => $record->status === 'completed');
-
-                            if ($completedServices->count() > 0) {
-                                // For bulk completion, trigger modal for the first service
-                                // and store others for sequential rating
-                                $firstService = $completedServices->first();
-                                static::triggerRatingModal($firstService);
-
-                                // Store remaining services for sequential rating
-                                if ($completedServices->count() > 1) {
-                                    $remainingServices = $completedServices->skip(1)->map(function ($service) {
-                                        return [
-                                            'service_id' => $service->id,
-                                            'customer_name' => $service->customer_name,
-                                            'service_type' => $service->service_type,
-                                            'vehicle_info' => $service->license_plate . ' - ' . $service->car_model,
-                                            'mechanics' => $service->mechanics->map(function ($mechanic) {
-                                                return [
-                                                    'id' => $mechanic->id,
-                                                    'name' => $mechanic->name,
-                                                    'specialization' => $mechanic->specialization ?? 'Montir Umum'
-                                                ];
-                                            })->toArray()
-                                        ];
-                                    })->toArray();
-
-                                    session(['pending_bulk_ratings' => $remainingServices]);
-                                }
-                            }
-
                             Notification::make()
-                                ->title('✅ Bulk Completion Berhasil')
-                                ->body("Berhasil menyelesaikan {$completedServices->count()} servis. Silakan berikan rating untuk montir.")
+                                ->title('Servis telah ditandai sebagai selesai')
                                 ->success()
-                                ->persistent()
                                 ->send();
+
+                            // Trigger rating popup for each completed service
+                            $records->each(function ($record) {
+                                if ($record->status === 'completed') {
+                                    static::triggerRatingPopup($record);
+                                }
+                            });
                         })
                         ->deselectRecordsAfterCompletion(),
                 ]),
@@ -1612,9 +1586,9 @@ class ServiceResource extends Resource
     }
 
     /**
-     * Trigger rating modal immediately after service completion
+     * Trigger rating popup notification after service completion
      */
-    protected static function triggerRatingModal(Service $service): void
+    protected static function triggerRatingPopup(Service $service): void
     {
         // Prepare service data for JavaScript
         $serviceData = [
@@ -1631,9 +1605,17 @@ class ServiceResource extends Resource
             })->toArray()
         ];
 
-        // Store service data and trigger immediate modal display
-        session(['current_rating_service' => $serviceData]);
-        session(['trigger_rating_modal' => true]);
+        // Store service data for immediate rating modal display
+        session(['pending_rating_service' => $serviceData]);
+        session(['show_rating_modal_direct' => true]);
+
+        // Send a simple success notification (optional)
+        Notification::make()
+            ->title('✅ Servis Selesai')
+            ->body("Servis untuk {$service->customer_name} telah selesai. Modal rating akan muncul untuk mengumpulkan feedback.")
+            ->success()
+            ->duration(3000) // Short duration
+            ->send();
     }
 
     public static function getPages(): array
