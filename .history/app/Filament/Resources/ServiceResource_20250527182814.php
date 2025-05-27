@@ -1370,11 +1370,13 @@ class ServiceResource extends Resource
                                 }
                             });
 
-                            // Completed services will show rating buttons in table
+                            // Trigger rating modal for each completed service
                             $completedServices = $records->filter(fn($record) => $record->status === 'completed');
 
                             if ($completedServices->count() > 0) {
-                                Log::info('✅ Bulk completion: ' . $completedServices->count() . ' services completed - Rating buttons now available');
+                                // For bulk completion, trigger modal for the first service
+                                $firstService = $completedServices->first();
+                                static::injectRatingModalScript($firstService);
 
                                 // Store remaining services for sequential rating
                                 if ($completedServices->count() > 1) {
@@ -1637,7 +1639,62 @@ class ServiceResource extends Resource
         }
     }
 
+    /**
+     * 🚀 NEW APPROACH: Inject JavaScript directly to show rating modal
+     * This bypasses all session/API complexity and works immediately
+     */
+    protected static function injectRatingModalScript(Service $service): void
+    {
+        Log::info('🚀 injectRatingModalScript called for service: ' . $service->id);
 
+        // Prepare service data for JavaScript
+        $serviceData = [
+            'service_id' => $service->id,
+            'customer_name' => $service->customer_name,
+            'service_type' => $service->service_type,
+            'vehicle_info' => $service->license_plate . ' - ' . $service->car_model,
+            'mechanics' => $service->mechanics->map(function ($mechanic) {
+                return [
+                    'id' => $mechanic->id,
+                    'name' => $mechanic->name,
+                    'specialization' => $mechanic->specialization ?? 'Montir Umum'
+                ];
+            })->toArray()
+        ];
+
+        Log::info('📊 Service data prepared for injection:', $serviceData);
+
+        // Create JavaScript that will execute immediately
+        $jsCode = "
+        <script>
+        console.log('🚀 Rating modal script injected for service: {$service->id}');
+
+        // Wait for DOM to be ready, then show modal
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    openSimpleRatingModal(" . json_encode($serviceData) . ");
+                }, 500);
+            });
+        } else {
+            // DOM is already ready
+            setTimeout(function() {
+                openSimpleRatingModal(" . json_encode($serviceData) . ");
+            }, 500);
+        }
+        </script>
+        ";
+
+        // Inject the script into the page using Filament's notification system
+        Notification::make()
+            ->title('Rating Modal')
+            ->body($jsCode)
+            ->success()
+            ->persistent()
+            ->send();
+
+        Log::info('✅ Rating modal script injected successfully');
+    }
 
     public static function getPages(): array
     {
