@@ -164,11 +164,9 @@
                                 @if($mechanicData['performance']['total_ratings'] > 0)
                                 @php
                                 $avgRating = $mechanicData['performance']['average_rating'];
-                                $performanceClass = $avgRating >= 4.5 ? 'bg-green-100 dark:bg-green-900 text-green-800
-                                dark:text-green-300' :
-                                ($avgRating >= 4.0 ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300' :
-                                ($avgRating >= 3.5 ? 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800
-                                dark:text-yellow-300' : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300'));
+                                $performanceClass = $avgRating >= 4.5 ? 'bg-green-100 text-green-800' :
+                                ($avgRating >= 4.0 ? 'bg-blue-100 text-blue-800' :
+                                ($avgRating >= 3.5 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'));
                                 $performanceText = $avgRating >= 4.5 ? 'Excellent' :
                                 ($avgRating >= 4.0 ? 'Baik' :
                                 ($avgRating >= 3.5 ? 'Cukup' : 'Perlu Perbaikan'));
@@ -179,7 +177,7 @@
                                 </span>
                                 @else
                                 <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300">
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
                                     Belum Ada Data
                                 </span>
                                 @endif
@@ -190,7 +188,7 @@
                 </table>
             </div>
             @else
-            <p class="text-gray-500 dark:text-gray-400 text-center py-8">Belum ada data rating untuk periode ini.</p>
+            <p class="text-gray-500 text-center py-8">Belum ada data rating untuk periode ini.</p>
             @endif
         </div>
         @endif

@@ -190,7 +190,7 @@
                 </table>
             </div>
             @else
-            <p class="text-gray-500 dark:text-gray-400 text-center py-8">Belum ada data rating untuk periode ini.</p>
+            <p class="text-gray-500 text-center py-8">Belum ada data rating untuk periode ini.</p>
             @endif
         </div>
         @endif

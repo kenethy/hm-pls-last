@@ -83,12 +83,12 @@
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div class="bg-white rounded-lg shadow p-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Export Data</p>
+                        <p class="text-sm font-medium text-gray-500">Export Data</p>
                         <button wire:click="exportData"
-                            class="mt-2 px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white text-sm rounded-md hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors">
+                            class="mt-2 px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors">
                             <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
@@ -104,45 +104,39 @@
 
         <!-- Comparative Analytics -->
         @if($comparativeData)
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Perbandingan Performa Montir</h3>
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Perbandingan Performa Montir</h3>
 
             @if($comparativeData['mechanics']->isNotEmpty())
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead class="bg-gray-50 dark:bg-gray-700">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
                         <tr>
-                            <th
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Montir</th>
-                            <th
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Spesialisasi</th>
-                            <th
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Total Rating</th>
-                            <th
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Rating Rata-rata</th>
-                            <th
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Performa</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($comparativeData['mechanics'] as $mechanicData)
                         <tr>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 {{ $mechanicData['mechanic']['name'] }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ $mechanicData['mechanic']['specialization'] ?? 'Umum' }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ $mechanicData['performance']['total_ratings'] }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 @if($mechanicData['performance']['total_ratings'] > 0)
                                 <div class="flex items-center">
                                     <span class="mr-2">{{ $mechanicData['performance']['average_rating'] }}</span>
@@ -157,18 +151,16 @@
                                     </div>
                                 </div>
                                 @else
-                                <span class="text-gray-400 dark:text-gray-500">Belum ada rating</span>
+                                <span class="text-gray-400">Belum ada rating</span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 @if($mechanicData['performance']['total_ratings'] > 0)
                                 @php
                                 $avgRating = $mechanicData['performance']['average_rating'];
-                                $performanceClass = $avgRating >= 4.5 ? 'bg-green-100 dark:bg-green-900 text-green-800
-                                dark:text-green-300' :
-                                ($avgRating >= 4.0 ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300' :
-                                ($avgRating >= 3.5 ? 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800
-                                dark:text-yellow-300' : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300'));
+                                $performanceClass = $avgRating >= 4.5 ? 'bg-green-100 text-green-800' :
+                                ($avgRating >= 4.0 ? 'bg-blue-100 text-blue-800' :
+                                ($avgRating >= 3.5 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'));
                                 $performanceText = $avgRating >= 4.5 ? 'Excellent' :
                                 ($avgRating >= 4.0 ? 'Baik' :
                                 ($avgRating >= 3.5 ? 'Cukup' : 'Perlu Perbaikan'));
@@ -179,7 +171,7 @@
                                 </span>
                                 @else
                                 <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300">
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
                                     Belum Ada Data
                                 </span>
                                 @endif
@@ -190,7 +182,7 @@
                 </table>
             </div>
             @else
-            <p class="text-gray-500 dark:text-gray-400 text-center py-8">Belum ada data rating untuk periode ini.</p>
+            <p class="text-gray-500 text-center py-8">Belum ada data rating untuk periode ini.</p>
             @endif
         </div>
         @endif

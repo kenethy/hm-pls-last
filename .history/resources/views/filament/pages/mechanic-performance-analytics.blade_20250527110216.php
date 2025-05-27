@@ -179,7 +179,7 @@
                                 </span>
                                 @else
                                 <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300">
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
                                     Belum Ada Data
                                 </span>
                                 @endif
@@ -190,7 +190,7 @@
                 </table>
             </div>
             @else
-            <p class="text-gray-500 dark:text-gray-400 text-center py-8">Belum ada data rating untuk periode ini.</p>
+            <p class="text-gray-500 text-center py-8">Belum ada data rating untuk periode ini.</p>
             @endif
         </div>
         @endif
