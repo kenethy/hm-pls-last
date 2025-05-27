@@ -58,45 +58,37 @@ class MechanicRatingResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('service.id')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('mechanic.name')
-                    ->label('Montir')
-                    ->sortable()
-                    ->searchable(),
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('customer.name')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('customer_name')
-                    ->label('Pelanggan')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('customer_phone')
-                    ->label('No. Telepon')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('rating')
-                    ->label('Rating')
-                    ->formatStateUsing(fn(string $state): string => str_repeat('⭐', (int) $state) . ' (' . $state . '/5)')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('service_type')
-                    ->label('Jenis Servis')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('vehicle_info')
-                    ->label('Kendaraan')
-                    ->searchable()
-                    ->limit(30),
-                Tables\Columns\TextColumn::make('comment')
-                    ->label('Komentar')
-                    ->limit(50)
-                    ->tooltip(function (Tables\Columns\TextColumn $column): ?string {
-                        $state = $column->getState();
-                        if (strlen($state) <= 50) {
-                            return null;
-                        }
-                        return $state;
-                    }),
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('service_date')
-                    ->label('Tanggal Servis')
-                    ->date('d M Y')
+                    ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Tanggal Rating')
-                    ->date('d M Y H:i')
-                    ->sortable(),
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

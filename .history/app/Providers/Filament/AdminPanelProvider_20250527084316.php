@@ -125,8 +125,6 @@ class AdminPanelProvider extends PanelProvider
                     ->label('Galeri'),
                 NavigationGroup::make()
                     ->label('Manajemen Pelanggan'),
-                NavigationGroup::make()
-                    ->label('Laporan & Analisis'),
             ])
             ->navigationItems([
                 \Filament\Navigation\NavigationItem::make('Simple Gallery')

@@ -23,7 +23,6 @@ use App\Filament\Resources\EnhancedGalleryResource;
 use App\Filament\Resources\SparePartResource;
 use App\Filament\Resources\SparePartCategoryResource;
 use App\Filament\Resources\SparePartSettingResource;
-use App\Filament\Resources\MechanicRatingResource;
 use App\Filament\Widgets\SimpleGalleryWidget;
 use App\Filament\Widgets\EnhancedGalleryWidget;
 use App\Filament\Pages\GalleryManager;
@@ -125,8 +124,6 @@ class AdminPanelProvider extends PanelProvider
                     ->label('Galeri'),
                 NavigationGroup::make()
                     ->label('Manajemen Pelanggan'),
-                NavigationGroup::make()
-                    ->label('Laporan & Analisis'),
             ])
             ->navigationItems([
                 \Filament\Navigation\NavigationItem::make('Simple Gallery')
