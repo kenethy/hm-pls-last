@@ -297,8 +297,7 @@ class AdminPanelProvider extends PanelProvider
                             // Reset button
                             submitBtn.disabled = false;
                             submitBtn.textContent = originalText;
-                            submitBtn.className = "w-full px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg cursor-pointer transition-colors duration-200";
-                            submitBtn.style.backgroundColor = "#f59e0b"; // Force Filament amber color
+                            submitBtn.className = "w-full px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg cursor-pointer transition-colors duration-200";
                         });
                     };
 

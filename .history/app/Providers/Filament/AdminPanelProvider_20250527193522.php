@@ -230,10 +230,9 @@ class AdminPanelProvider extends PanelProvider
                         } else {
                             console.log(`🔘 Enabling submit button for mechanic ${mechanicId}`);
                             submitBtn.disabled = false;
-                            submitBtn.className = "w-full px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg cursor-pointer transition-colors duration-200";
-                            submitBtn.style.backgroundColor = "#f59e0b"; // Force Filament amber color
+                            submitBtn.className = "w-full px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg cursor-pointer transition-colors duration-200";
                             submitBtn.textContent = "Kirim Rating";
-                            console.log(`✅ Submit button enabled and styled with Filament amber`);
+                            console.log(`✅ Submit button enabled and styled`);
                         }
 
                         console.log(`🎉 setRating completed for mechanic ${mechanicId} with rating ${rating}`);
@@ -286,8 +285,7 @@ class AdminPanelProvider extends PanelProvider
                                 // Reset button
                                 submitBtn.disabled = false;
                                 submitBtn.textContent = originalText;
-                                submitBtn.className = "w-full px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg cursor-pointer transition-colors duration-200";
-                                submitBtn.style.backgroundColor = "#f59e0b"; // Force Filament amber color
+                                submitBtn.className = "w-full px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg cursor-pointer transition-colors duration-200";
                             }
                         })
                         .catch(error => {
@@ -297,8 +295,7 @@ class AdminPanelProvider extends PanelProvider
                             // Reset button
                             submitBtn.disabled = false;
                             submitBtn.textContent = originalText;
-                            submitBtn.className = "w-full px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg cursor-pointer transition-colors duration-200";
-                            submitBtn.style.backgroundColor = "#f59e0b"; // Force Filament amber color
+                            submitBtn.className = "w-full px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg cursor-pointer transition-colors duration-200";
                         });
                     };
 
