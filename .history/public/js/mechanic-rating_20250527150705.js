@@ -704,69 +704,6 @@ function showRatingReminderToast(serviceId) {
     }, 10000);
 }
 
-/**
- * Check for session-based rating popup triggers
- */
-function checkSessionRatingTriggers() {
-    // Check if there's a pending rating popup trigger
-    fetch('/api/check-rating-popup', {
-        method: 'GET',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
-            'Accept': 'application/json',
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.show_popup && data.service_data) {
-                // Small delay to ensure page is fully loaded
-                setTimeout(() => {
-                    showRatingNotificationPopup(data.service_data);
-                }, 1500);
-            }
-
-            // Check for pending reminders
-            if (data.reminders && data.reminders.length > 0) {
-                data.reminders.forEach(reminder => {
-                    if (Date.now() >= reminder.remind_at * 1000) {
-                        showRatingReminderToast(reminder.service_data.service_id);
-                    }
-                });
-            }
-        })
-        .catch(error => {
-            console.warn('Could not check rating popup triggers:', error);
-        });
-}
-
-/**
- * Enhanced rating notification popup with better UX
- */
-function showEnhancedRatingNotification(serviceData) {
-    // Use Filament's native notification system if available
-    if (window.Filament && window.Filament.notifications) {
-        window.Filament.notifications.send({
-            title: '🎉 Servis Selesai - Kumpulkan Rating!',
-            body: `Servis untuk ${serviceData.customer_name} telah selesai. Kumpulkan rating montir sekarang!`,
-            color: 'success',
-            duration: 15000,
-            actions: [
-                {
-                    label: '⭐ Rating Sekarang',
-                    action: () => openRatingModal(serviceData.service_id)
-                },
-                {
-                    label: '⏰ Ingatkan Nanti',
-                    action: () => remindRatingLater(serviceData.service_id)
-                }
-            ]
-        });
-    } else {
-        // Fallback to custom popup
-        showRatingNotificationPopup(serviceData);
-    }
-}
-
 // Initialize the rating system when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
     window.ratingSystem = new MechanicRatingSystem();
@@ -774,14 +711,4 @@ document.addEventListener('DOMContentLoaded', function () {
     // Check for pending rating reminders every 5 minutes
     checkRatingReminders();
     setInterval(checkRatingReminders, 5 * 60 * 1000);
-
-    // Check for session-based rating triggers
-    setTimeout(checkSessionRatingTriggers, 2000);
-
-    // Also check when page becomes visible (user switches back to tab)
-    document.addEventListener('visibilitychange', function () {
-        if (!document.hidden) {
-            setTimeout(checkSessionRatingTriggers, 1000);
-        }
-    });
 });

@@ -47,7 +47,7 @@ class MechanicRatingSystem {
     async openRatingModal(serviceId) {
         this.currentServiceId = serviceId;
         const modal = document.getElementById('ratingModal');
-
+        
         // Show modal and loading state
         modal.classList.remove('hidden');
         this.showLoadingState();
@@ -86,16 +86,16 @@ class MechanicRatingSystem {
         this.mechanics = mechanics;
         const container = document.getElementById('mechanicsContainer');
         const template = document.getElementById('mechanicRatingTemplate');
-
+        
         container.innerHTML = '';
 
         mechanics.forEach(mechanic => {
             const mechanicCard = template.content.cloneNode(true);
-
+            
             // Set mechanic info
             mechanicCard.querySelector('.mechanic-name').textContent = mechanic.name;
             mechanicCard.querySelector('.mechanic-specialization').textContent = mechanic.specialization || 'Montir Umum';
-
+            
             // Set mechanic ID for star rating and submit button
             const starRating = mechanicCard.querySelector('.star-rating');
             const submitBtn = mechanicCard.querySelector('.submit-individual-rating');
@@ -139,14 +139,14 @@ class MechanicRatingSystem {
         // Display existing comment and date
         const commentElement = mechanicCard.querySelector('.existing-comment');
         const dateElement = mechanicCard.querySelector('.existing-date');
-
+        
         if (rating.comment) {
             commentElement.textContent = rating.comment;
         } else {
             commentElement.textContent = 'Tidak ada komentar';
             commentElement.classList.add('italic', 'text-gray-500');
         }
-
+        
         dateElement.textContent = `Diberi rating pada ${rating.created_at}`;
     }
 
@@ -156,7 +156,7 @@ class MechanicRatingSystem {
     setupStarRating(mechanicCard, mechanicId) {
         const stars = mechanicCard.querySelectorAll('.star');
         const statusBadge = mechanicCard.querySelector('.rating-status-badge');
-
+        
         statusBadge.textContent = 'Belum Diberi Rating';
         statusBadge.classList.add('bg-yellow-100', 'text-yellow-800');
 
@@ -236,9 +236,9 @@ class MechanicRatingSystem {
     updateSubmitButton(mechanicCard, mechanicId) {
         const submitBtn = mechanicCard.querySelector('.submit-individual-rating');
         const hasRating = this.ratings[mechanicId]?.rating > 0;
-
+        
         submitBtn.disabled = !hasRating;
-
+        
         if (hasRating) {
             submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
         } else {
@@ -252,7 +252,7 @@ class MechanicRatingSystem {
     updateSubmitAllButton() {
         const submitAllBtn = document.getElementById('submitAllRatings');
         const hasUnratedMechanics = this.mechanics.some(mechanic => !mechanic.has_rating);
-
+        
         if (hasUnratedMechanics) {
             submitAllBtn.classList.remove('hidden');
         } else {
@@ -272,7 +272,7 @@ class MechanicRatingSystem {
 
         const submitBtn = mechanicCard.querySelector('.submit-individual-rating');
         const originalText = submitBtn.innerHTML;
-
+        
         // Show loading state
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Mengirim...';
@@ -297,19 +297,19 @@ class MechanicRatingSystem {
             if (data.success) {
                 this.showSuccessMessage(mechanicCard);
                 this.showSuccessToast(data.message);
-
+                
                 // Update mechanic data to reflect the new rating
                 const mechanic = this.mechanics.find(m => m.id == mechanicId);
                 if (mechanic) {
                     mechanic.has_rating = true;
                     mechanic.existing_rating = data.rating;
                 }
-
+                
                 // Convert to already rated display
                 setTimeout(() => {
                     this.convertToAlreadyRated(mechanicCard, data.rating);
                 }, 2000);
-
+                
             } else {
                 this.showErrorMessage(mechanicCard, data.message);
                 this.showErrorToast(data.message);
@@ -349,14 +349,14 @@ class MechanicRatingSystem {
         // Display comment and date
         const commentElement = mechanicCard.querySelector('.existing-comment');
         const dateElement = mechanicCard.querySelector('.existing-date');
-
+        
         if (ratingData.comment) {
             commentElement.textContent = ratingData.comment;
         } else {
             commentElement.textContent = 'Tidak ada komentar';
             commentElement.classList.add('italic', 'text-gray-500');
         }
-
+        
         dateElement.textContent = `Diberi rating baru saja`;
 
         this.updateSubmitAllButton();
@@ -383,7 +383,7 @@ class MechanicRatingSystem {
     showSuccessMessage(mechanicCard) {
         const successMsg = mechanicCard.querySelector('.success-message');
         successMsg.classList.remove('hidden');
-
+        
         setTimeout(() => {
             successMsg.classList.add('hidden');
         }, 3000);
@@ -395,10 +395,10 @@ class MechanicRatingSystem {
     showErrorMessage(mechanicCard, message) {
         const errorMsg = mechanicCard.querySelector('.error-message');
         const errorText = mechanicCard.querySelector('.error-text');
-
+        
         errorText.textContent = message;
         errorMsg.classList.remove('hidden');
-
+        
         setTimeout(() => {
             errorMsg.classList.add('hidden');
         }, 5000);
@@ -436,12 +436,12 @@ class MechanicRatingSystem {
     closeModal() {
         const modal = document.getElementById('ratingModal');
         modal.classList.add('hidden');
-
+        
         // Reset state
         this.currentServiceId = null;
         this.mechanics = [];
         this.ratings = {};
-
+        
         // Clear content
         document.getElementById('mechanicsContainer').innerHTML = '';
     }
@@ -452,10 +452,10 @@ class MechanicRatingSystem {
     showSuccessToast(message) {
         const toast = document.getElementById('successToast');
         const messageElement = document.getElementById('successMessage');
-
+        
         messageElement.textContent = message;
         toast.classList.remove('hidden');
-
+        
         setTimeout(() => {
             toast.classList.add('hidden');
         }, 4000);
@@ -467,10 +467,10 @@ class MechanicRatingSystem {
     showErrorToast(message) {
         const toast = document.getElementById('errorToast');
         const messageElement = document.getElementById('errorMessage');
-
+        
         messageElement.textContent = message;
         toast.classList.remove('hidden');
-
+        
         setTimeout(() => {
             toast.classList.add('hidden');
         }, 5000);
@@ -497,291 +497,7 @@ function submitAllRatings() {
     alert('Fitur kirim semua rating akan segera tersedia');
 }
 
-/**
- * Show automatic rating popup notification after service completion
- */
-function showRatingNotificationPopup(serviceData) {
-    // Create notification popup HTML
-    const popupHtml = `
-        <div id="ratingNotificationPopup" class="fixed inset-0 z-50 overflow-y-auto" style="z-index: 9999;">
-            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
-                <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                    <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div class="sm:flex sm:items-start">
-                            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 dark:bg-yellow-900 sm:mx-0 sm:h-10 sm:w-10">
-                                <svg class="h-6 w-6 text-yellow-600 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                </svg>
-                            </div>
-                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                                    Servis Selesai - Kumpulkan Rating Montir
-                                </h3>
-                                <div class="mt-2">
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                                        Servis untuk <strong>${serviceData.customer_name}</strong> telah selesai.
-                                    </p>
-                                    <div class="mt-3 text-sm text-gray-600 dark:text-gray-300">
-                                        <p><strong>Jenis Servis:</strong> ${serviceData.service_type}</p>
-                                        <p><strong>Kendaraan:</strong> ${serviceData.vehicle_info}</p>
-                                        <p><strong>Montir:</strong> ${serviceData.mechanics.map(m => m.name).join(', ')}</p>
-                                    </div>
-                                    <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900 rounded-md">
-                                        <p class="text-sm text-blue-700 dark:text-blue-300">
-                                            💡 <strong>Tip:</strong> Kumpulkan rating dari pelanggan sekarang selagi servis masih fresh di ingatan!
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <button type="button" onclick="openRatingModalFromNotification(${serviceData.service_id})"
-                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-600 text-base font-medium text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:ml-3 sm:w-auto sm:text-sm">
-                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                            </svg>
-                            Rating Sekarang
-                        </button>
-                        <button type="button" onclick="remindRatingLater(${serviceData.service_id})"
-                                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                            Ingatkan Nanti
-                        </button>
-                        <button type="button" onclick="dismissRatingNotification()"
-                                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
-                            Tutup
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    // Remove existing popup if any
-    const existingPopup = document.getElementById('ratingNotificationPopup');
-    if (existingPopup) {
-        existingPopup.remove();
-    }
-
-    // Add popup to body
-    document.body.insertAdjacentHTML('beforeend', popupHtml);
-
-    // Auto-dismiss after 30 seconds if no action taken
-    setTimeout(() => {
-        dismissRatingNotification();
-    }, 30000);
-}
-
-/**
- * Open rating modal directly from notification
- */
-function openRatingModalFromNotification(serviceId) {
-    dismissRatingNotification();
-
-    // Small delay to ensure notification is dismissed before opening modal
-    setTimeout(() => {
-        if (window.ratingSystem) {
-            window.ratingSystem.openRatingModal(serviceId);
-        } else {
-            // Fallback if rating system not initialized
-            openRatingModal(serviceId);
-        }
-    }, 100);
-}
-
-/**
- * Remind rating later - store in localStorage for later reminder
- */
-function remindRatingLater(serviceId) {
-    // Store reminder in localStorage
-    const reminders = JSON.parse(localStorage.getItem('ratingReminders') || '[]');
-    const reminder = {
-        serviceId: serviceId,
-        timestamp: Date.now(),
-        reminderTime: Date.now() + (2 * 60 * 60 * 1000) // Remind in 2 hours
-    };
-
-    reminders.push(reminder);
-    localStorage.setItem('ratingReminders', JSON.stringify(reminders));
-
-    dismissRatingNotification();
-
-    // Show confirmation
-    if (window.ratingSystem) {
-        window.ratingSystem.showSuccessToast('Pengingat rating telah diatur untuk 2 jam ke depan');
-    }
-}
-
-/**
- * Dismiss rating notification popup
- */
-function dismissRatingNotification() {
-    const popup = document.getElementById('ratingNotificationPopup');
-    if (popup) {
-        popup.remove();
-    }
-}
-
-/**
- * Check for pending rating reminders
- */
-function checkRatingReminders() {
-    const reminders = JSON.parse(localStorage.getItem('ratingReminders') || '[]');
-    const now = Date.now();
-    const pendingReminders = [];
-    const remainingReminders = [];
-
-    reminders.forEach(reminder => {
-        if (now >= reminder.reminderTime) {
-            pendingReminders.push(reminder);
-        } else {
-            remainingReminders.push(reminder);
-        }
-    });
-
-    // Update localStorage with remaining reminders
-    localStorage.setItem('ratingReminders', JSON.stringify(remainingReminders));
-
-    // Show pending reminders
-    pendingReminders.forEach(reminder => {
-        showRatingReminderToast(reminder.serviceId);
-    });
-}
-
-/**
- * Show rating reminder toast
- */
-function showRatingReminderToast(serviceId) {
-    const toastHtml = `
-        <div id="ratingReminderToast" class="fixed top-4 right-4 z-50 max-w-sm w-full bg-yellow-100 dark:bg-yellow-900 border border-yellow-400 dark:border-yellow-600 rounded-lg shadow-lg">
-            <div class="p-4">
-                <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                        <svg class="h-5 w-5 text-yellow-600 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                    </div>
-                    <div class="ml-3 w-0 flex-1">
-                        <p class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
-                            Pengingat Rating Montir
-                        </p>
-                        <p class="mt-1 text-sm text-yellow-700 dark:text-yellow-300">
-                            Jangan lupa kumpulkan rating untuk servis yang telah selesai.
-                        </p>
-                        <div class="mt-3 flex space-x-2">
-                            <button onclick="openRatingModal(${serviceId}); document.getElementById('ratingReminderToast').remove();"
-                                    class="text-xs bg-yellow-600 text-white px-2 py-1 rounded hover:bg-yellow-700">
-                                Rating Sekarang
-                            </button>
-                            <button onclick="document.getElementById('ratingReminderToast').remove();"
-                                    class="text-xs bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600">
-                                Tutup
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    // Remove existing toast if any
-    const existingToast = document.getElementById('ratingReminderToast');
-    if (existingToast) {
-        existingToast.remove();
-    }
-
-    // Add toast to body
-    document.body.insertAdjacentHTML('beforeend', toastHtml);
-
-    // Auto-dismiss after 10 seconds
-    setTimeout(() => {
-        const toast = document.getElementById('ratingReminderToast');
-        if (toast) {
-            toast.remove();
-        }
-    }, 10000);
-}
-
-/**
- * Check for session-based rating popup triggers
- */
-function checkSessionRatingTriggers() {
-    // Check if there's a pending rating popup trigger
-    fetch('/api/check-rating-popup', {
-        method: 'GET',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
-            'Accept': 'application/json',
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.show_popup && data.service_data) {
-                // Small delay to ensure page is fully loaded
-                setTimeout(() => {
-                    showRatingNotificationPopup(data.service_data);
-                }, 1500);
-            }
-
-            // Check for pending reminders
-            if (data.reminders && data.reminders.length > 0) {
-                data.reminders.forEach(reminder => {
-                    if (Date.now() >= reminder.remind_at * 1000) {
-                        showRatingReminderToast(reminder.service_data.service_id);
-                    }
-                });
-            }
-        })
-        .catch(error => {
-            console.warn('Could not check rating popup triggers:', error);
-        });
-}
-
-/**
- * Enhanced rating notification popup with better UX
- */
-function showEnhancedRatingNotification(serviceData) {
-    // Use Filament's native notification system if available
-    if (window.Filament && window.Filament.notifications) {
-        window.Filament.notifications.send({
-            title: '🎉 Servis Selesai - Kumpulkan Rating!',
-            body: `Servis untuk ${serviceData.customer_name} telah selesai. Kumpulkan rating montir sekarang!`,
-            color: 'success',
-            duration: 15000,
-            actions: [
-                {
-                    label: '⭐ Rating Sekarang',
-                    action: () => openRatingModal(serviceData.service_id)
-                },
-                {
-                    label: '⏰ Ingatkan Nanti',
-                    action: () => remindRatingLater(serviceData.service_id)
-                }
-            ]
-        });
-    } else {
-        // Fallback to custom popup
-        showRatingNotificationPopup(serviceData);
-    }
-}
-
 // Initialize the rating system when DOM is loaded
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     window.ratingSystem = new MechanicRatingSystem();
-
-    // Check for pending rating reminders every 5 minutes
-    checkRatingReminders();
-    setInterval(checkRatingReminders, 5 * 60 * 1000);
-
-    // Check for session-based rating triggers
-    setTimeout(checkSessionRatingTriggers, 2000);
-
-    // Also check when page becomes visible (user switches back to tab)
-    document.addEventListener('visibilitychange', function () {
-        if (!document.hidden) {
-            setTimeout(checkSessionRatingTriggers, 1000);
-        }
-    });
 });

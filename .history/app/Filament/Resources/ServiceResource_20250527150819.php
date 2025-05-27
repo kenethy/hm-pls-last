@@ -1603,54 +1603,59 @@ class ServiceResource extends Resource
             })->toArray()
         ];
 
-        // Send enhanced notification with rating prompt
+        // Create JavaScript code to trigger the popup
+        $jsCode = "
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Small delay to ensure page is fully loaded
+                    setTimeout(function() {
+                        if (typeof showRatingNotificationPopup === 'function') {
+                            showRatingNotificationPopup(" . json_encode($serviceData) . ");
+                        } else {
+                            console.warn('Rating notification system not loaded');
+                        }
+                    }, 1000);
+                });
+            </script>
+        ";
+
+        // Send notification with JavaScript injection
         Notification::make()
-            ->title('🎉 Servis Selesai - Kumpulkan Rating!')
-            ->body("Servis untuk {$service->customer_name} telah selesai. Kumpulkan rating montir sekarang selagi fresh di ingatan!")
+            ->title('Rating Montir')
+            ->body('Sistem rating montir siap untuk mengumpulkan feedback pelanggan.')
             ->success()
-            ->persistent()
-            ->duration(15000) // Show for 15 seconds
+            ->persistent() // Make it persistent so user sees it
             ->actions([
                 \Filament\Notifications\Actions\Action::make('rateNow')
-                    ->label('⭐ Rating Sekarang')
+                    ->label('Rating Sekarang')
                     ->button()
                     ->color('warning')
-                    ->action(function () use ($serviceData) {
-                        // Store service data in session for JavaScript access
-                        session(['pending_rating_service' => $serviceData]);
-
-                        // Trigger JavaScript popup via session flag
-                        session(['show_rating_popup' => true]);
-
-                        return;
+                    ->action(function () use ($service) {
+                        // This will be handled by JavaScript
+                        return redirect()->to(request()->url() . '?show_rating=' . $service->id);
                     }),
                 \Filament\Notifications\Actions\Action::make('remindLater')
-                    ->label('⏰ Ingatkan Nanti')
+                    ->label('Ingatkan Nanti')
                     ->button()
                     ->color('gray')
-                    ->action(function () use ($serviceData) {
-                        // Store reminder for later
-                        $reminders = session('rating_reminders', []);
-                        $reminders[] = [
-                            'service_data' => $serviceData,
-                            'remind_at' => now()->addHours(2)->timestamp
-                        ];
-                        session(['rating_reminders' => $reminders]);
-
-                        Notification::make()
-                            ->title('Pengingat Diatur')
-                            ->body('Anda akan diingatkan untuk mengumpulkan rating dalam 2 jam.')
-                            ->info()
-                            ->send();
-
+                    ->action(function () {
+                        // Just dismiss the notification
                         return;
                     }),
             ])
             ->send();
 
-        // Store service data for immediate popup trigger
-        session(['pending_rating_service' => $serviceData]);
-        session(['show_rating_popup' => true]);
+        // Inject JavaScript into the page
+        $this->injectRatingPopupScript($serviceData);
+    }
+
+    /**
+     * Inject JavaScript for rating popup
+     */
+    protected function injectRatingPopupScript(array $serviceData): void
+    {
+        // Use Filament's JavaScript injection capability
+        $this->dispatch('rating-popup-trigger', serviceData: $serviceData);
     }
 
     public static function getPages(): array
