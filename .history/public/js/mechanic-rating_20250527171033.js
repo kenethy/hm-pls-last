@@ -53,50 +53,28 @@ class MechanicRatingSystem {
      * Open rating modal for a specific service
      */
     async openRatingModal(serviceId) {
-        console.log('🎯 Opening rating modal for service:', serviceId);
         this.currentServiceId = serviceId;
         const modal = document.getElementById('ratingModal');
-
-        if (!modal) {
-            console.error('❌ Rating modal element not found');
-            this.showErrorToast('Rating modal tidak tersedia');
-            return;
-        }
 
         // Show modal and loading state
         modal.classList.remove('hidden');
         this.showLoadingState();
 
         try {
-            // Fetch service and mechanics data with proper headers
-            const response = await fetch(`/api/ratings/service/${serviceId}/modal`, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': this.csrfToken || '',
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-
+            // Fetch service and mechanics data
+            const response = await fetch(`/api/ratings/service/${serviceId}/modal`);
             const data = await response.json();
-            console.log('📊 Rating modal data received:', data);
 
             if (data.success) {
                 this.displayServiceInfo(data.service);
                 this.displayMechanics(data.mechanics);
                 this.hideLoadingState();
-                console.log('✅ Rating modal loaded successfully');
             } else {
-                console.error('❌ API returned error:', data.message);
                 this.showErrorState(data.message || 'Gagal memuat data servis');
             }
         } catch (error) {
-            console.error('❌ Error loading rating modal:', error);
-            this.showErrorState('Terjadi kesalahan saat memuat data: ' + error.message);
+            console.error('Error loading rating modal:', error);
+            this.showErrorState('Terjadi kesalahan saat memuat data');
         }
     }
 
