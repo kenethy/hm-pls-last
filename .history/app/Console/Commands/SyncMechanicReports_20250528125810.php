@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 use App\Models\Mechanic;
 use App\Models\MechanicReport;
 use App\Models\Service;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class SyncMechanicReports extends Command
@@ -186,53 +188,153 @@ class SyncMechanicReports extends Command
     }
 
     /**
-     * Validate all cumulative reports.
+     * Process a specific mechanic.
      */
-    private function validateAllCumulativeReports()
+    private function processMechanic($mechanic)
     {
-        // Get all cumulative reports
-        $reports = MechanicReport::where('is_cumulative', true)->get();
-
-        $this->info("Found {$reports->count()} cumulative reports to validate");
-        Log::info("SyncMechanicReports: Found {$reports->count()} cumulative reports to validate");
-
-        if ($reports->count() === 0) {
-            $this->info("No cumulative reports found. Creating reports for all active mechanics...");
-            $this->rebuildAllCumulativeReports();
+        if (!$mechanic) {
+            $this->error('Mechanic not found');
+            Log::error('SyncMechanicReports: Mechanic not found');
             return;
         }
+
+        Log::info("SyncMechanicReports: Processing mechanic #{$mechanic->id}");
+
+        // Get all week periods for this mechanic
+        $weekPeriods = DB::table('mechanic_service')
+            ->where('mechanic_id', $mechanic->id)
+            ->join('services', 'mechanic_service.service_id', '=', 'services.id')
+            ->where('services.status', 'completed')
+            ->select('mechanic_service.week_start', 'mechanic_service.week_end')
+            ->distinct()
+            ->get();
+
+        foreach ($weekPeriods as $period) {
+            $weekStart = $period->week_start;
+            $weekEnd = $period->week_end;
+
+            if (empty($weekStart) || empty($weekEnd)) {
+                continue;
+            }
+
+            // Update mechanic report for this period
+            $this->updateMechanicReport($mechanic, $weekStart, $weekEnd);
+        }
+    }
+
+    /**
+     * Update mechanic report for a specific period.
+     */
+    private function updateMechanicReport($mechanic, $weekStart, $weekEnd)
+    {
+        // Calculate total labor cost for completed services
+        $totalLaborCost = DB::table('mechanic_service')
+            ->join('services', 'mechanic_service.service_id', '=', 'services.id')
+            ->where('mechanic_service.mechanic_id', $mechanic->id)
+            ->where('mechanic_service.week_start', $weekStart)
+            ->where('mechanic_service.week_end', $weekEnd)
+            ->where('services.status', 'completed')
+            ->sum('mechanic_service.labor_cost');
+
+        // Count completed services
+        $servicesCount = DB::table('mechanic_service')
+            ->join('services', 'mechanic_service.service_id', '=', 'services.id')
+            ->where('mechanic_service.mechanic_id', $mechanic->id)
+            ->where('mechanic_service.week_start', $weekStart)
+            ->where('mechanic_service.week_end', $weekEnd)
+            ->where('services.status', 'completed')
+            ->count();
+
+        Log::info("SyncMechanicReports: Calculated for mechanic #{$mechanic->id}: services_count={$servicesCount}, total_labor_cost={$totalLaborCost}");
+
+        // Find or create the report
+        $report = DB::table('mechanic_reports')
+            ->where('mechanic_id', $mechanic->id)
+            ->where('week_start', $weekStart)
+            ->where('week_end', $weekEnd)
+            ->first();
+
+        if ($report) {
+            // Update existing report
+            DB::table('mechanic_reports')
+                ->where('id', $report->id)
+                ->update([
+                    'services_count' => $servicesCount,
+                    'total_labor_cost' => $totalLaborCost,
+                    'updated_at' => now(),
+                ]);
+
+            Log::info("SyncMechanicReports: Updated report #{$report->id} for mechanic #{$mechanic->id}");
+        } else {
+            // Create new report
+            $reportId = DB::table('mechanic_reports')->insertGetId([
+                'mechanic_id' => $mechanic->id,
+                'week_start' => $weekStart,
+                'week_end' => $weekEnd,
+                'services_count' => $servicesCount,
+                'total_labor_cost' => $totalLaborCost,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            Log::info("SyncMechanicReports: Created new report #{$reportId} for mechanic #{$mechanic->id}");
+        }
+    }
+
+    /**
+     * Validate all mechanic reports.
+     */
+    private function validateAllMechanicReports()
+    {
+        // Get all mechanic reports
+        $reports = DB::table('mechanic_reports')->get();
+
+        $this->info("Found {$reports->count()} mechanic reports to validate");
+        Log::info("SyncMechanicReports: Found {$reports->count()} mechanic reports to validate");
 
         $bar = $this->output->createProgressBar($reports->count());
         $bar->start();
 
-        $updated = 0;
-        $errors = 0;
-
         foreach ($reports as $report) {
-            try {
-                // Store current values for comparison
-                $currentServicesCount = $report->services_count;
-                $currentTotalLaborCost = $report->total_labor_cost;
+            // Calculate actual values
+            $totalLaborCost = DB::table('mechanic_service')
+                ->join('services', 'mechanic_service.service_id', '=', 'services.id')
+                ->where('mechanic_service.mechanic_id', $report->mechanic_id)
+                ->where('mechanic_service.week_start', $report->week_start)
+                ->where('mechanic_service.week_end', $report->week_end)
+                ->where('services.status', 'completed')
+                ->sum('mechanic_service.labor_cost');
 
-                // Recalculate the report
-                $report->recalculateCumulative();
+            $servicesCount = DB::table('mechanic_service')
+                ->join('services', 'mechanic_service.service_id', '=', 'services.id')
+                ->where('mechanic_service.mechanic_id', $report->mechanic_id)
+                ->where('mechanic_service.week_start', $report->week_start)
+                ->where('mechanic_service.week_end', $report->week_end)
+                ->where('services.status', 'completed')
+                ->count();
 
-                // Check if values changed
-                if ($report->services_count != $currentServicesCount || $report->total_labor_cost != $currentTotalLaborCost) {
-                    $updated++;
-                    Log::info("SyncMechanicReports: Updated cumulative report #{$report->id} for mechanic #{$report->mechanic_id}", [
-                        'old_services_count' => $currentServicesCount,
-                        'new_services_count' => $report->services_count,
-                        'old_total_labor_cost' => $currentTotalLaborCost,
-                        'new_total_labor_cost' => $report->total_labor_cost,
-                    ]);
-                }
-            } catch (\Exception $e) {
-                $errors++;
-                Log::error("SyncMechanicReports: Error validating cumulative report #{$report->id}: " . $e->getMessage(), [
+            // Check if values match
+            if ($report->services_count != $servicesCount || $report->total_labor_cost != $totalLaborCost) {
+                Log::info("SyncMechanicReports: Mismatch found for report #{$report->id}", [
                     'mechanic_id' => $report->mechanic_id,
-                    'trace' => $e->getTraceAsString(),
+                    'week_start' => $report->week_start,
+                    'week_end' => $report->week_end,
+                    'current_services_count' => $report->services_count,
+                    'actual_services_count' => $servicesCount,
+                    'current_total_labor_cost' => $report->total_labor_cost,
+                    'actual_total_labor_cost' => $totalLaborCost,
                 ]);
+
+                // Update report with correct values
+                DB::table('mechanic_reports')
+                    ->where('id', $report->id)
+                    ->update([
+                        'services_count' => $servicesCount,
+                        'total_labor_cost' => $totalLaborCost,
+                        'updated_at' => now(),
+                    ]);
+
+                Log::info("SyncMechanicReports: Updated report #{$report->id} with correct values");
             }
 
             $bar->advance();
@@ -240,28 +342,5 @@ class SyncMechanicReports extends Command
 
         $bar->finish();
         $this->newLine();
-
-        $this->info("Validation completed: {$updated} updated, {$errors} errors");
-        Log::info("SyncMechanicReports: Validation completed: {$updated} updated, {$errors} errors");
-
-        // Check for mechanics without cumulative reports
-        $mechanicsWithoutReports = Mechanic::where('is_active', true)
-            ->whereDoesntHave('reports', function ($query) {
-                $query->where('is_cumulative', true);
-            })
-            ->get();
-
-        if ($mechanicsWithoutReports->count() > 0) {
-            $this->info("Found {$mechanicsWithoutReports->count()} mechanics without cumulative reports. Creating them...");
-
-            foreach ($mechanicsWithoutReports as $mechanic) {
-                try {
-                    $mechanic->getOrCreateCumulativeReport();
-                    Log::info("SyncMechanicReports: Created missing cumulative report for mechanic #{$mechanic->id}");
-                } catch (\Exception $e) {
-                    Log::error("SyncMechanicReports: Error creating cumulative report for mechanic #{$mechanic->id}: " . $e->getMessage());
-                }
-            }
-        }
     }
 }

@@ -20,35 +20,24 @@ class EditMechanicReport extends EditRecord
                 ->label('Refresh Rekap')
                 ->icon('heroicon-o-arrow-path')
                 ->color('success')
-                ->tooltip('Memperbarui rekap kumulatif montir ini berdasarkan data servis terbaru')
-                ->visible(fn() => $this->record->is_cumulative)
-                ->requiresConfirmation()
-                ->modalHeading('Refresh Rekap Kumulatif')
-                ->modalDescription('Apakah Anda yakin ingin memperbarui rekap kumulatif montir ini? Data akan dihitung ulang berdasarkan semua servis terbaru.')
-                ->modalSubmitActionLabel('Ya, Refresh')
+                ->tooltip('Memperbarui rekap montir ini berdasarkan data servis terbaru')
                 ->action(function () {
+                    // Jalankan command untuk memperbarui rekap montir ini
+                    $output = '';
                     try {
-                        // Use the updated command that works with cumulative reports
                         Artisan::call('mechanic:sync-reports', [
                             '--mechanic_id' => $this->record->mechanic_id,
-                        ]);
+                        ], $output);
 
-                        // Refresh the record to show updated data
-                        $this->record->refresh();
-                        $this->refreshFormData(['services_count', 'total_labor_cost', 'last_calculated_at']);
+                        // Refresh halaman untuk menampilkan data terbaru
+                        $this->refresh();
 
                         Notification::make()
                             ->title('Rekap montir berhasil diperbarui')
                             ->success()
-                            ->body('Rekap kumulatif montir telah diperbarui berdasarkan data servis terbaru.')
+                            ->body('Rekap montir telah diperbarui berdasarkan data servis terbaru.')
                             ->send();
                     } catch (\Exception $e) {
-                        Log::error('Error refreshing individual mechanic report: ' . $e->getMessage(), [
-                            'mechanic_id' => $this->record->mechanic_id,
-                            'report_id' => $this->record->id,
-                            'trace' => $e->getTraceAsString(),
-                        ]);
-
                         Notification::make()
                             ->title('Gagal memperbarui rekap montir')
                             ->danger()

@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 use App\Models\Mechanic;
 use App\Models\MechanicReport;
 use App\Models\Service;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class SyncMechanicReports extends Command

@@ -21,28 +21,21 @@ class ListMechanicReports extends ListRecords
                 ->label('Refresh Rekap Montir')
                 ->icon('heroicon-o-arrow-path')
                 ->color('success')
-                ->tooltip('Memperbarui semua rekap kumulatif montir berdasarkan data servis terbaru')
-                ->requiresConfirmation()
-                ->modalHeading('Refresh Rekap Montir')
-                ->modalDescription('Apakah Anda yakin ingin memperbarui semua rekap kumulatif montir? Proses ini akan menghitung ulang semua data berdasarkan servis terbaru.')
-                ->modalSubmitActionLabel('Ya, Refresh')
+                ->tooltip('Memperbarui semua rekap montir berdasarkan data servis terbaru')
                 ->action(function () {
+                    // Jalankan command untuk memperbarui rekap montir
+                    $output = '';
                     try {
-                        // Use the updated command that works with cumulative reports
                         Artisan::call('mechanic:sync-reports', [
                             '--force' => true,
-                        ]);
+                        ], $output);
 
                         Notification::make()
                             ->title('Rekap montir berhasil diperbarui')
                             ->success()
-                            ->body('Semua rekap kumulatif montir telah diperbarui berdasarkan data servis terbaru.')
+                            ->body('Semua rekap montir telah diperbarui berdasarkan data servis terbaru.')
                             ->send();
                     } catch (\Exception $e) {
-                        Log::error('Error refreshing mechanic reports: ' . $e->getMessage(), [
-                            'trace' => $e->getTraceAsString(),
-                        ]);
-
                         Notification::make()
                             ->title('Gagal memperbarui rekap montir')
                             ->danger()
