@@ -202,7 +202,7 @@ class WhatsAppConfigResource extends Resource
                     ->label('Autentikasi WhatsApp')
                     ->icon('heroicon-o-qr-code')
                     ->color('warning')
-                    ->url('/whatsapp-auth.html')
+                    ->url(fn(WhatsAppConfig $record) => static::getExternalApiUrl($record))
                     ->openUrlInNewTab()
                     ->visible(fn(WhatsAppConfig $record) => $record->is_active),
 
