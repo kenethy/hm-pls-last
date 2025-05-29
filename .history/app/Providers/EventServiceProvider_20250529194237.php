@@ -24,7 +24,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         ServiceStatusChanged::class => [
             UpdateMechanicReports::class,
-            SendWhatsAppFollowUp::class,
         ],
         MechanicsAssigned::class => [
             UpdateMechanicReports::class,
