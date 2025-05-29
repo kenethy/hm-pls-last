@@ -222,7 +222,7 @@ class WhatsAppConfigResource extends Resource
                                 ->actions([
                                     \Filament\Notifications\Actions\Action::make('view_qr')
                                         ->label('Lihat QR Code')
-                                        ->url($result['qr_url'] ?? static::getQRCodeUrl($record))
+                                        ->url($result['qr_url'])
                                         ->openUrlInNewTab(),
                                 ])
                                 ->send();
@@ -335,13 +335,5 @@ class WhatsAppConfigResource extends Resource
         }
 
         return $externalUrl;
-    }
-
-    /**
-     * Get QR code URL for external access.
-     */
-    public static function getQRCodeUrl(WhatsAppConfig $record): string
-    {
-        return static::getExternalApiUrl($record) . '/app/login';
     }
 }
