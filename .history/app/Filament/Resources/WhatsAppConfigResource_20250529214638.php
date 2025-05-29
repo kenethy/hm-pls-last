@@ -315,21 +315,20 @@ class WhatsAppConfigResource extends Resource
      */
     protected function getExternalApiUrl(WhatsAppConfig $record): string
     {
-        // Priority order for external access:
-        // 1. Subdomain (if configured): whatsapp.hartonomotor.xyz
-        // 2. Main domain with port: hartonomotor.xyz:3000
-        // 3. Main domain with proxy path: hartonomotor.xyz/whatsapp-api
+        // Convert internal Docker URL to external accessible URL
+        $internalUrl = $record->api_url;
 
-        // Check if we can use subdomain
-        $subdomainUrl = 'http://whatsapp.hartonomotor.xyz';
+        // Replace Docker internal hostnames with external domain
+        $externalUrl = str_replace([
+            'http://whatsapp-api:3000',
+            'http://hartono-whatsapp-api:3000',
+            'http://localhost:3000'
+        ], [
+            'http://hartonomotor.xyz:3000',
+            'http://hartonomotor.xyz:3000',
+            'http://hartonomotor.xyz:3000'
+        ], $internalUrl);
 
-        // For now, use main domain with port as primary option
-        $mainDomainUrl = 'http://hartonomotor.xyz:3000';
-
-        // Fallback to proxy path
-        $proxyUrl = 'http://hartonomotor.xyz/whatsapp-api';
-
-        // Return the most likely to work option
-        return $mainDomainUrl;
+        return $externalUrl;
     }
 }

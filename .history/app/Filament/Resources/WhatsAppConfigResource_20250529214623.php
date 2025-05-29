@@ -309,27 +309,4 @@ class WhatsAppConfigResource extends Resource
             ->orderBy('is_active', 'desc')
             ->orderBy('created_at', 'desc');
     }
-
-    /**
-     * Get external API URL that can be accessed from browser.
-     */
-    protected function getExternalApiUrl(WhatsAppConfig $record): string
-    {
-        // Priority order for external access:
-        // 1. Subdomain (if configured): whatsapp.hartonomotor.xyz
-        // 2. Main domain with port: hartonomotor.xyz:3000
-        // 3. Main domain with proxy path: hartonomotor.xyz/whatsapp-api
-
-        // Check if we can use subdomain
-        $subdomainUrl = 'http://whatsapp.hartonomotor.xyz';
-
-        // For now, use main domain with port as primary option
-        $mainDomainUrl = 'http://hartonomotor.xyz:3000';
-
-        // Fallback to proxy path
-        $proxyUrl = 'http://hartonomotor.xyz/whatsapp-api';
-
-        // Return the most likely to work option
-        return $mainDomainUrl;
-    }
 }
