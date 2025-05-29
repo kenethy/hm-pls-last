@@ -18,49 +18,18 @@ echo ""
 
 # Configuration
 DOMAIN="hartonomotor.xyz"
-CURRENT_DIR=$(pwd)
+LARAVEL_DIR="/var/www/html"
 
 echo -e "${YELLOW}📋 Configuration:${NC}"
 echo -e "  Domain: ${DOMAIN}"
-echo -e "  Current Directory: ${CURRENT_DIR}"
+echo -e "  Laravel Directory: ${LARAVEL_DIR}"
 echo ""
 
 # Step 1: Update WhatsApp Configuration in Database
 echo -e "${YELLOW}🗄️ Step 1: Updating WhatsApp configuration in database...${NC}"
+cd ${LARAVEL_DIR}
 
-# Update database configuration using artisan tinker
-echo "Updating WhatsApp configuration..."
-php artisan tinker --execute="
-use App\Models\WhatsAppConfig;
-
-\$config = WhatsAppConfig::getActive();
-
-if (\$config) {
-    \$config->update([
-        'name' => 'Production WhatsApp API (Domain-based)',
-        'api_url' => 'https://hartonomotor.xyz/whatsapp-api',
-        'api_username' => 'admin',
-        'api_password' => 'HartonoMotor2025!',
-        'webhook_secret' => 'HartonoMotorWebhookSecret2025',
-        'webhook_url' => 'https://hartonomotor.xyz/api/whatsapp/webhook',
-        'is_active' => true,
-        'notes' => 'Updated to use domain-based reverse proxy instead of direct port access',
-    ]);
-    echo 'WhatsApp configuration updated successfully!';
-} else {
-    WhatsAppConfig::create([
-        'name' => 'Production WhatsApp API (Domain-based)',
-        'api_url' => 'https://hartonomotor.xyz/whatsapp-api',
-        'api_username' => 'admin',
-        'api_password' => 'HartonoMotor2025!',
-        'webhook_secret' => 'HartonoMotorWebhookSecret2025',
-        'webhook_url' => 'https://hartonomotor.xyz/api/whatsapp/webhook',
-        'is_active' => true,
-        'notes' => 'Created with domain-based reverse proxy configuration',
-    ]);
-    echo 'WhatsApp configuration created successfully!';
-}
-"
+php update-whatsapp-config.php
 
 echo -e "${GREEN}✅ Database configuration updated${NC}"
 echo ""
@@ -112,7 +81,7 @@ echo -e "${YELLOW}🔍 Step 4: Testing WhatsApp API container...${NC}"
 
 if docker-compose ps | grep -q "hartono-whatsapp-api.*Up"; then
     echo -e "${GREEN}✅ WhatsApp API container is running${NC}"
-
+    
     # Test internal connectivity
     if docker-compose exec -T app curl -s http://whatsapp-api:3000/app/devices >/dev/null 2>&1; then
         echo -e "${GREEN}✅ Internal container connectivity working${NC}"
