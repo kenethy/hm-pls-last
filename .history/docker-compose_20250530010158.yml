@@ -30,7 +30,6 @@ services:
       - ./docker/nginx/ssl/:/etc/nginx/ssl/
       - ./docker/certbot/conf:/etc/letsencrypt
       - ./docker/certbot/www:/var/www/certbot
-      - ./whatsapp_statics:/var/www/whatsapp_statics
     networks:
       - hartono-network
     depends_on:
