@@ -321,15 +321,10 @@ class WhatsAppConfigResource extends Resource
         // Option 1: Use nginx proxy (recommended for production)
         $proxyUrl = 'https://hartonomotor.xyz/whatsapp-api';
 
-        // Option 2: Use subdomain (if configured in Cloudflare)
-        $subdomainUrl = 'http://whatsapp.hartonomotor.xyz:3000';
-
-        // Option 3: Use direct IP access (temporary solution)
+        // Option 2: Use direct IP access (temporary solution)
         $ipUrl = 'http://45.32.116.20:3000';
 
         // Try proxy first, fallback to IP if needed
-        // Uncomment the line below to use IP access temporarily
-        // return $ipUrl;
         return $proxyUrl;
     }
 
