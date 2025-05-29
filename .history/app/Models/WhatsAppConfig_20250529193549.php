@@ -93,8 +93,8 @@ class WhatsAppConfig extends Model
             return false;
         }
 
-        return isset($this->connection_status['connected']) &&
-            $this->connection_status['connected'] === true;
+        return isset($this->connection_status['connected']) && 
+               $this->connection_status['connected'] === true;
     }
 
     /**
@@ -113,26 +113,6 @@ class WhatsAppConfig extends Model
                 }
 
                 return $this->connection_status['status'] ?? 'Disconnected';
-            }
-        );
-    }
-
-    /**
-     * Get authentication status display.
-     */
-    protected function authStatusDisplay(): Attribute
-    {
-        return Attribute::make(
-            get: function () {
-                if (!$this->connection_status) {
-                    return 'Unknown';
-                }
-
-                if (isset($this->connection_status['devices']) && !empty($this->connection_status['devices'])) {
-                    return 'Authenticated';
-                }
-
-                return 'Not Authenticated';
             }
         );
     }

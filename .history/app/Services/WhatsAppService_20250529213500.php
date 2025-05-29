@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\WhatsAppConfig;
 use App\Models\WhatsAppMessage;
+use App\Models\Customer;
 use App\Models\Service;
 use App\Models\FollowUpTemplate;
 use Illuminate\Support\Facades\Http;
@@ -115,102 +116,6 @@ class WhatsAppService
             'success' => false,
             'message' => 'Connection failed after trying multiple URLs. Last error: ' . $lastError,
         ];
-    }
-
-    /**
-     * Get QR code for WhatsApp authentication.
-     */
-    public function getQRCode(): array
-    {
-        if (!$this->isAvailable()) {
-            return [
-                'success' => false,
-                'message' => 'WhatsApp configuration not found or inactive',
-            ];
-        }
-
-        try {
-            $response = $this->makeApiRequest('GET', '/app/login');
-
-            if ($response->successful()) {
-                $data = $response->json();
-
-                // The API returns QR code information
-                if (isset($data['results']['qr_link'])) {
-                    return [
-                        'success' => true,
-                        'message' => 'QR Code generated successfully',
-                        'qr_url' => $data['results']['qr_link'],
-                        'qr_duration' => $data['results']['qr_duration'] ?? 120,
-                        'data' => $data,
-                    ];
-                }
-
-                return [
-                    'success' => false,
-                    'message' => 'QR Code not available in response: ' . $response->body(),
-                ];
-            }
-
-            return [
-                'success' => false,
-                'message' => 'API returned error: ' . $response->body(),
-            ];
-        } catch (Exception $e) {
-            Log::error('WhatsApp QR code generation failed', [
-                'error' => $e->getMessage(),
-                'config_id' => $this->config->id,
-            ]);
-
-            return [
-                'success' => false,
-                'message' => 'QR code generation failed: ' . $e->getMessage(),
-            ];
-        }
-    }
-
-    /**
-     * Check WhatsApp authentication status.
-     */
-    public function getAuthStatus(): array
-    {
-        if (!$this->isAvailable()) {
-            return [
-                'success' => false,
-                'message' => 'WhatsApp configuration not found or inactive',
-            ];
-        }
-
-        try {
-            $response = $this->makeApiRequest('GET', '/app/devices');
-
-            if ($response->successful()) {
-                $data = $response->json();
-
-                return [
-                    'success' => true,
-                    'message' => 'Status retrieved successfully',
-                    'is_authenticated' => !empty($data['results']),
-                    'devices' => $data['results'] ?? [],
-                    'data' => $data,
-                ];
-            }
-
-            return [
-                'success' => false,
-                'message' => 'API returned error: ' . $response->body(),
-            ];
-        } catch (Exception $e) {
-            Log::error('WhatsApp auth status check failed', [
-                'error' => $e->getMessage(),
-                'config_id' => $this->config->id,
-            ]);
-
-            return [
-                'success' => false,
-                'message' => 'Auth status check failed: ' . $e->getMessage(),
-            ];
-        }
     }
 
     /**
@@ -382,22 +287,6 @@ class WhatsAppService
     protected function makeApiRequest(string $method, string $endpoint, array $data = []): \Illuminate\Http\Client\Response
     {
         $url = $this->config->getApiEndpoint($endpoint);
-        $request = Http::timeout(30);
-
-        // Add basic auth if configured
-        if ($credentials = $this->config->getBasicAuthCredentials()) {
-            $request = $request->withBasicAuth($credentials['username'], $credentials['password']);
-        }
-
-        return $request->$method($url, $data);
-    }
-
-    /**
-     * Make API request with custom base URL.
-     */
-    protected function makeApiRequestWithUrl(string $baseUrl, string $method, string $endpoint, array $data = []): \Illuminate\Http\Client\Response
-    {
-        $url = rtrim($baseUrl, '/') . '/' . ltrim($endpoint, '/');
         $request = Http::timeout(30);
 
         // Add basic auth if configured

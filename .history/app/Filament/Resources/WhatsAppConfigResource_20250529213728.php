@@ -72,8 +72,7 @@ class WhatsAppConfigResource extends Resource
                         Forms\Components\TextInput::make('webhook_url')
                             ->label('Webhook URL')
                             ->url()
-                            ->default(fn() => url('/api/whatsapp/webhook'))
-                            ->helperText('URL untuk menerima webhook dari WhatsApp API. Default: ' . url('/api/whatsapp/webhook')),
+                            ->helperText('URL untuk menerima webhook dari WhatsApp API'),
                     ]),
 
                 Forms\Components\Section::make('Auto Reply')
@@ -229,47 +228,6 @@ class WhatsAppConfigResource extends Resource
                         } else {
                             Notification::make()
                                 ->title('Gagal Membuat QR Code')
-                                ->danger()
-                                ->body($result['message'])
-                                ->send();
-                        }
-                    })
-                    ->visible(fn(WhatsAppConfig $record) => $record->is_active),
-
-                Tables\Actions\Action::make('test_message')
-                    ->label('Test Pesan')
-                    ->icon('heroicon-o-chat-bubble-left-ellipsis')
-                    ->color('success')
-                    ->form([
-                        Forms\Components\TextInput::make('phone_number')
-                            ->label('Nomor Telepon')
-                            ->required()
-                            ->placeholder('08123456789 atau 628123456789')
-                            ->helperText('Masukkan nomor telepon untuk test pesan'),
-
-                        Forms\Components\Textarea::make('message')
-                            ->label('Pesan Test')
-                            ->required()
-                            ->default('Halo! Ini adalah pesan test dari sistem Hartono Motor. Jika Anda menerima pesan ini, berarti integrasi WhatsApp berhasil!')
-                            ->rows(4),
-                    ])
-                    ->action(function (array $data, WhatsAppConfig $record): void {
-                        $service = new WhatsAppService();
-                        $result = $service->sendTextMessage(
-                            phoneNumber: $data['phone_number'],
-                            message: $data['message'],
-                            triggeredBy: 'manual_test'
-                        );
-
-                        if ($result['success']) {
-                            Notification::make()
-                                ->title('Pesan Berhasil Dikirim')
-                                ->success()
-                                ->body('Pesan test telah berhasil dikirim ke ' . $data['phone_number'])
-                                ->send();
-                        } else {
-                            Notification::make()
-                                ->title('Gagal Mengirim Pesan')
                                 ->danger()
                                 ->body($result['message'])
                                 ->send();

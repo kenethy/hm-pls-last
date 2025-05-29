@@ -72,8 +72,7 @@ class WhatsAppConfigResource extends Resource
                         Forms\Components\TextInput::make('webhook_url')
                             ->label('Webhook URL')
                             ->url()
-                            ->default(fn() => url('/api/whatsapp/webhook'))
-                            ->helperText('URL untuk menerima webhook dari WhatsApp API. Default: ' . url('/api/whatsapp/webhook')),
+                            ->helperText('URL untuk menerima webhook dari WhatsApp API'),
                     ]),
 
                 Forms\Components\Section::make('Auto Reply')

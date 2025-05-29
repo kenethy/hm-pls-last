@@ -92,10 +92,7 @@ services:
       - whatsapp_data:/app/storages
       - whatsapp_statics:/app/statics
     networks:
-      hartono-network:
-        aliases:
-          - whatsapp-api
-          - whatsapp
+      - hartono-network
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/app/devices"]
       interval: 30s
