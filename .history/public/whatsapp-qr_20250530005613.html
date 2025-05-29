@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +25,7 @@
             background: white;
             border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             text-align: center;
             max-width: 500px;
             width: 100%;
@@ -91,13 +90,8 @@
         }
 
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .instructions {
@@ -176,7 +170,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <div class="logo">📱</div>
@@ -225,55 +218,9 @@
 
                 if (data.code === 'SUCCESS' && data.results.qr_link) {
                     const qrImage = document.getElementById('qrCode');
-
-                    // Fix QR code URL to use HTTPS domain instead of HTTP localhost
-                    let qrUrl = data.results.qr_link;
-
-                    // Convert various possible URL formats to domain-based HTTPS
-                    qrUrl = qrUrl.replace(/^http:\/\/localhost:3000\//, 'https://hartonomotor.xyz/');
-                    qrUrl = qrUrl.replace(/^http:\/\/whatsapp-api:3000\//, 'https://hartonomotor.xyz/');
-                    qrUrl = qrUrl.replace(/^http:\/\/[^\/]+:3000\//, 'https://hartonomotor.xyz/');
-
-                    // Ensure it starts with https://hartonomotor.xyz
-                    if (!qrUrl.startsWith('https://hartonomotor.xyz/')) {
-                        // Extract the path part and prepend domain
-                        const pathMatch = qrUrl.match(/\/statics\/.*$/);
-                        if (pathMatch) {
-                            qrUrl = 'https://hartonomotor.xyz' + pathMatch[0];
-                        }
-                    }
-
-                    console.log('Original QR URL:', data.results.qr_link);
-                    console.log('Fixed QR URL:', qrUrl);
-
-                    // Add error handler for image loading
-                    qrImage.onerror = function () {
-                        console.error('Failed to load QR image:', qrUrl);
-                        const status = document.getElementById('status');
-                        status.className = 'status error';
-                        status.innerHTML = `
-                            <strong>QR Code image gagal dimuat</strong><br><br>
-                            URL: ${qrUrl}<br><br>
-                            <strong>Kemungkinan penyebab:</strong><br>
-                            1. QR code sudah expired<br>
-                            2. Static files tidak dapat diakses<br>
-                            3. Reverse proxy belum dikonfigurasi dengan benar<br><br>
-                            <button onclick="loadQRCode()" style="background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
-                                🔄 Coba Lagi
-                            </button>
-                        `;
-                        status.style.display = 'block';
-                        document.getElementById('loading').style.display = 'none';
-                    };
-
-                    // Add success handler for image loading
-                    qrImage.onload = function () {
-                        console.log('QR image loaded successfully:', qrUrl);
-                        document.getElementById('loading').style.display = 'none';
-                    };
-
-                    qrImage.src = qrUrl;
+                    qrImage.src = data.results.qr_link;
                     qrImage.style.display = 'block';
+                    document.getElementById('loading').style.display = 'none';
 
                     // Show success status
                     const status = document.getElementById('status');
@@ -291,19 +238,10 @@
             } catch (error) {
                 console.error('Error loading QR code:', error);
                 document.getElementById('loading').style.display = 'none';
-
+                
                 const status = document.getElementById('status');
                 status.className = 'status error';
-                status.innerHTML = `
-                    <strong>Gagal memuat QR Code:</strong> ${error.message}<br><br>
-                    <strong>Troubleshooting:</strong><br>
-                    1. Pastikan WhatsApp API container berjalan<br>
-                    2. Coba refresh halaman<br>
-                    3. Periksa koneksi internet<br><br>
-                    <a href="/whatsapp-api/app/login" target="_blank" style="color: #721c24; text-decoration: underline;">
-                        🔗 Coba akses API endpoint langsung
-                    </a>
-                `;
+                status.textContent = 'Gagal memuat QR Code: ' + error.message;
                 status.style.display = 'block';
             }
         }
@@ -319,5 +257,4 @@
         refreshInterval = setInterval(loadQRCode, 30000);
     </script>
 </body>
-
 </html>
