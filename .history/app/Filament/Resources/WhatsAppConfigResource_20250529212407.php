@@ -157,21 +157,8 @@ class WhatsAppConfigResource extends Resource
                     ->icon('heroicon-o-signal')
                     ->color('info')
                     ->action(function (WhatsAppConfig $record) {
-                        // Temporarily activate this config for testing
-                        $originalActive = WhatsAppConfig::getActive();
-                        if ($originalActive && $originalActive->id !== $record->id) {
-                            $originalActive->update(['is_active' => false]);
-                        }
-                        $record->update(['is_active' => true]);
-
                         $service = new WhatsAppService();
                         $result = $service->testConnection();
-
-                        // Restore original active config if different
-                        if ($originalActive && $originalActive->id !== $record->id) {
-                            $record->update(['is_active' => false]);
-                            $originalActive->update(['is_active' => true]);
-                        }
 
                         if ($result['success']) {
                             Notification::make()

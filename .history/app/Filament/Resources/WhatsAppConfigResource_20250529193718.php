@@ -45,8 +45,8 @@ class WhatsAppConfigResource extends Resource
                             ->label('URL API WhatsApp')
                             ->required()
                             ->url()
-                            ->default('http://whatsapp-api:3000')
-                            ->helperText('URL server WhatsApp API (contoh: http://whatsapp-api:3000 untuk Docker atau http://localhost:3000 untuk lokal)'),
+                            ->default('http://localhost:3000')
+                            ->helperText('URL server WhatsApp API (contoh: http://localhost:3000)'),
 
                         Forms\Components\Grid::make(2)
                             ->schema([
@@ -84,7 +84,7 @@ class WhatsAppConfigResource extends Resource
                         Forms\Components\Textarea::make('auto_reply_message')
                             ->label('Pesan Auto Reply')
                             ->rows(3)
-                            ->visible(fn(Forms\Get $get) => $get('auto_reply_enabled'))
+                            ->visible(fn (Forms\Get $get) => $get('auto_reply_enabled'))
                             ->helperText('Pesan yang akan dikirim otomatis saat menerima pesan'),
                     ]),
 
@@ -130,7 +130,7 @@ class WhatsAppConfigResource extends Resource
                 Tables\Columns\TextColumn::make('connection_status_display')
                     ->label('Koneksi')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'Connected' => 'success',
                         'Disconnected' => 'danger',
                         default => 'warning',
@@ -157,21 +157,8 @@ class WhatsAppConfigResource extends Resource
                     ->icon('heroicon-o-signal')
                     ->color('info')
                     ->action(function (WhatsAppConfig $record) {
-                        // Temporarily activate this config for testing
-                        $originalActive = WhatsAppConfig::getActive();
-                        if ($originalActive && $originalActive->id !== $record->id) {
-                            $originalActive->update(['is_active' => false]);
-                        }
-                        $record->update(['is_active' => true]);
-
                         $service = new WhatsAppService();
                         $result = $service->testConnection();
-
-                        // Restore original active config if different
-                        if ($originalActive && $originalActive->id !== $record->id) {
-                            $record->update(['is_active' => false]);
-                            $originalActive->update(['is_active' => true]);
-                        }
 
                         if ($result['success']) {
                             Notification::make()

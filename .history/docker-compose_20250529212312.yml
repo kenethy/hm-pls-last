@@ -115,7 +115,3 @@ networks:
 volumes:
   dbdata:
     driver: local
-  whatsapp_data:
-    driver: local
-  whatsapp_statics:
-    driver: local
