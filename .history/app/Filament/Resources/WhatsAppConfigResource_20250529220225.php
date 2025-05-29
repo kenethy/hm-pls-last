@@ -315,10 +315,18 @@ class WhatsAppConfigResource extends Resource
      */
     public static function getExternalApiUrl(WhatsAppConfig $record): string
     {
-        // Since domain:3000 is blocked by CDN/Cloudflare but IP:3000 works,
-        // we use nginx proxy path which works through standard HTTPS port
+        // Priority order for external access:
+        // 1. Nginx proxy path (most reliable): hartonomotor.xyz/whatsapp-api
+        // 2. Direct port access: hartonomotor.xyz:3000
 
-        return 'https://hartonomotor.xyz/whatsapp-api';
+        // Use nginx proxy as primary option (more reliable)
+        $proxyUrl = 'https://hartonomotor.xyz/whatsapp-api';
+
+        // Fallback to direct port access
+        $directUrl = 'http://hartonomotor.xyz:3000';
+
+        // Return proxy URL as it's more likely to work through nginx
+        return $proxyUrl;
     }
 
     /**
