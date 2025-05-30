@@ -62,38 +62,18 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-# Check system resources with better detection
-MEMORY_KB=$(grep MemTotal /proc/meminfo | awk '{print $2}')
-MEMORY_MB=$((MEMORY_KB / 1024))
-MEMORY_GB=$(echo "scale=1; $MEMORY_MB / 1024" | bc -l 2>/dev/null || echo "$(($MEMORY_MB / 1024))")
-
+# Check system resources
+MEMORY_GB=$(free -g | awk 'NR==2{printf "%.1f", $2}')
 DISK_GB=$(df -BG / | awk 'NR==2{print $4}' | sed 's/G//')
 
 show_info "System: $(uname -a)"
-show_info "Memory: ${MEMORY_MB}MB (${MEMORY_GB}GB)"
+show_info "Memory: ${MEMORY_GB}GB"
 show_info "Disk: ${DISK_GB}GB available"
 show_info "IP: 45.32.116.20"
 
-# More detailed memory info
-show_info "Memory details:"
-free -h | head -2
-
-# Check if we have enough memory (minimum 512MB for basic operation)
-if [[ $MEMORY_MB -lt 512 ]]; then
-    show_error "Insufficient memory. Found: ${MEMORY_MB}MB, Minimum: 512MB required."
-    show_info "Consider upgrading VPS plan or closing other services."
+if (( $(echo "$MEMORY_GB < 1.0" | bc -l) )); then
+    show_error "Insufficient memory. Minimum 1GB required."
     exit 1
-elif [[ $MEMORY_MB -lt 1024 ]]; then
-    show_warning "Low memory detected: ${MEMORY_MB}MB. WhatsApp API may run slowly."
-    show_info "Recommended: 1GB+ for optimal performance."
-    echo ""
-    read -p "Continue anyway? (y/N): " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        exit 1
-    fi
-else
-    show_success "Memory check passed: ${MEMORY_MB}MB available"
 fi
 
 echo ""
@@ -106,10 +86,10 @@ if command -v docker &> /dev/null; then
     show_info "Docker already installed: $(docker --version)"
 else
     show_info "Installing Docker..."
-
+    
     # Update system
     apt update
-
+    
     # Install dependencies
     apt install -y \
         apt-transport-https \
@@ -117,17 +97,17 @@ else
         curl \
         gnupg \
         lsb-release
-
+    
     # Add Docker GPG key
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-
+    
     # Add Docker repository
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-
+    
     # Install Docker
     apt update
     apt install -y docker-ce docker-ce-cli containerd.io
-
+    
     show_success "Docker installed"
 fi
 
@@ -136,11 +116,11 @@ if command -v docker-compose &> /dev/null; then
     show_info "Docker Compose already installed: $(docker-compose --version)"
 else
     show_info "Installing Docker Compose..."
-
+    
     # Install Docker Compose
     curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
-
+    
     show_success "Docker Compose installed"
 fi
 
@@ -270,11 +250,11 @@ sleep 15
 # Check container status
 if docker ps | grep -q $CONTAINER_NAME; then
     show_success "Container started successfully"
-
+    
     # Show container info
     show_info "Container status:"
     docker ps --filter name=$CONTAINER_NAME --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
-
+    
 else
     show_error "Container failed to start"
     echo ""
@@ -313,7 +293,7 @@ fi
 if curl -s -f -u $BASIC_AUTH_USER:$BASIC_AUTH_PASS http://localhost:$API_PORT/app/devices > /dev/null 2>&1; then
     show_success "API responding with authentication"
     AUTH_OK=true
-
+    
     # Get API response
     API_RESPONSE=$(curl -s -u $BASIC_AUTH_USER:$BASIC_AUTH_PASS http://localhost:$API_PORT/app/devices)
     show_info "API Response: $API_RESPONSE"
@@ -420,10 +400,10 @@ done
 
 if [[ -n "$LARAVEL_DIR" ]]; then
     cd "$LARAVEL_DIR"
-
+    
     # Backup .env
     cp .env .env.backup.$(date +%Y%m%d_%H%M%S)
-
+    
     # Update Laravel .env
     if grep -q "WHATSAPP_API_URL=" .env; then
         sed -i "s|WHATSAPP_API_URL=.*|WHATSAPP_API_URL=http://localhost:$API_PORT|" .env
@@ -432,16 +412,16 @@ if [[ -n "$LARAVEL_DIR" ]]; then
         echo "# WhatsApp API Configuration (Docker)" >> .env
         echo "WHATSAPP_API_URL=http://localhost:$API_PORT" >> .env
     fi
-
+    
     if ! grep -q "WHATSAPP_BASIC_AUTH_USERNAME=" .env; then
         echo "WHATSAPP_BASIC_AUTH_USERNAME=$BASIC_AUTH_USER" >> .env
         echo "WHATSAPP_BASIC_AUTH_PASSWORD=$BASIC_AUTH_PASS" >> .env
     fi
-
+    
     # Clear Laravel cache
     php artisan config:clear 2>/dev/null || true
     php artisan config:cache 2>/dev/null || true
-
+    
     show_success "Laravel configuration updated"
 else
     show_warning "Laravel not found, manual configuration needed"
