@@ -2,8 +2,6 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 const express = require('express');
 const cors = require('cors');
 const QRCode = require('qrcode');
-const fs = require('fs');
-const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,39 +16,8 @@ let qrCodeData = null;
 let isReady = false;
 let sessionStatus = 'disconnected';
 
-// Cleanup function to remove lock files
-function cleanupChromiumLocks() {
-    try {
-        const lockPaths = [
-            '/tmp/chromium-user-data/SingletonLock',
-            '/tmp/chromium-user-data/SingletonSocket',
-            '/tmp/chromium-user-data/SingletonCookie'
-        ];
-
-        lockPaths.forEach(lockPath => {
-            if (fs.existsSync(lockPath)) {
-                fs.unlinkSync(lockPath);
-                console.log(`Removed lock file: ${lockPath}`);
-            }
-        });
-
-        // Also cleanup any existing chromium processes
-        const { execSync } = require('child_process');
-        try {
-            execSync('pkill -f chromium', { stdio: 'ignore' });
-            console.log('Killed existing chromium processes');
-        } catch (e) {
-            // Ignore if no processes found
-        }
-    } catch (error) {
-        console.log('Cleanup warning:', error.message);
-    }
-}
-
 // Initialize WhatsApp Client
 function initializeClient() {
-    // Cleanup before starting
-    cleanupChromiumLocks();
     client = new Client({
         authStrategy: new LocalAuth({
             clientId: 'hartono-motor',
