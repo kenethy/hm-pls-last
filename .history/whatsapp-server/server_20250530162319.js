@@ -49,10 +49,7 @@ function cleanupChromiumLocks() {
 
 // Initialize WhatsApp Client
 function initializeClient() {
-    console.log('🚀 initializeClient() called - starting WhatsApp Web.js initialization');
-
     // Cleanup before starting
-    console.log('🧹 Running cleanup...');
     cleanupChromiumLocks();
     client = new Client({
         authStrategy: new LocalAuth({
@@ -103,8 +100,6 @@ function initializeClient() {
             timeout: 60000
         }
     });
-
-    console.log('📱 WhatsApp Client created, setting up event handlers...');
 
     // Event Handlers
     client.on('qr', async (qr) => {
@@ -210,9 +205,7 @@ function initializeClient() {
     });
 
     // Initialize client
-    console.log('🔄 Calling client.initialize()...');
     client.initialize();
-    console.log('✅ client.initialize() called, waiting for events...');
 }
 
 // API Routes

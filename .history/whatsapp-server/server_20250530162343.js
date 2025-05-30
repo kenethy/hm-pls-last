@@ -210,9 +210,7 @@ function initializeClient() {
     });
 
     // Initialize client
-    console.log('🔄 Calling client.initialize()...');
     client.initialize();
-    console.log('✅ client.initialize() called, waiting for events...');
 }
 
 // API Routes

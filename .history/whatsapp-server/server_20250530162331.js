@@ -104,8 +104,6 @@ function initializeClient() {
         }
     });
 
-    console.log('📱 WhatsApp Client created, setting up event handlers...');
-
     // Event Handlers
     client.on('qr', async (qr) => {
         console.log('QR Code received');
@@ -210,9 +208,7 @@ function initializeClient() {
     });
 
     // Initialize client
-    console.log('🔄 Calling client.initialize()...');
     client.initialize();
-    console.log('✅ client.initialize() called, waiting for events...');
 }
 
 // API Routes
