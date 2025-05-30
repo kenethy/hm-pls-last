@@ -87,13 +87,13 @@ services:
       - WHATSAPP_MODE=${WHATSAPP_MODE:-mock}
     command: >
       sh -c "
-        echo 'Environment WHATSAPP_MODE:' $$WHATSAPP_MODE;
+        echo 'Environment WHATSAPP_MODE: '$$WHATSAPP_MODE;
         if [ \"$$WHATSAPP_MODE\" = \"full\" ]; then
           echo 'Starting in FULL mode with real WhatsApp Web.js';
-          npm run start-full;
+          exec npm run start-full;
         else
           echo 'Starting in MOCK mode for testing';
-          npm run start-mock;
+          exec npm run start-mock;
         fi
       "
     networks:
