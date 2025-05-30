@@ -23,7 +23,10 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy application files (including whatsapp-web.js-main)
+# Copy whatsapp-web.js library
+COPY ../whatsapp-web.js-main ./whatsapp-web.js-main
+
+# Copy application files
 COPY . .
 
 # Create directory for session data

@@ -11,7 +11,3 @@ coverage
 .coverage.*
 .cache
 .DS_Store
-whatsapp-web.js-main/node_modules
-whatsapp-web.js-main/.git
-whatsapp-web.js-main/docs
-whatsapp-web.js-main/tests
