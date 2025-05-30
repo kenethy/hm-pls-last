@@ -129,21 +129,6 @@ class WhatsAppManager extends Page
                         ->send();
                 }),
 
-            Action::make('getQRCode')
-                ->label('Get QR Code')
-                ->icon('heroicon-o-qr-code')
-                ->color('info')
-                ->visible(fn() => !$this->isConnected)
-                ->action(function () {
-                    $this->getQRCode();
-
-                    Notification::make()
-                        ->title('QR Code Refreshed')
-                        ->body('QR code has been updated.')
-                        ->success()
-                        ->send();
-                }),
-
             Action::make('terminateSession')
                 ->label('Terminate Session')
                 ->icon('heroicon-o-stop')

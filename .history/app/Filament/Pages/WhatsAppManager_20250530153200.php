@@ -88,9 +88,7 @@ class WhatsAppManager extends Page
                 ->action(function () {
                     try {
                         $whatsappService = $this->getWhatsAppService();
-                        $result = $whatsappService->startSession();
-
-                        Log::info('Start session result', ['result' => $result]);
+                        $whatsappService->startSession();
 
                         Notification::make()
                             ->title('Session Started')
@@ -98,16 +96,8 @@ class WhatsAppManager extends Page
                             ->success()
                             ->send();
 
-                        // Wait a moment then get QR code
-                        sleep(2);
-                        $this->getQRCode();
                         $this->checkSessionStatus();
                     } catch (\Exception $e) {
-                        Log::error('Start session failed', [
-                            'error' => $e->getMessage(),
-                            'trace' => $e->getTraceAsString()
-                        ]);
-
                         Notification::make()
                             ->title('Failed to Start Session')
                             ->body($e->getMessage())
@@ -125,21 +115,6 @@ class WhatsAppManager extends Page
                     Notification::make()
                         ->title('Status Refreshed')
                         ->body('Session status has been updated.')
-                        ->success()
-                        ->send();
-                }),
-
-            Action::make('getQRCode')
-                ->label('Get QR Code')
-                ->icon('heroicon-o-qr-code')
-                ->color('info')
-                ->visible(fn() => !$this->isConnected)
-                ->action(function () {
-                    $this->getQRCode();
-
-                    Notification::make()
-                        ->title('QR Code Refreshed')
-                        ->body('QR code has been updated.')
                         ->success()
                         ->send();
                 }),
