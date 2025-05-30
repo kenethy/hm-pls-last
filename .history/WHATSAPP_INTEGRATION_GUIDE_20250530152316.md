@@ -117,31 +117,8 @@ php artisan migrate
    curl http://localhost:3001/health
    ```
 
-### **Step 5: Test Integration dengan Mock Mode**
+### **Step 5: Setup WhatsApp Connection**
 
-1. **Akses Filament Admin Panel**
-2. **Buka menu "WhatsApp Manager"**
-3. **Klik "Start Session"** - Seharusnya tidak ada error lagi!
-4. **Mock QR Code akan muncul** - Ini untuk testing UI
-5. **Test "Send Test Message"** - Akan berhasil dengan mock response
-6. **Test "Send Follow-up Messages"** - Semua akan bekerja dalam mock mode
-
-### **Step 6: Switch ke Full Mode (Setelah Testing Berhasil)**
-
-Jika testing dengan mock mode berhasil, Anda bisa switch ke full mode:
-
-```bash
-# Stop container
-docker stop hartono-whatsapp-api
-
-# Start dengan full mode
-WHATSAPP_MODE=full docker-compose up -d whatsapp-api
-
-# Monitor logs untuk troubleshooting
-docker logs -f hartono-whatsapp-api
-```
-
-**Full Mode Setup:**
 1. **Akses Filament Admin Panel**
 2. **Buka menu "WhatsApp Manager"**
 3. **Klik "Start Session"**
