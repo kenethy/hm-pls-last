@@ -260,10 +260,12 @@ class WhatsAppService
     public function checkNumber($phone)
     {
         try {
+            $formattedPhone = $this->formatPhoneNumber($phone);
+
             $response = Http::timeout(30)
                 ->withHeaders(['X-API-Key' => $this->apiKey])
-                ->post("{$this->baseUrl}/number/check", [
-                    'phone' => $phone
+                ->post("{$this->baseUrl}/client/isRegisteredUser/{$this->sessionId}", [
+                    'chatId' => $formattedPhone
                 ]);
 
             if ($response->successful()) {

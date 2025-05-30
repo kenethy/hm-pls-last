@@ -218,17 +218,20 @@ class WhatsAppService
         try {
             $response = Http::timeout(30)
                 ->withHeaders(['X-API-Key' => $this->apiKey])
-                ->delete("{$this->baseUrl}/session/terminate");
+                ->delete("{$this->baseUrl}/session/terminate/{$this->sessionId}");
 
             if ($response->successful()) {
-                Log::info('WhatsApp session terminated successfully');
+                Log::info('WhatsApp session terminated successfully', [
+                    'session_id' => $this->sessionId
+                ]);
                 return $response->json();
             }
 
             throw new Exception('Failed to terminate session: ' . $response->body());
         } catch (Exception $e) {
             Log::error('WhatsApp session termination failed', [
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
+                'session_id' => $this->sessionId
             ]);
             throw $e;
         }
@@ -260,10 +263,12 @@ class WhatsAppService
     public function checkNumber($phone)
     {
         try {
+            $formattedPhone = $this->formatPhoneNumber($phone);
+
             $response = Http::timeout(30)
                 ->withHeaders(['X-API-Key' => $this->apiKey])
-                ->post("{$this->baseUrl}/number/check", [
-                    'phone' => $phone
+                ->post("{$this->baseUrl}/client/isRegisteredUser/{$this->sessionId}", [
+                    'chatId' => $formattedPhone
                 ]);
 
             if ($response->successful()) {

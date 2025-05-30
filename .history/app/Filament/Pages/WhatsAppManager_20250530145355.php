@@ -279,8 +279,8 @@ class WhatsAppManager extends Page
 
     public function getQRCodeUrl(): ?string
     {
-        if ($this->qrCode && isset($this->qrCode['qrImage'])) {
-            return $this->qrCode['qrImage'];
+        if ($this->qrCode && isset($this->qrCode['qr'])) {
+            return "data:image/png;base64," . base64_encode($this->qrCode['qr']);
         }
 
         return null;

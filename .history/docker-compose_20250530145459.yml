@@ -67,6 +67,25 @@ services:
     depends_on:
       - db
 
+  # WhatsApp API Service
+  whatsapp-api:
+    image: aldinokemal2104/go-whatsapp-web-multidevice:latest
+    container_name: hartono-whatsapp-api
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    volumes:
+      - whatsapp_data:/app/storages
+    environment:
+      - APP_PORT=3000
+      - APP_DEBUG=false
+      - APP_OS=Hartono Motor
+      - APP_WEBHOOK=${WHATSAPP_WEBHOOK_URL:-}
+      - APP_BASIC_AUTH=${WHATSAPP_BASIC_AUTH:-admin:hartonomotor2024}
+    command: ["rest"]
+    networks:
+      - hartono-network
+
   # WhatsApp API Service (Custom Implementation)
   whatsapp-api:
     build:
@@ -113,5 +132,7 @@ volumes:
     driver: local
   whatsapp_sessions:
     driver: local
-  whatsapp_cache:
+  whatsapp_logs:
+    driver: local
+  whatsapp_data:
     driver: local

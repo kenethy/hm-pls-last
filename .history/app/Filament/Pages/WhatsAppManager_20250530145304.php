@@ -6,7 +6,8 @@ use App\Services\WhatsAppService;
 use Filament\Pages\Page;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
-use Illuminate\Support\Facades\Log;
+use Filament\Support\Exceptions\Halt;
+use Illuminate\Support\Facades\Cache;
 
 class WhatsAppManager extends Page
 {
@@ -72,8 +73,7 @@ class WhatsAppManager extends Page
                 ->visible(fn() => !$this->isConnected)
                 ->action(function () {
                     try {
-                        $whatsappService = $this->getWhatsAppService();
-                        $whatsappService->startSession();
+                        $this->whatsappService->startSession();
 
                         Notification::make()
                             ->title('Session Started')
@@ -114,8 +114,7 @@ class WhatsAppManager extends Page
                 ->modalDescription('Are you sure you want to terminate the WhatsApp session? You will need to scan QR code again.')
                 ->action(function () {
                     try {
-                        $whatsappService = $this->getWhatsAppService();
-                        $whatsappService->terminateSession();
+                        $this->whatsappService->terminateSession();
 
                         Notification::make()
                             ->title('Session Terminated')
@@ -152,8 +151,7 @@ class WhatsAppManager extends Page
                 ])
                 ->action(function (array $data) {
                     try {
-                        $whatsappService = $this->getWhatsAppService();
-                        $result = $whatsappService->sendMessage($data['phone'], $data['message']);
+                        $result = $this->whatsappService->sendMessage($data['phone'], $data['message']);
 
                         if (isset($result['success']) && $result['success']) {
                             Notification::make()
@@ -223,8 +221,7 @@ class WhatsAppManager extends Page
                                     );
                                 }
 
-                                $whatsappService = $this->getWhatsAppService();
-                                $result = $whatsappService->sendMessage($customer->phone, $message);
+                                $result = $this->whatsappService->sendMessage($customer->phone, $message);
 
                                 if (isset($result['success']) && $result['success']) {
                                     $sent++;
@@ -236,7 +233,7 @@ class WhatsAppManager extends Page
                                 sleep(1);
                             } catch (\Exception $e) {
                                 $failed++;
-                                Log::error('Failed to send follow-up to customer', [
+                                \Log::error('Failed to send follow-up to customer', [
                                     'customer_id' => $customer->id,
                                     'error' => $e->getMessage()
                                 ]);
@@ -279,8 +276,8 @@ class WhatsAppManager extends Page
 
     public function getQRCodeUrl(): ?string
     {
-        if ($this->qrCode && isset($this->qrCode['qrImage'])) {
-            return $this->qrCode['qrImage'];
+        if ($this->qrCode && isset($this->qrCode['qr'])) {
+            return "data:image/png;base64," . base64_encode($this->qrCode['qr']);
         }
 
         return null;

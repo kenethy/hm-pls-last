@@ -113,5 +113,7 @@ volumes:
     driver: local
   whatsapp_sessions:
     driver: local
-  whatsapp_cache:
+  whatsapp_logs:
+    driver: local
+  whatsapp_data:
     driver: local
