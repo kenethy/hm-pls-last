@@ -1,0 +1,10 @@
+# Tambahkan ke .env Laravel
+
+# WhatsApp API Configuration
+WHATSAPP_API_URL=http://localhost:3000
+WHATSAPP_BASIC_AUTH_USERNAME=admin
+WHATSAPP_BASIC_AUTH_PASSWORD=your_password_from_vps_config
+WHATSAPP_WEBHOOK_SECRET=your_webhook_secret
+WHATSAPP_WEBHOOK_URL=https://hartonomotor.xyz/webhook/whatsapp
+WHATSAPP_LOGGING_ENABLED=true
+WHATSAPP_LOG_CHANNEL=daily
