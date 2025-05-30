@@ -451,12 +451,11 @@ setup_log_rotation() {
 $LOGS_DIR/app/*.log {
     daily
     missingok
-    rotate 3
+    rotate 7
     compress
     delaycompress
     notifempty
     create 644 $USER $USER
-    size 10M
     postrotate
         docker kill -s USR1 whatsapp-api-production 2>/dev/null || true
     endscript
@@ -465,12 +464,11 @@ $LOGS_DIR/app/*.log {
 $LOGS_DIR/deployment.log {
     weekly
     missingok
-    rotate 2
+    rotate 4
     compress
     delaycompress
     notifempty
     create 644 $USER $USER
-    size 5M
 }
 EOF
 
@@ -488,7 +486,7 @@ setup_backup_system() {
 BACKUP_DIR="/opt/whatsapp-api-production/backups"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 BACKUP_NAME="whatsapp-backup-$TIMESTAMP"
-RETENTION_DAYS=3  # Reduced for tiny VPS to save space
+RETENTION_DAYS=7
 
 # Create backup directory
 mkdir -p "$BACKUP_DIR/$BACKUP_NAME"

@@ -342,39 +342,6 @@ To update the WhatsApp API:
    docker-compose -f docker-compose.production.yml up -d
    ```
 
-## 💰 Tiny VPS Optimization Tips
-
-### Perfect for Budget VPS ($2-5/month)
-This deployment is specifically optimized for tiny VPS instances:
-
-- **Minimum**: 256MB RAM, 1GB storage
-- **Recommended**: 512MB RAM, 2GB storage
-- **Perfect for**: DigitalOcean $4/month, Vultr $2.50/month, Linode $5/month
-
-### Space-Saving Features
-- ✅ **Reduced backup retention**: 3 days instead of 7
-- ✅ **Smaller log files**: 5MB max size, 2-3 rotations
-- ✅ **Optimized Docker**: Limited concurrent operations
-- ✅ **Minimal dependencies**: Only essential packages
-- ✅ **Compressed logs**: Automatic compression to save space
-
-### Monitoring for Tiny VPS
-```bash
-# Check space usage
-df -h
-du -sh /opt/whatsapp-api-production/*
-
-# Clean up if needed
-docker system prune -f
-./backup.sh  # Then remove old backups manually
-```
-
-### Cost-Effective Hosting Recommendations
-- **DigitalOcean**: $4/month (512MB, 10GB) - Perfect!
-- **Vultr**: $2.50/month (512MB, 10GB) - Great value!
-- **Linode**: $5/month (1GB, 25GB) - Comfortable
-- **Hetzner**: €3/month (1GB, 20GB) - European option
-
 ## 📝 License
 
 This deployment configuration is provided as-is for production use with the WhatsApp API implementation.
