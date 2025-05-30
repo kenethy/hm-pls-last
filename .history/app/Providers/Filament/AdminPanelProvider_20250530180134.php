@@ -96,7 +96,6 @@ class AdminPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
                 GalleryManager::class,
                 WhatsAppManager::class,
-                WhatsAppChatManager::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
@@ -123,8 +122,6 @@ class AdminPanelProvider extends PanelProvider
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label('Servis & Booking'),
-                NavigationGroup::make()
-                    ->label('Communication'),
                 NavigationGroup::make()
                     ->label('Konten Website'),
                 NavigationGroup::make()

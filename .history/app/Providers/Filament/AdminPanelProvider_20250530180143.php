@@ -124,8 +124,6 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make()
                     ->label('Servis & Booking'),
                 NavigationGroup::make()
-                    ->label('Communication'),
-                NavigationGroup::make()
                     ->label('Konten Website'),
                 NavigationGroup::make()
                     ->label('Galeri'),
