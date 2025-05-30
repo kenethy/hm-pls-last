@@ -135,7 +135,7 @@ Route::get('/admin/whatsapp-chat-manager-debug', function () {
             'class' => get_class($page),
             'slug' => $page::getSlug(),
             'url' => $page::getUrl(),
-            'view' => $page->getView(),
+            'view' => $page::getView(),
             'navigation_label' => $page::getNavigationLabel(),
             'navigation_group' => $page::getNavigationGroup(),
         ]);
