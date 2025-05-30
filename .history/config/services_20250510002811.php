@@ -35,11 +35,4 @@ return [
         ],
     ],
 
-    'whatsapp' => [
-        'base_url' => env('WHATSAPP_API_URL', 'http://whatsapp-api:3000'),
-        'api_key' => env('WHATSAPP_API_KEY', 'hartonomotor2024'),
-        'session_id' => env('WHATSAPP_SESSION_ID', 'HARTONO'),
-        'webhook_url' => env('WHATSAPP_WEBHOOK_URL', ''),
-    ],
-
 ];

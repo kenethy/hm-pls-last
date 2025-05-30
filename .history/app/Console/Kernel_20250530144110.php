@@ -43,13 +43,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('mechanic:sync-reports --force')
             ->dailyAt('00:00')
             ->appendOutputTo(storage_path('logs/mechanic-reports-full-sync.log'));
-
-        // Send automatic WhatsApp follow-ups every day at 10 AM
-        $schedule->command('whatsapp:send-follow-ups --limit=20')
-            ->dailyAt('10:00')
-            ->withoutOverlapping()
-            ->runInBackground()
-            ->appendOutputTo(storage_path('logs/whatsapp-follow-ups.log'));
     }
 
     /**

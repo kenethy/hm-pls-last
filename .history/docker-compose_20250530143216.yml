@@ -86,27 +86,24 @@ services:
     networks:
       - hartono-network
 
-  # WhatsApp API Service (VPS-Optimized)
+  # WhatsApp API Service
   whatsapp-api:
-    image: chrishubert/whatsapp-web-api:latest
+    image: aldinokemal2104/go-whatsapp-web-multidevice:latest
     container_name: hartono-whatsapp-api
     restart: unless-stopped
     ports:
       - "3001:3000"
     volumes:
-      - whatsapp_sessions:/app/session
-      - whatsapp_logs:/app/session/message_log.txt
+      - whatsapp_data:/app/storages
     environment:
-      - API_KEY=hartonomotor2024
-      - BASE_WEBHOOK_URL=http://app:80/api/whatsapp/webhook
-      - ENABLE_LOCAL_CALLBACK_EXAMPLE=false
-      - MAX_ATTACHMENT_SIZE=10000000
-      - SET_MESSAGES_AS_SEEN=true
-      - DISABLED_CALLBACKS=
+      - APP_PORT=3000
+      - APP_DEBUG=false
+      - APP_OS=Hartono Motor
+      - APP_WEBHOOK=${WHATSAPP_WEBHOOK_URL:-}
+      - APP_BASIC_AUTH=${WHATSAPP_BASIC_AUTH:-admin:hartonomotor2024}
+    command: ["rest"]
     networks:
       - hartono-network
-    depends_on:
-      - app
 
   # Certbot for SSL
   certbot:
@@ -123,10 +120,6 @@ networks:
 
 volumes:
   dbdata:
-    driver: local
-  whatsapp_sessions:
-    driver: local
-  whatsapp_logs:
     driver: local
   whatsapp_data:
     driver: local
