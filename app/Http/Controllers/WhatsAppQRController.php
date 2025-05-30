@@ -16,7 +16,7 @@ class WhatsAppQRController extends Controller
     {
         // URL API WhatsApp di VPS yang sama (internal communication)
         $this->whatsappApiUrl = config('whatsapp.api_url', 'http://localhost:3000');
-
+        
         // Basic Auth credentials
         $this->basicAuth = [
             config('whatsapp.basic_auth.username', 'admin'),
@@ -30,7 +30,7 @@ class WhatsAppQRController extends Controller
     public function index()
     {
         return view('whatsapp.qr-generator', [
-            'title' => 'WhatsApp QR Code Generator',
+            'title' => 'WhatsApp QR Code Generator - Hartono Motor',
             'api_url' => $this->whatsappApiUrl
         ]);
     }
@@ -44,17 +44,17 @@ class WhatsAppQRController extends Controller
             $response = Http::timeout(30)
                 ->withBasicAuth($this->basicAuth[0], $this->basicAuth[1])
                 ->get($this->whatsappApiUrl . '/app/login-fresh');
-
+            
             if ($response->successful()) {
                 $data = $response->json();
-
+                
                 // Log successful QR generation
                 Log::info('WhatsApp Fresh QR generated', [
                     'qr_duration' => $data['results']['qr_duration'] ?? null,
                     'processing_time' => $data['results']['total_time_ms'] ?? null,
                     'fresh' => $data['results']['fresh'] ?? false
                 ]);
-
+                
                 return response()->json([
                     'success' => true,
                     'data' => $data
@@ -64,7 +64,7 @@ class WhatsAppQRController extends Controller
                     'status' => $response->status(),
                     'body' => $response->body()
                 ]);
-
+                
                 return response()->json([
                     'success' => false,
                     'message' => 'Failed to generate QR code'
@@ -75,7 +75,7 @@ class WhatsAppQRController extends Controller
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-
+            
             return response()->json([
                 'success' => false,
                 'message' => 'Connection error: ' . $e->getMessage()
@@ -92,10 +92,10 @@ class WhatsAppQRController extends Controller
             $response = Http::timeout(10)
                 ->withBasicAuth($this->basicAuth[0], $this->basicAuth[1])
                 ->get($this->whatsappApiUrl . '/app/devices');
-
+            
             if ($response->successful()) {
                 $data = $response->json();
-
+                
                 return response()->json([
                     'success' => true,
                     'data' => $data
@@ -110,7 +110,7 @@ class WhatsAppQRController extends Controller
             Log::error('WhatsApp status check failed', [
                 'error' => $e->getMessage()
             ]);
-
+            
             return response()->json([
                 'success' => false,
                 'message' => 'Connection error: ' . $e->getMessage()
@@ -135,15 +135,15 @@ class WhatsAppQRController extends Controller
                     'phone' => $request->phone,
                     'message' => $request->message
                 ]);
-
+            
             if ($response->successful()) {
                 $data = $response->json();
-
+                
                 Log::info('WhatsApp message sent', [
                     'phone' => $request->phone,
                     'message_length' => strlen($request->message)
                 ]);
-
+                
                 return response()->json([
                     'success' => true,
                     'data' => $data
@@ -159,7 +159,7 @@ class WhatsAppQRController extends Controller
                 'error' => $e->getMessage(),
                 'phone' => $request->phone
             ]);
-
+            
             return response()->json([
                 'success' => false,
                 'message' => 'Connection error: ' . $e->getMessage()

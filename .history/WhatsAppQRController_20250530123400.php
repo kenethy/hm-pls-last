@@ -89,9 +89,7 @@ class WhatsAppQRController extends Controller
     public function checkStatus(): JsonResponse
     {
         try {
-            $response = Http::timeout(10)
-                ->withBasicAuth($this->basicAuth[0], $this->basicAuth[1])
-                ->get($this->whatsappApiUrl . '/app/devices');
+            $response = Http::timeout(10)->get($this->whatsappApiUrl . '/app/devices');
 
             if ($response->successful()) {
                 $data = $response->json();
@@ -129,12 +127,10 @@ class WhatsAppQRController extends Controller
         ]);
 
         try {
-            $response = Http::timeout(30)
-                ->withBasicAuth($this->basicAuth[0], $this->basicAuth[1])
-                ->post($this->whatsappApiUrl . '/send/message', [
-                    'phone' => $request->phone,
-                    'message' => $request->message
-                ]);
+            $response = Http::timeout(30)->post($this->whatsappApiUrl . '/send/message', [
+                'phone' => $request->phone,
+                'message' => $request->message
+            ]);
 
             if ($response->successful()) {
                 $data = $response->json();
