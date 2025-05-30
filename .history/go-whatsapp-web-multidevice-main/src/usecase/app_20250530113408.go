@@ -92,7 +92,7 @@ func (service serviceApp) Login(_ context.Context) (response domainApp.LoginResp
 	return response, nil
 }
 
-// LoginFresh forces a fresh QR code generation using smart session management
+// LoginFresh forces a fresh QR code generation by clearing existing session
 func (service serviceApp) LoginFresh(ctx context.Context) (response domainApp.LoginResponse, err error) {
 	startTime := time.Now()
 	requestID := fiberUtils.UUIDv4()[:8] // Short ID for tracking
@@ -104,15 +104,15 @@ func (service serviceApp) LoginFresh(ctx context.Context) (response domainApp.Lo
 	logrus.WithFields(logrus.Fields{
 		"request_id": requestID,
 		"timestamp": startTime.Format("2006-01-02 15:04:05.000"),
-	}).Info("🚀 Starting smart fresh login process...")
+	}).Info("🚀 Starting fresh login process...")
 
-	// Smart approach: Disconnect without destroying session store
+	// Simple approach: Disconnect and clear files without full logout
 	disconnectStart := time.Now()
 	service.WaCli.Disconnect()
 	logrus.WithFields(logrus.Fields{
 		"request_id": requestID,
 		"duration_ms": time.Since(disconnectStart).Milliseconds(),
-	}).Info("📡 WhatsApp client disconnected (smart mode)")
+	}).Info("📡 WhatsApp client disconnected")
 
 	// Clear any existing QR code files (non-blocking)
 	cleanupStart := time.Now()
@@ -131,225 +131,93 @@ func (service serviceApp) LoginFresh(ctx context.Context) (response domainApp.Lo
 		}).Info("✅ QR files cleanup completed")
 	}()
 
+	// Small delay to ensure disconnect is complete
+	time.Sleep(500 * time.Millisecond)
 	logrus.WithFields(logrus.Fields{
 		"request_id": requestID,
 		"total_prep_ms": time.Since(startTime).Milliseconds(),
-	}).Info("⏱️ Smart preparation phase completed")
+	}).Info("⏱️ Preparation phase completed")
 
 	chImage := make(chan string, 1) // Buffered channel to prevent blocking
 	chError := make(chan error, 1)  // Error channel with timeout
 
-	// Smart QR channel handling - similar to working regular login
-	qrChannelStart := time.Now()
-	logrus.WithFields(logrus.Fields{
-		"request_id": requestID,
-		"timestamp": time.Now().Format("2006-01-02 15:04:05.000"),
-	}).Info("🔄 Getting smart fresh QR channel...")
+	// Get fresh QR channel with timeout context
+	ctxTimeout, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
 
-	ch, err := service.WaCli.GetQRChannel(context.Background())
+	ch, err := service.WaCli.GetQRChannel(ctxTimeout)
 	if err != nil {
-		logrus.WithFields(logrus.Fields{
-			"request_id": requestID,
-			"error": err.Error(),
-			"duration_ms": time.Since(qrChannelStart).Milliseconds(),
-		}).Error("❌ Error getting fresh QR channel")
-
-		// Smart handling like regular login - DON'T destroy session
+		logrus.Error("Error getting fresh QR channel: ", err.Error())
+		// If error is about existing session, try to clear it
 		if errors.Is(err, whatsmeow.ErrQRStoreContainsID) {
-			logrus.WithFields(logrus.Fields{
-				"request_id": requestID,
-			}).Info("🔧 Session exists - connecting to websocket...")
-
-			// Just connect to websocket like regular login
-			_ = service.WaCli.Connect()
-			if service.WaCli.IsLoggedIn() {
-				logrus.WithFields(logrus.Fields{
-					"request_id": requestID,
-				}).Info("✅ Already logged in - returning session saved")
-				return response, pkgError.ErrAlreadyLoggedIn
+			logrus.Info("Clearing existing session for fresh QR...")
+			// Clear the store ID to force fresh QR
+			service.WaCli.Store.ID = nil
+			// Try again
+			ch, err = service.WaCli.GetQRChannel(ctxTimeout)
+			if err != nil {
+				return response, pkgError.ErrQrChannel
 			}
-
-			logrus.WithFields(logrus.Fields{
-				"request_id": requestID,
-			}).Info("⚠️ Session saved but not logged in - need fresh QR")
-			return response, pkgError.ErrSessionSaved
 		} else {
 			return response, pkgError.ErrQrChannel
 		}
 	}
 
-	logrus.WithFields(logrus.Fields{
-		"request_id": requestID,
-		"duration_ms": time.Since(qrChannelStart).Milliseconds(),
-	}).Info("✅ Smart QR channel obtained successfully")
-
 	// QR code generation goroutine with timeout
 	go func() {
-		qrGenStart := time.Now()
 		defer func() {
 			if r := recover(); r != nil {
-				logrus.WithFields(logrus.Fields{
-					"request_id": requestID,
-					"panic": r,
-					"duration_ms": time.Since(qrGenStart).Milliseconds(),
-				}).Error("💥 Panic in QR generation")
+				logrus.Error("Panic in QR generation: ", r)
 				chError <- fmt.Errorf("QR generation panic: %v", r)
 			}
 		}()
 
-		logrus.WithFields(logrus.Fields{
-			"request_id": requestID,
-			"timestamp": time.Now().Format("2006-01-02 15:04:05.000"),
-		}).Info("🎯 Starting QR code generation goroutine...")
-
 		for evt := range ch {
-			eventTime := time.Now()
 			response.Code = evt.Code
 			response.Duration = evt.Timeout / time.Second / 2
-
-			logrus.WithFields(logrus.Fields{
-				"request_id": requestID,
-				"event_type": evt.Event,
-				"qr_duration": response.Duration,
-				"timestamp": eventTime.Format("2006-01-02 15:04:05.000"),
-			}).Info("📨 Received QR event")
-
 			if evt.Event == "code" {
-				qrWriteStart := time.Now()
-				qrUUID := fiberUtils.UUIDv4()
-				qrPath := fmt.Sprintf("%s/scan-qr-fresh-%s.png", config.PathQrCode, qrUUID)
-
-				logrus.WithFields(logrus.Fields{
-					"request_id": requestID,
-					"qr_uuid": qrUUID,
-					"qr_path": qrPath,
-					"timestamp": qrWriteStart.Format("2006-01-02 15:04:05.000"),
-				}).Info("📝 Writing QR code to file...")
-
+				qrPath := fmt.Sprintf("%s/scan-qr-fresh-%s.png", config.PathQrCode, fiberUtils.UUIDv4())
 				err := qrcode.WriteFile(evt.Code, qrcode.Medium, 512, qrPath)
 				if err != nil {
-					logrus.WithFields(logrus.Fields{
-						"request_id": requestID,
-						"qr_uuid": qrUUID,
-						"error": err.Error(),
-						"duration_ms": time.Since(qrWriteStart).Milliseconds(),
-					}).Error("❌ Error writing QR code to file")
+					logrus.Error("Error when write fresh qr code to file: ", err)
 					chError <- err
 					return
 				}
 
-				logrus.WithFields(logrus.Fields{
-					"request_id": requestID,
-					"qr_uuid": qrUUID,
-					"qr_path": qrPath,
-					"write_duration_ms": time.Since(qrWriteStart).Milliseconds(),
-					"total_generation_ms": time.Since(qrGenStart).Milliseconds(),
-					"timestamp": time.Now().Format("2006-01-02 15:04:05.000"),
-				}).Info("✅ Fresh QR code generated successfully")
-
 				// Auto-cleanup QR file after duration
-				go func(path string, duration time.Duration, uuid string) {
-					logrus.WithFields(logrus.Fields{
-						"request_id": requestID,
-						"qr_uuid": uuid,
-						"cleanup_after_seconds": duration.Seconds(),
-					}).Info("⏰ Scheduled QR file cleanup")
-
+				go func(path string, duration time.Duration) {
 					time.Sleep(duration)
-					err := os.Remove(path)
-					if err != nil {
-						logrus.WithFields(logrus.Fields{
-							"request_id": requestID,
-							"qr_uuid": uuid,
-							"error": err.Error(),
-						}).Warn("⚠️ Failed to cleanup QR file")
-					} else {
-						logrus.WithFields(logrus.Fields{
-							"request_id": requestID,
-							"qr_uuid": uuid,
-						}).Info("🗑️ QR file cleaned up successfully")
-					}
-				}(qrPath, time.Duration(response.Duration)*time.Second, qrUUID)
+					_ = os.Remove(path)
+				}(qrPath, time.Duration(response.Duration)*time.Second)
 
 				chImage <- qrPath
+				logrus.Info("Fresh QR code generated successfully: ", qrPath)
 				return
 			} else {
-				logrus.WithFields(logrus.Fields{
-					"request_id": requestID,
-					"event_type": evt.Event,
-					"timestamp": eventTime.Format("2006-01-02 15:04:05.000"),
-				}).Error("❌ Error event in fresh QR generation")
+				logrus.Error("Error event in fresh QR generation: ", evt.Event)
 			}
 		}
-
-		logrus.WithFields(logrus.Fields{
-			"request_id": requestID,
-			"duration_ms": time.Since(qrGenStart).Milliseconds(),
-		}).Error("❌ QR channel closed without generating code")
 		chError <- fmt.Errorf("QR channel closed without generating code")
 	}()
 
 	// Connect with timeout
-	connectStart := time.Now()
-	logrus.WithFields(logrus.Fields{
-		"request_id": requestID,
-		"timestamp": connectStart.Format("2006-01-02 15:04:05.000"),
-	}).Info("🔌 Connecting to WhatsApp...")
-
 	err = service.WaCli.Connect()
 	if err != nil {
-		logrus.WithFields(logrus.Fields{
-			"request_id": requestID,
-			"error": err.Error(),
-			"duration_ms": time.Since(connectStart).Milliseconds(),
-			"total_duration_ms": time.Since(startTime).Milliseconds(),
-		}).Error("❌ Error connecting to WhatsApp for fresh login")
+		logrus.Error("Error when connect to whatsapp for fresh login: ", err)
 		return response, pkgError.ErrReconnect
 	}
 
-	logrus.WithFields(logrus.Fields{
-		"request_id": requestID,
-		"duration_ms": time.Since(connectStart).Milliseconds(),
-	}).Info("✅ Connected to WhatsApp successfully")
-
 	// Wait for QR code or timeout
-	waitStart := time.Now()
-	logrus.WithFields(logrus.Fields{
-		"request_id": requestID,
-		"timeout_seconds": 15,
-		"timestamp": waitStart.Format("2006-01-02 15:04:05.000"),
-	}).Info("⏳ Waiting for QR code generation...")
-
 	select {
 	case imagePath := <-chImage:
 		response.ImagePath = imagePath
-		totalDuration := time.Since(startTime)
-		logrus.WithFields(logrus.Fields{
-			"request_id": requestID,
-			"qr_path": imagePath,
-			"wait_duration_ms": time.Since(waitStart).Milliseconds(),
-			"total_duration_ms": totalDuration.Milliseconds(),
-			"timestamp": time.Now().Format("2006-01-02 15:04:05.000"),
-		}).Info("🎉 Fresh login QR code ready!")
+		logrus.Info("Fresh login QR code ready: ", imagePath)
 		return response, nil
-
 	case err := <-chError:
-		totalDuration := time.Since(startTime)
-		logrus.WithFields(logrus.Fields{
-			"request_id": requestID,
-			"error": err.Error(),
-			"wait_duration_ms": time.Since(waitStart).Milliseconds(),
-			"total_duration_ms": totalDuration.Milliseconds(),
-		}).Error("❌ Fresh login failed")
+		logrus.Error("Fresh login failed: ", err)
 		return response, pkgError.ErrQrChannel
-
 	case <-time.After(15 * time.Second):
-		totalDuration := time.Since(startTime)
-		logrus.WithFields(logrus.Fields{
-			"request_id": requestID,
-			"timeout_seconds": 15,
-			"total_duration_ms": totalDuration.Milliseconds(),
-		}).Error("⏰ Fresh login timeout after 15 seconds")
+		logrus.Error("Fresh login timeout after 15 seconds")
 		return response, pkgError.ErrQrChannel
 	}
 }

@@ -115,14 +115,8 @@
         <!-- Timestamp Debugging Section -->
         <div id="debug-container"
             style="display: none; margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 5px; border-left: 4px solid #007bff;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <h4 style="margin: 0;">🔍 Debug Information</h4>
-                <button onclick="clearDebugInfo()"
-                    style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 12px;">Clear</button>
-            </div>
-            <div id="debug-info"
-                style="max-height: 300px; overflow-y: auto; background: #ffffff; padding: 10px; border-radius: 3px; border: 1px solid #dee2e6;">
-            </div>
+            <h4>🔍 Debug Information</h4>
+            <div id="debug-info"></div>
         </div>
 
         <div id="qr-container" class="qr-container" style="display: none;">
@@ -228,7 +222,6 @@
         }
 
         async function generateQR() {
-            if (debugMode) clearDebugInfo(); // Clear previous debug info
             const startTime = performance.now();
             showStatus('Generating QR Code...', 'info');
             showDebugInfo('🔄 Starting regular QR code generation...');
@@ -260,81 +253,46 @@
         }
 
         async function generateFreshQR() {
-            if (debugMode) clearDebugInfo(); // Clear previous debug info
-            const startTime = performance.now();
             showStatus('Generating Fresh QR Code (clearing session)...', 'info');
-            showDebugInfo('🔄 Starting FRESH QR code generation (session clearing)...');
 
             try {
-                const fetchStart = performance.now();
                 const response = await fetch(`${API_BASE}/app/login-fresh`);
-                const fetchTime = performance.now() - fetchStart;
-
-                showDebugInfo(`📡 Fresh API Request completed in ${fetchTime.toFixed(2)}ms`);
-
                 const data = await response.json();
-                const totalTime = performance.now() - startTime;
-
-                showDebugInfo(`📊 Total fresh request time: ${totalTime.toFixed(2)}ms`);
-                showDebugInfo(`📋 Fresh Response: ${JSON.stringify(data, null, 2)}`);
 
                 if (data.code === 'SUCCESS') {
-                    showDebugInfo(`✅ Fresh QR generated successfully! Server processing: ${data.results.total_time_ms}ms`);
-                    showQR(data.results.qr_link, data.results.qr_duration, data.results.fresh, data.results);
+                    showQR(data.results.qr_link, data.results.qr_duration, data.results.fresh);
                 } else {
                     showStatus(`Error: ${data.message}`, 'error');
-                    showDebugInfo(`❌ Fresh QR Error: ${data.message}`);
                 }
             } catch (error) {
-                const totalTime = performance.now() - startTime;
                 showStatus(`Network Error: ${error.message}`, 'error');
-                showDebugInfo(`❌ Fresh QR Network Error after ${totalTime.toFixed(2)}ms: ${error.message}`);
             }
         }
 
         async function checkStatus() {
-            const startTime = performance.now();
             showStatus('Checking WhatsApp connection status...', 'info');
-            showDebugInfo('🔍 Checking device connection status...');
 
             try {
-                const fetchStart = performance.now();
                 const response = await fetch(`${API_BASE}/app/devices`);
-                const fetchTime = performance.now() - fetchStart;
-
-                showDebugInfo(`📡 Status API Request completed in ${fetchTime.toFixed(2)}ms`);
-
                 const data = await response.json();
-                const totalTime = performance.now() - startTime;
-
-                showDebugInfo(`📊 Total status check time: ${totalTime.toFixed(2)}ms`);
-                showDebugInfo(`📋 Status Response: ${JSON.stringify(data, null, 2)}`);
 
                 if (data.code === 'SUCCESS') {
                     const devices = data.results || [];
                     if (devices.length > 0) {
                         showStatus(`✅ Connected! Devices: ${devices.map(d => d.name).join(', ')}`, 'success');
-                        showDebugInfo(`✅ Found ${devices.length} connected device(s)`);
                     } else {
                         showStatus('⚠️ No devices connected. Please scan QR code.', 'info');
-                        showDebugInfo('⚠️ No devices found - ready for QR code scanning');
                     }
                 } else {
                     showStatus(`Status Error: ${data.message}`, 'error');
-                    showDebugInfo(`❌ Status Error: ${data.message}`);
                 }
             } catch (error) {
-                const totalTime = performance.now() - startTime;
                 showStatus(`Network Error: ${error.message}`, 'error');
-                showDebugInfo(`❌ Status Network Error after ${totalTime.toFixed(2)}ms: ${error.message}`);
             }
         }
 
         // Auto-check status on page load
         window.onload = function () {
-            showDebugInfo('🚀 WhatsApp QR Test Page loaded successfully');
-            showDebugInfo(`🌐 API Base URL: ${API_BASE}`);
-            showDebugInfo('📱 Ready to test QR code generation and debugging');
             checkStatus();
         };
     </script>

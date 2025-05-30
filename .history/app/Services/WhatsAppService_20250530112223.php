@@ -461,4 +461,43 @@ class WhatsAppService
 
         return $request->$method($url, $data);
     }
+
+    /**
+     * Fix QR code URL for external access.
+     */
+    protected function fixQRCodeUrl(string $internalUrl): string
+    {
+        // Convert internal Docker URL to external accessible URL
+        // From: http://whatsapp-api:3000/statics/qrcode/scan-qr-xxx.png
+        // To: https://hartonomotor.xyz/whatsapp-api/statics/qrcode/scan-qr-xxx.png
+
+        // Extract the path part after the domain
+        if (preg_match('#/statics/qrcode/(.+)$#', $internalUrl, $matches)) {
+            $filename = $matches[1];
+
+            // Build external URL
+            $externalUrl = 'https://hartonomotor.xyz/whatsapp-api/statics/qrcode/' . $filename;
+
+            Log::info('QR URL converted', [
+                'internal' => $internalUrl,
+                'external' => $externalUrl,
+            ]);
+
+            return $externalUrl;
+        }
+
+        // If pattern doesn't match, try to replace the base URL
+        $fixedUrl = str_replace(
+            ['http://whatsapp-api:3000', 'http://localhost:3000'],
+            'https://hartonomotor.xyz/whatsapp-api',
+            $internalUrl
+        );
+
+        Log::info('QR URL fallback conversion', [
+            'internal' => $internalUrl,
+            'external' => $fixedUrl,
+        ]);
+
+        return $fixedUrl;
+    }
 }

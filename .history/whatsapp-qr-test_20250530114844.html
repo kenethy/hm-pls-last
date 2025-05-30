@@ -228,7 +228,6 @@
         }
 
         async function generateQR() {
-            if (debugMode) clearDebugInfo(); // Clear previous debug info
             const startTime = performance.now();
             showStatus('Generating QR Code...', 'info');
             showDebugInfo('🔄 Starting regular QR code generation...');
@@ -260,7 +259,6 @@
         }
 
         async function generateFreshQR() {
-            if (debugMode) clearDebugInfo(); // Clear previous debug info
             const startTime = performance.now();
             showStatus('Generating Fresh QR Code (clearing session)...', 'info');
             showDebugInfo('🔄 Starting FRESH QR code generation (session clearing)...');
@@ -332,9 +330,6 @@
 
         // Auto-check status on page load
         window.onload = function () {
-            showDebugInfo('🚀 WhatsApp QR Test Page loaded successfully');
-            showDebugInfo(`🌐 API Base URL: ${API_BASE}`);
-            showDebugInfo('📱 Ready to test QR code generation and debugging');
             checkStatus();
         };
     </script>

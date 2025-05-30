@@ -115,14 +115,8 @@
         <!-- Timestamp Debugging Section -->
         <div id="debug-container"
             style="display: none; margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 5px; border-left: 4px solid #007bff;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <h4 style="margin: 0;">🔍 Debug Information</h4>
-                <button onclick="clearDebugInfo()"
-                    style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 12px;">Clear</button>
-            </div>
-            <div id="debug-info"
-                style="max-height: 300px; overflow-y: auto; background: #ffffff; padding: 10px; border-radius: 3px; border: 1px solid #dee2e6;">
-            </div>
+            <h4>🔍 Debug Information</h4>
+            <div id="debug-info"></div>
         </div>
 
         <div id="qr-container" class="qr-container" style="display: none;">
@@ -228,7 +222,6 @@
         }
 
         async function generateQR() {
-            if (debugMode) clearDebugInfo(); // Clear previous debug info
             const startTime = performance.now();
             showStatus('Generating QR Code...', 'info');
             showDebugInfo('🔄 Starting regular QR code generation...');
@@ -260,7 +253,6 @@
         }
 
         async function generateFreshQR() {
-            if (debugMode) clearDebugInfo(); // Clear previous debug info
             const startTime = performance.now();
             showStatus('Generating Fresh QR Code (clearing session)...', 'info');
             showDebugInfo('🔄 Starting FRESH QR code generation (session clearing)...');
@@ -332,9 +324,6 @@
 
         // Auto-check status on page load
         window.onload = function () {
-            showDebugInfo('🚀 WhatsApp QR Test Page loaded successfully');
-            showDebugInfo(`🌐 API Base URL: ${API_BASE}`);
-            showDebugInfo('📱 Ready to test QR code generation and debugging');
             checkStatus();
         };
     </script>

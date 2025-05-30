@@ -2,7 +2,6 @@ package rest
 
 import (
 	"fmt"
-	"time"
 
 	domainApp "github.com/aldinokemal/go-whatsapp-web-multidevice/domains/app"
 	"github.com/aldinokemal/go-whatsapp-web-multidevice/pkg/utils"

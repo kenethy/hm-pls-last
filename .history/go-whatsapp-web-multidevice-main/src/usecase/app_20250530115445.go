@@ -139,14 +139,17 @@ func (service serviceApp) LoginFresh(ctx context.Context) (response domainApp.Lo
 	chImage := make(chan string, 1) // Buffered channel to prevent blocking
 	chError := make(chan error, 1)  // Error channel with timeout
 
-	// Smart QR channel handling - similar to working regular login
+	// Get fresh QR channel with timeout context
 	qrChannelStart := time.Now()
+	ctxTimeout, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+
 	logrus.WithFields(logrus.Fields{
 		"request_id": requestID,
 		"timestamp": time.Now().Format("2006-01-02 15:04:05.000"),
-	}).Info("🔄 Getting smart fresh QR channel...")
+	}).Info("🔄 Getting QR channel...")
 
-	ch, err := service.WaCli.GetQRChannel(context.Background())
+	ch, err := service.WaCli.GetQRChannel(ctxTimeout)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{
 			"request_id": requestID,
@@ -154,25 +157,30 @@ func (service serviceApp) LoginFresh(ctx context.Context) (response domainApp.Lo
 			"duration_ms": time.Since(qrChannelStart).Milliseconds(),
 		}).Error("❌ Error getting fresh QR channel")
 
-		// Smart handling like regular login - DON'T destroy session
+		// If error is about existing session, try to clear it
 		if errors.Is(err, whatsmeow.ErrQRStoreContainsID) {
 			logrus.WithFields(logrus.Fields{
 				"request_id": requestID,
-			}).Info("🔧 Session exists - connecting to websocket...")
+			}).Info("🔧 Clearing existing session for fresh QR...")
 
-			// Just connect to websocket like regular login
-			_ = service.WaCli.Connect()
-			if service.WaCli.IsLoggedIn() {
+			// Clear the store ID to force fresh QR
+			service.WaCli.Store.ID = nil
+
+			// Try again
+			retryStart := time.Now()
+			ch, err = service.WaCli.GetQRChannel(ctxTimeout)
+			if err != nil {
 				logrus.WithFields(logrus.Fields{
 					"request_id": requestID,
-				}).Info("✅ Already logged in - returning session saved")
-				return response, pkgError.ErrAlreadyLoggedIn
+					"retry_duration_ms": time.Since(retryStart).Milliseconds(),
+					"error": err.Error(),
+				}).Error("❌ Retry failed for QR channel")
+				return response, pkgError.ErrQrChannel
 			}
-
 			logrus.WithFields(logrus.Fields{
 				"request_id": requestID,
-			}).Info("⚠️ Session saved but not logged in - need fresh QR")
-			return response, pkgError.ErrSessionSaved
+				"retry_duration_ms": time.Since(retryStart).Milliseconds(),
+			}).Info("✅ QR channel retry successful")
 		} else {
 			return response, pkgError.ErrQrChannel
 		}
@@ -181,7 +189,7 @@ func (service serviceApp) LoginFresh(ctx context.Context) (response domainApp.Lo
 	logrus.WithFields(logrus.Fields{
 		"request_id": requestID,
 		"duration_ms": time.Since(qrChannelStart).Milliseconds(),
-	}).Info("✅ Smart QR channel obtained successfully")
+	}).Info("✅ QR channel obtained successfully")
 
 	// QR code generation goroutine with timeout
 	go func() {
