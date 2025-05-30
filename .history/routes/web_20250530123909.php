@@ -293,6 +293,7 @@ Route::get('/generate-fresh-qr', function () {
 });
 
 
+
 /*
 |--------------------------------------------------------------------------
 | WhatsApp API Routes
