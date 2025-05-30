@@ -613,57 +613,6 @@ app.post('/number/check', async (req, res) => {
     }
 });
 
-// Debug endpoint to check chats count
-app.get('/debug/chats', async (req, res) => {
-    if (!isReady) {
-        return res.status(400).json({
-            success: false,
-            message: 'WhatsApp client is not ready'
-        });
-    }
-
-    try {
-        const chats = await client.getChats();
-        const contacts = await client.getContacts();
-
-        res.json({
-            success: true,
-            chatsCount: chats.length,
-            contactsCount: contacts.length,
-            sampleChats: chats.slice(0, 3).map(chat => ({
-                id: chat.id._serialized,
-                name: chat.name,
-                isGroup: chat.isGroup,
-                timestamp: chat.timestamp,
-                lastMessage: chat.lastMessage ? {
-                    body: chat.lastMessage.body,
-                    fromMe: chat.lastMessage.fromMe
-                } : null
-            })),
-            clientInfo: {
-                pushname: client.info?.pushname,
-                wid: client.info?.wid?.user,
-                platform: client.info?.platform
-            }
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
-});
-
-// Health check
-app.get('/health', (req, res) => {
-    res.json({
-        status: 'ok',
-        timestamp: new Date().toISOString(),
-        isReady: isReady,
-        sessionStatus: sessionStatus
-    });
-});
-
 // Get client info
 app.get('/client/info', async (req, res) => {
     try {
