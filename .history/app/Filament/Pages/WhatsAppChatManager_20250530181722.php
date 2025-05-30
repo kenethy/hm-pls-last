@@ -61,27 +61,19 @@ class WhatsAppChatManager extends Page
 
     public function checkWhatsAppStatus(): void
     {
-        // Cache status for 30 seconds to reduce API calls
-        $cacheKey = 'whatsapp_status_' . (auth()->user()?->id ?? 'guest');
+        try {
+            $response = Http::timeout(10)
+                ->withHeaders(['X-API-Key' => config('services.whatsapp.api_key')])
+                ->get(config('services.whatsapp.api_url') . '/session/status');
 
-        $cachedStatus = cache()->remember($cacheKey, 30, function () {
-            try {
-                $response = Http::timeout(5) // Reduced timeout
-                    ->withHeaders(['X-API-Key' => config('services.whatsapp.api_key')])
-                    ->get(config('services.whatsapp.api_url') . '/session/status');
-
-                if ($response->successful()) {
-                    $data = $response->json();
-                    return $data['success'] && $data['isReady'];
-                }
-                return false;
-            } catch (\Exception $e) {
-                Log::error('WhatsApp status check failed: ' . $e->getMessage());
-                return false;
+            if ($response->successful()) {
+                $data = $response->json();
+                $this->isConnected = $data['success'] && $data['isReady'];
             }
-        });
-
-        $this->isConnected = $cachedStatus;
+        } catch (\Exception $e) {
+            Log::error('WhatsApp status check failed: ' . $e->getMessage());
+            $this->isConnected = false;
+        }
     }
 
     public function loadChats(): void

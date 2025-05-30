@@ -62,7 +62,7 @@ class WhatsAppChatManager extends Page
     public function checkWhatsAppStatus(): void
     {
         // Cache status for 30 seconds to reduce API calls
-        $cacheKey = 'whatsapp_status_' . (auth()->user()?->id ?? 'guest');
+        $cacheKey = 'whatsapp_status_' . auth()->id();
 
         $cachedStatus = cache()->remember($cacheKey, 30, function () {
             try {
