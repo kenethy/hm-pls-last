@@ -8,8 +8,8 @@ This guide provides comprehensive instructions for deploying the WhatsApp API wi
 
 ### System Requirements
 - **OS**: Ubuntu 20.04+ or Debian 11+
-- **RAM**: Minimum 512MB, Recommended 1GB+
-- **Storage**: Minimum 2GB, Recommended 5GB free space
+- **RAM**: Minimum 2GB, Recommended 4GB+
+- **Storage**: Minimum 10GB free space
 - **Network**: Stable internet connection
 - **Ports**: 3000 (WhatsApp API), 22 (SSH), 80/443 (if SSL enabled)
 
@@ -279,7 +279,7 @@ Response:
    ```bash
    # Check logs
    docker logs whatsapp-api-production
-
+   
    # Restart container
    ./restart.sh
    ```
@@ -288,7 +288,7 @@ Response:
    ```bash
    # Check if port is open
    ss -tlnp | grep :3000
-
+   
    # Test locally
    curl http://localhost:3000/app/devices
    ```
@@ -297,7 +297,7 @@ Response:
    ```bash
    # Clear QR codes
    rm -f /opt/whatsapp-api-production/data/qrcode/*.png
-
+   
    # Restart service
    ./restart.sh
    ```
@@ -306,7 +306,7 @@ Response:
    ```bash
    # Check resource usage
    docker stats whatsapp-api-production
-
+   
    # Check system resources
    htop
    ```
