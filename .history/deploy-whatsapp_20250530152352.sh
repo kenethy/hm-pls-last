@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Default mode
-MODE=${1:-full}
+MODE=${1:-mock}
 
 echo -e "${BLUE}🚀 Hartono Motor WhatsApp Deployment Script${NC}"
 echo -e "${BLUE}=============================================${NC}"
