@@ -6,13 +6,6 @@ services:
       dockerfile: Dockerfile
     container_name: hartono-app
     restart: unless-stopped
-    environment:
-      - DB_CONNECTION=mysql
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_DATABASE=${DB_DATABASE}
-      - DB_USERNAME=root
-      - DB_PASSWORD=${DB_ROOT_PASSWORD}
     volumes:
       - ./:/var/www/html
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
@@ -69,7 +62,7 @@ services:
       PMA_PASSWORD: ${DB_ROOT_PASSWORD}
       UPLOAD_LIMIT: 300M
     ports:
-      - "8081:80"  # Changed from 8080 to 8081 to avoid conflict
+      - "8080:80"
     networks:
       - hartono-network
     depends_on:

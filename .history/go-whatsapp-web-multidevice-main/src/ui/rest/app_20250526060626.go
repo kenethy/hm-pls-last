@@ -15,7 +15,6 @@ type App struct {
 func InitRestApp(app *fiber.App, service domainApp.IAppUsecase) App {
 	rest := App{Service: service}
 	app.Get("/app/login", rest.Login)
-	app.Get("/app/login-fresh", rest.LoginFresh)
 	app.Get("/app/login-with-code", rest.LoginWithCode)
 	app.Get("/app/logout", rest.Logout)
 	app.Get("/app/reconnect", rest.Reconnect)
@@ -35,22 +34,6 @@ func (handler *App) Login(c *fiber.Ctx) error {
 		Results: map[string]any{
 			"qr_link":     fmt.Sprintf("%s://%s/%s", c.Protocol(), c.Hostname(), response.ImagePath),
 			"qr_duration": response.Duration,
-		},
-	})
-}
-
-func (handler *App) LoginFresh(c *fiber.Ctx) error {
-	response, err := handler.Service.LoginFresh(c.UserContext())
-	utils.PanicIfNeeded(err)
-
-	return c.JSON(utils.ResponseData{
-		Status:  200,
-		Code:    "SUCCESS",
-		Message: "Fresh login success - new QR code generated",
-		Results: map[string]any{
-			"qr_link":     fmt.Sprintf("%s://%s/%s", c.Protocol(), c.Hostname(), response.ImagePath),
-			"qr_duration": response.Duration,
-			"fresh":       true,
 		},
 	})
 }

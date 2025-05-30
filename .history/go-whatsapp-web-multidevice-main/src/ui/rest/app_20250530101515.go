@@ -39,22 +39,6 @@ func (handler *App) Login(c *fiber.Ctx) error {
 	})
 }
 
-func (handler *App) LoginFresh(c *fiber.Ctx) error {
-	response, err := handler.Service.LoginFresh(c.UserContext())
-	utils.PanicIfNeeded(err)
-
-	return c.JSON(utils.ResponseData{
-		Status:  200,
-		Code:    "SUCCESS",
-		Message: "Fresh login success - new QR code generated",
-		Results: map[string]any{
-			"qr_link":     fmt.Sprintf("%s://%s/%s", c.Protocol(), c.Hostname(), response.ImagePath),
-			"qr_duration": response.Duration,
-			"fresh":       true,
-		},
-	})
-}
-
 func (handler *App) LoginWithCode(c *fiber.Ctx) error {
 	pairCode, err := handler.Service.LoginWithCode(c.UserContext(), c.Query("phone"))
 	utils.PanicIfNeeded(err)
