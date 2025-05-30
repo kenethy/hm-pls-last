@@ -491,32 +491,26 @@ app.post('/message/send', async (req, res) => {
             });
         }
 
-        const { phone, message, chatId } = req.body;
+        const { phone, message } = req.body;
 
-        if ((!phone && !chatId) || !message) {
+        if (!phone || !message) {
             return res.status(400).json({
                 success: false,
-                message: 'Phone/chatId and message are required'
+                message: 'Phone and message are required'
             });
         }
 
-        let targetId;
-
-        if (chatId) {
-            targetId = chatId;
-        } else {
-            // Format phone number
-            let formattedPhone = phone.replace(/[^0-9]/g, '');
-            if (formattedPhone.startsWith('0')) {
-                formattedPhone = '62' + formattedPhone.substring(1);
-            }
-            if (!formattedPhone.startsWith('62')) {
-                formattedPhone = '62' + formattedPhone;
-            }
-            targetId = formattedPhone + '@c.us';
+        // Format phone number
+        let formattedPhone = phone.replace(/[^0-9]/g, '');
+        if (formattedPhone.startsWith('0')) {
+            formattedPhone = '62' + formattedPhone.substring(1);
         }
+        if (!formattedPhone.startsWith('62')) {
+            formattedPhone = '62' + formattedPhone;
+        }
+        formattedPhone += '@c.us';
 
-        const sentMessage = await client.sendMessage(targetId, message);
+        const sentMessage = await client.sendMessage(formattedPhone, message);
 
         res.json({
             success: true,
