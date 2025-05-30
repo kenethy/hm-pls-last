@@ -32,24 +32,8 @@ function initializeClient() {
                 '--no-first-run',
                 '--no-zygote',
                 '--single-process',
-                '--disable-gpu',
-                '--disable-web-security',
-                '--disable-features=VizDisplayCompositor',
-                '--disable-extensions',
-                '--disable-plugins',
-                '--disable-images',
-                '--disable-default-apps',
-                '--disable-background-timer-throttling',
-                '--disable-backgrounding-occluded-windows',
-                '--disable-renderer-backgrounding',
-                '--disable-field-trial-config',
-                '--disable-back-forward-cache',
-                '--disable-ipc-flooding-protection',
-                '--memory-pressure-off',
-                '--max_old_space_size=4096'
-            ],
-            executablePath: '/usr/bin/chromium-browser',
-            timeout: 60000
+                '--disable-gpu'
+            ]
         }
     });
 
@@ -58,7 +42,7 @@ function initializeClient() {
         console.log('QR Code received');
         qrCodeData = qr;
         sessionStatus = 'qr_ready';
-
+        
         // Generate QR Code image
         try {
             const qrImage = await QRCode.toDataURL(qr);
@@ -98,7 +82,7 @@ function initializeClient() {
 
     client.on('message', async (message) => {
         console.log('Message received:', message.body);
-
+        
         // Send webhook to Laravel if configured
         const webhookUrl = process.env.WEBHOOK_URL;
         if (webhookUrl) {
@@ -130,7 +114,7 @@ function initializeClient() {
 
     client.on('message_ack', async (message, ack) => {
         console.log('Message ACK:', message.id._serialized, 'ACK:', ack);
-
+        
         // Send webhook to Laravel
         const webhookUrl = process.env.WEBHOOK_URL;
         if (webhookUrl) {
@@ -266,7 +250,7 @@ app.post('/message/send', async (req, res) => {
         }
 
         const { phone, message } = req.body;
-
+        
         if (!phone || !message) {
             return res.status(400).json({
                 success: false,
@@ -285,7 +269,7 @@ app.post('/message/send', async (req, res) => {
         formattedPhone += '@c.us';
 
         const sentMessage = await client.sendMessage(formattedPhone, message);
-
+        
         res.json({
             success: true,
             messageId: sentMessage.id._serialized,
@@ -311,7 +295,7 @@ app.post('/number/check', async (req, res) => {
         }
 
         const { phone } = req.body;
-
+        
         if (!phone) {
             return res.status(400).json({
                 success: false,
@@ -330,7 +314,7 @@ app.post('/number/check', async (req, res) => {
         formattedPhone += '@c.us';
 
         const isRegistered = await client.isRegisteredUser(formattedPhone);
-
+        
         res.json({
             success: true,
             isRegistered: isRegistered,
@@ -385,7 +369,7 @@ app.use((error, req, res, next) => {
 app.listen(port, () => {
     console.log(`Hartono Motor WhatsApp Server running on port ${port}`);
     console.log(`Health check: http://localhost:${port}/health`);
-
+    
     // Auto-start client
     initializeClient();
 });
