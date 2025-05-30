@@ -51,44 +51,14 @@ BASIC_AUTH_PASS="hartonomotor$(date +%s | tail -c 6)"
 # STEP 1: Check current environment
 show_step "1" "Checking current environment..."
 
-# Auto-detect Laravel location
-POSSIBLE_LARAVEL_DIRS=(
-    "/var/www/html"
-    "/hm-new"
-    "/var/www/hartonomotor.xyz"
-    "/home/*/hartonomotor.xyz"
-    "/opt/hartonomotor.xyz"
-    "/root/hartonomotor.xyz"
-    "$(pwd)"
-)
-
-LARAVEL_DIR=""
-for dir in "${POSSIBLE_LARAVEL_DIRS[@]}"; do
-    # Expand wildcard
-    for expanded_dir in $dir; do
-        if [[ -f "$expanded_dir/artisan" ]]; then
-            LARAVEL_DIR="$expanded_dir"
-            show_success "Laravel found at $LARAVEL_DIR"
-            break 2
-        fi
-    done
-done
-
-if [[ -z "$LARAVEL_DIR" ]]; then
-    show_error "Laravel not found in common locations"
-    echo ""
-    echo "Searched in:"
-    for dir in "${POSSIBLE_LARAVEL_DIRS[@]}"; do
-        echo "  - $dir"
-    done
-    echo ""
-    read -p "Enter Laravel directory path manually: " LARAVEL_DIR
-
-    if [[ ! -f "$LARAVEL_DIR/artisan" ]]; then
-        show_error "Invalid Laravel directory: $LARAVEL_DIR"
-        exit 1
-    fi
-    show_success "Laravel confirmed at $LARAVEL_DIR"
+# Check if Laravel exists
+if [[ -f "/var/www/html/artisan" ]]; then
+    show_success "Laravel found at /var/www/html"
+    LARAVEL_DIR="/var/www/html"
+else
+    show_error "Laravel not found at /var/www/html"
+    echo "Please ensure Laravel is properly installed first"
+    exit 1
 fi
 
 # Check available resources
@@ -172,12 +142,12 @@ LATEST_URL=$(curl -s https://api.github.com/repos/aldinokemal/go-whatsapp-web-mu
 if [[ -n "$LATEST_URL" && "$LATEST_URL" != "null" ]]; then
     show_info "Downloading: $LATEST_URL"
     wget -O whatsapp-linux.tar.gz "$LATEST_URL"
-
+    
     # Extract binary
     tar -xzf whatsapp-linux.tar.gz
     mv whatsapp bin/whatsapp
     rm whatsapp-linux.tar.gz
-
+    
     show_success "Binary downloaded and extracted"
 else
     show_error "Could not find binary for $DOWNLOAD_ARCH"
@@ -339,7 +309,7 @@ sleep 10
 # Check if service is running
 if systemctl is-active --quiet $SERVICE_NAME; then
     show_success "WhatsApp API service started successfully"
-
+    
     # Test API
     if curl -s -f http://localhost:$API_PORT/app/devices > /dev/null 2>&1; then
         show_success "API is responding"
