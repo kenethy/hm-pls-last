@@ -59,7 +59,6 @@ function initializeClient() {
             clientId: 'hartono-motor',
             dataPath: '/app/.wwebjs_auth'
         }),
-        session: null, // Force new session to generate QR
         puppeteer: {
             headless: true,
             args: [
@@ -126,36 +125,28 @@ function initializeClient() {
     });
 
     client.on('ready', () => {
-        console.log('🟢 WhatsApp Client is ready!');
+        console.log('WhatsApp Client is ready!');
         isReady = true;
         sessionStatus = 'ready';
         qrCodeData = null;
     });
 
     client.on('authenticated', () => {
-        console.log('🔐 WhatsApp Client authenticated');
+        console.log('WhatsApp Client authenticated');
         sessionStatus = 'authenticated';
     });
 
     client.on('auth_failure', (msg) => {
-        console.error('❌ Authentication failure:', msg);
+        console.error('Authentication failure:', msg);
         sessionStatus = 'auth_failure';
         isReady = false;
     });
 
     client.on('disconnected', (reason) => {
-        console.log('🔴 WhatsApp Client disconnected:', reason);
+        console.log('WhatsApp Client disconnected:', reason);
         sessionStatus = 'disconnected';
         isReady = false;
         qrCodeData = null;
-    });
-
-    client.on('loading_screen', (percent, message) => {
-        console.log('⏳ Loading screen:', percent, message);
-    });
-
-    client.on('change_state', state => {
-        console.log('🔄 State changed:', state);
     });
 
     client.on('message', async (message) => {

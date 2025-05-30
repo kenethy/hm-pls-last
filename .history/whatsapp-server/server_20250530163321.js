@@ -59,7 +59,6 @@ function initializeClient() {
             clientId: 'hartono-motor',
             dataPath: '/app/.wwebjs_auth'
         }),
-        session: null, // Force new session to generate QR
         puppeteer: {
             headless: true,
             args: [
