@@ -24,9 +24,6 @@ use App\Filament\Resources\SparePartResource;
 use App\Filament\Resources\SparePartCategoryResource;
 use App\Filament\Resources\SparePartSettingResource;
 use App\Filament\Resources\MechanicRatingResource;
-use App\Filament\Resources\WhatsAppConfigResource;
-use App\Filament\Resources\WhatsAppMessageResource;
-use App\Filament\Resources\FollowUpTemplateResource;
 use App\Filament\Widgets\SimpleGalleryWidget;
 use App\Filament\Widgets\EnhancedGalleryWidget;
 use App\Filament\Pages\GalleryManager;
@@ -91,11 +88,6 @@ class AdminPanelProvider extends PanelProvider
                 SparePartResource::class,
                 SparePartSettingResource::class,
                 MechanicRatingResource::class,
-
-                // WhatsApp Integration Resources
-                WhatsAppConfigResource::class,
-                WhatsAppMessageResource::class,
-                FollowUpTemplateResource::class,
             ])
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -135,8 +127,6 @@ class AdminPanelProvider extends PanelProvider
                     ->label('Manajemen Pelanggan'),
                 NavigationGroup::make()
                     ->label('Laporan & Analisis'),
-                NavigationGroup::make()
-                    ->label('WhatsApp Integration'),
             ])
             ->navigationItems([
                 \Filament\Navigation\NavigationItem::make('Simple Gallery')

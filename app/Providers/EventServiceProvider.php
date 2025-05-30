@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Events\MechanicsAssigned;
 use App\Events\ServiceStatusChanged;
-use App\Listeners\SendWhatsAppFollowUp;
 use App\Listeners\UpdateMechanicReports;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -24,7 +23,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         ServiceStatusChanged::class => [
             UpdateMechanicReports::class,
-            SendWhatsAppFollowUp::class,
         ],
         MechanicsAssigned::class => [
             UpdateMechanicReports::class,
