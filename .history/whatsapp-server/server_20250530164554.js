@@ -48,7 +48,7 @@ function cleanupChromiumLocks() {
 }
 
 // Initialize WhatsApp Client
-async function initializeClient() {
+function initializeClient() {
     console.log('🚀 initializeClient() called - starting WhatsApp Web.js initialization');
 
     // Cleanup before starting
@@ -486,10 +486,10 @@ app.listen(port, () => {
 
     // Auto-start client with delay and logging
     console.log('Starting WhatsApp client initialization...');
-    setTimeout(async () => {
+    setTimeout(() => {
         console.log('Calling initializeClient()...');
         try {
-            await initializeClient();
+            initializeClient();
         } catch (error) {
             console.error('Error initializing client:', error);
         }
